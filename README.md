@@ -1,8 +1,12 @@
-# eros
+# Eros
+A coupon management system, made in Flutter, using firebase.
 
-A coupon management system
+## Motivation
+I made this project so people behind the counter, when accepting the coupon, can check if the coupon is still valid to use. This will avoid fraud and makes managing them easier.
 
-## Getting Started
+## Made in or with
+- Flutter
+- Firebase
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+## Plans
+- Web interface using AngularDart 5 (when that gets proper WebStorm support)
