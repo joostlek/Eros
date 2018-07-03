@@ -1,4 +1,5 @@
 import 'package:eros/eros.dart';
+import 'package:eros/login.dart';
 import "package:flutter/material.dart";
 
 void main() {
@@ -20,6 +21,6 @@ class ExampleState extends State<Example> {
 
   @override
   Widget build(BuildContext context) {
-    return new Eros();
+    return new Login('kek');
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:eros/bottom_item.dart';
+//import 'package:eros/pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class Eros extends StatefulWidget {
@@ -47,9 +48,9 @@ class _ErosState extends State<Eros> {
   getNavItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new Center(child: new Text("Page three"));
-      case 1:
         return new Center(child: new Text("Page 2"));
+      case 1:
+        return new Text("");
     }
   }
 }
