@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = new GoogleSignIn();
 
 class Login extends StatefulWidget {
@@ -17,6 +16,26 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  _handleGoogleSignIn() async {
+    GoogleSignIn _googleSignIn = new GoogleSignIn();
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    if (googleUser != null) {
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      if (googleAuth.accessToken != null) {
+        try {
+          FirebaseUser user = await _auth.signInWithGoogle(
+            idToken: googleAuth.idToken,
+            accessToken: googleAuth.accessToken,
+          );
+        } catch (e) {
+          print(e.toString());
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +52,12 @@ class _LoginState extends State<Login> {
                   padding: EdgeInsets.all(16.0),
                   child: new RaisedButton(
                     color: Colors.white,
-                    onPressed: () => {},
+                    onPressed: _handleGoogleSignIn,
                     child: new Row(
                       children: <Widget>[
                         new Padding(
                             padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                            EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Image.asset('assets/go-logo.png')),
                         new Center(
                           child: new Text("Sign in with Google"),
@@ -57,7 +76,7 @@ class _LoginState extends State<Login> {
                       children: <Widget>[
                         new Padding(
                             padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                            EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Image.asset('assets/fb-logo.png')),
                         new Center(
                           child: new Text("Sign in with Facebook"),
@@ -76,7 +95,7 @@ class _LoginState extends State<Login> {
                       children: <Widget>[
                         new Padding(
                             padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                            EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Icon(Icons.home)),
                         new Center(
                           child: new Text("Sign in with Twitter"),
@@ -95,7 +114,7 @@ class _LoginState extends State<Login> {
                       children: <Widget>[
                         new Padding(
                             padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                            EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Icon(Icons.email)),
                         new Center(
                           child: new Text("Sign in with email"),
@@ -114,7 +133,7 @@ class _LoginState extends State<Login> {
                       children: <Widget>[
                         new Padding(
                             padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                            EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Icon(Icons.phone)),
                         new Center(
                           child: new Text("Sign in with phone"),

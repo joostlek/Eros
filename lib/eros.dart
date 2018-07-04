@@ -1,15 +1,22 @@
 import 'dart:async';
 
 import 'package:eros/bottom_item.dart';
+import 'package:eros/pages/profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 //import 'package:eros/pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class Eros extends StatefulWidget {
-  Eros();
+  FirebaseUser user;
+  Eros({this.user});
+
   final bottomItems = [
-    new BottomItem("Camera", Icons.camera_alt, Colors.red),
-    new BottomItem("My profile", Icons.person_outline, Colors.cyan),
+    new BottomItem("Camera", Icons.camera_alt, Colors.blue),
+    new BottomItem("Dashboard", Icons.dashboard, Colors.blue),
+    new BottomItem("My profile", Icons.person, Colors.blue)
   ];
+
   @override
   State<StatefulWidget> createState() {
     return new _ErosState();
@@ -32,9 +39,6 @@ class _ErosState extends State<Eros> {
         onTap: (index) => _onSelectItem(index),
         currentIndex: _selectedNavIndex,
       ),
-      appBar: new AppBar(
-        title: new Text(title),
-      ),
       body: getNavItemWidget(_selectedNavIndex),
     );
   }
@@ -42,7 +46,6 @@ class _ErosState extends State<Eros> {
   _onSelectItem(int index) {
     setState(() => _selectedNavIndex = index);
     getNavItemWidget(_selectedNavIndex);
-//    title = widget.bottomItems[index].title;
   }
 
   getNavItemWidget(int pos) {
@@ -50,7 +53,9 @@ class _ErosState extends State<Eros> {
       case 0:
         return new Center(child: new Text("Page 2"));
       case 1:
-        return new Text("");
+        return new Text("Dashboard");
+      case 2:
+        return new Profile(user: widget.user);
     }
   }
 }

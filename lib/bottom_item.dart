@@ -7,7 +7,6 @@ class BottomItem {
   BottomItem(this.title, this.icon, this.color);
   BottomNavigationBarItem toBottomNavigationBarItem() {
     return new BottomNavigationBarItem(
-        icon: new Icon(this.icon, color: this.color),
-        title: new Text(this.title));
+        icon: new Icon(this.icon), title: new Text(this.title));
   }
 }
