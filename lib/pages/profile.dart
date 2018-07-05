@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
   final FirebaseUser user;
+
   Profile({this.user});
+
   @override
   State<StatefulWidget> createState() {
     return new ProfileState();
@@ -27,16 +29,55 @@ class ProfileState extends State<Profile> {
           )
         ],
       ),
-      body: Center(
-        child: Container(
-          width: 96.0,
-          height: 96.0,
-          decoration: new BoxDecoration(
-              shape: BoxShape.circle,
-              image: new DecorationImage(
-                  fit: BoxFit.fill,
-                  image: new NetworkImage(widget.user.photoUrl))),
-        ),
+      body: Column(
+        children: <Widget>[
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 96.0,
+                height: 96.0,
+                decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                        fit: BoxFit.fill,
+                        image: new NetworkImage(widget.user.photoUrl))),
+              ),
+            ),
+          ),
+          Center(
+            child: Text(
+              widget.user.displayName,
+              textScaleFactor: 1.5,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+                child: Column(
+              children: <Widget>[
+                const ListTile(
+                  leading: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: const Icon(Icons.camera_alt),
+                  ),
+                  title: const Text("Amount of coupons scanned"),
+                  subtitle: const Text("123"),
+                ),
+                ButtonTheme.bar(
+                  child: ButtonBar(
+                    children: <Widget>[
+                      FlatButton(
+                        child: const Text("VIEW"),
+                        onPressed: () => {},
+                      )
+                    ],
+                  ),
+                )
+              ],
+            )),
+          )
+        ],
       ),
     );
   }
