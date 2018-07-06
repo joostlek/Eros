@@ -33,7 +33,10 @@ class UserStorage {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot newDoc =
           await tx.get(userCollection.document(user.uid));
-      await tx.set(newDoc.reference, user.toMap());
+      await tx.set(
+          newDoc.reference,
+          _toMap(
+              user, {'created': new DateTime.now().toUtc().toIso8601String()}));
       return user;
     };
     return Firestore.instance
@@ -55,6 +58,13 @@ class UserStorage {
       snapshots = snapshots.take(limit);
     }
     return snapshots;
+  }
+
+  Future<bool> isUserStored() {
+    final DocumentReference userRef = userCollection.document(user.uid);
+    return userRef.get().then((DocumentSnapshot docSnapshot) {
+      return docSnapshot.exists;
+    });
   }
 
   Future<User> getUser() async {

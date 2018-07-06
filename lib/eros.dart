@@ -11,9 +11,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Eros extends StatefulWidget {
-  User user;
+  Future<User> user;
+  UserStorage userStorage;
 
-  Eros({this.user});
+  Eros({this.user, this.userStorage});
 
   final bottomItems = [
     new BottomItem("Camera", Icons.camera_alt, Colors.blue),
@@ -59,7 +60,9 @@ class _ErosState extends State<Eros> {
       case 1:
         return new Dashboard();
       case 2:
-        return new Profile(user: widget.user);
+        return new Profile(
+          userStorage: widget.userStorage,
+        );
     }
   }
 }
