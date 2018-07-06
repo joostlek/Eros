@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:eros/bottom_item.dart';
+import 'package:eros/pages/dashboard.dart';
 import 'package:eros/pages/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -53,7 +54,7 @@ class _ErosState extends State<Eros> {
       case 0:
         return new Center(child: new Text("Page 2"));
       case 1:
-        return new Text("Dashboard");
+        return new Dashboard();
       case 2:
         return new Profile(user: widget.user);
     }
