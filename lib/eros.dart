@@ -1,15 +1,18 @@
 import 'dart:async';
 
 import 'package:eros/bottom_item.dart';
+import 'package:eros/models/user.dart';
 import 'package:eros/pages/dashboard.dart';
 import 'package:eros/pages/profile.dart';
+import 'package:eros/services/user_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-//import 'package:eros/pages/profile.dart';
 import 'package:flutter/material.dart';
 
 class Eros extends StatefulWidget {
-  FirebaseUser user;
+  User user;
+
   Eros({this.user});
 
   final bottomItems = [

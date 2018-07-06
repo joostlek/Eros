@@ -1,3 +1,4 @@
+import 'package:eros/pages/locations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,12 @@ class DashboardState extends State<Dashboard> {
                     trailing: IconButton(
                         iconSize: 36.0,
                         icon: Icon(Icons.chevron_right),
-                        onPressed: () => {}),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Locations()));
+                        }),
                   ),
                   Divider(),
                   ListTile(

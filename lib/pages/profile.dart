@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:eros/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
-  final FirebaseUser user;
+  final User user;
 
   Profile({this.user});
 
