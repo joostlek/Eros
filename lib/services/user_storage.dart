@@ -9,11 +9,12 @@ final CollectionReference userCollection =
     Firestore.instance.collection('users');
 
 class UserStorage {
-  final FirebaseUser user;
+  final FirebaseUser firebaseUser;
+  User user;
 
   UserStorage.forUser({
-    @required this.user,
-  }) : assert(user != null);
+    @required this.firebaseUser,
+  }) : assert(firebaseUser != null);
 
   static User fromDocument(DocumentSnapshot document) =>
       _fromMap(document.data);
@@ -49,8 +50,9 @@ class UserStorage {
   }
 
   Stream<QuerySnapshot> list({int limit, int offset}) {
-    Stream<QuerySnapshot> snapshots =
-        userCollection.where('uid', isEqualTo: this.user.uid).snapshots();
+    Stream<QuerySnapshot> snapshots = userCollection
+        .where('uid', isEqualTo: this.firebaseUser.uid)
+        .snapshots();
     if (offset != null) {
       snapshots = snapshots.skip(offset);
     }
@@ -61,14 +63,18 @@ class UserStorage {
   }
 
   Future<bool> isUserStored() {
-    final DocumentReference userRef = userCollection.document(user.uid);
+    final DocumentReference userRef = userCollection.document(firebaseUser.uid);
     return userRef.get().then((DocumentSnapshot docSnapshot) {
       return docSnapshot.exists;
     });
   }
 
   Future<User> getUser() async {
-    return fromDocument(await userCollection.document(user.uid).get());
+    if (user == null) {
+      user =
+          fromDocument(await userCollection.document(firebaseUser.uid).get());
+    }
+    return user;
   }
 
   Future<bool> update(User user) async {
