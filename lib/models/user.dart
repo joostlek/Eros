@@ -11,18 +11,15 @@ class User extends Object with _$UserSerializerMixin {
   final String uid;
   @JsonKey(name: 'photo_url')
   final String photoUrl;
+  final Map<String, bool> locations;
+  final Map<String, bool> owner;
+  final Map<String, bool> manager;
 
-  User(this.uid, this.displayName, this.email, this.photoUrl);
+  User(this.uid, this.displayName, this.email, this.photoUrl, this.locations,
+      this.owner, this.manager);
 
   User.fromFirebaseUser(FirebaseUser user)
-      : this(user.uid, user.displayName, user.email, user.photoUrl);
-
-  Map<String, dynamic> toMap() => {
-        'uid': this.uid,
-        'display_name': this.displayName,
-        'email': this.email,
-        'photo_url': this.photoUrl,
-      };
+      : this(user.uid, user.displayName, user.email, user.photoUrl, {}, {}, {});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

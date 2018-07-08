@@ -86,7 +86,7 @@ class LocationsState extends State<Locations> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => LocationPage(location)));
+                    builder: (context) => LocationPage(user, location)));
           },
         ),
       ),

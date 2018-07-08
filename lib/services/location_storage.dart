@@ -62,6 +62,21 @@ class LocationStorage {
     });
   }
 
+  Stream<QuerySnapshot> listEmployees(Location location,
+      {int limit, int offset}) {
+    Stream<QuerySnapshot> snapshots = Firestore.instance
+        .collection('users')
+        .where('locations.${location.locationId}', isEqualTo: true)
+        .snapshots();
+    if (offset != null) {
+      snapshots = snapshots.skip(offset);
+    }
+    if (limit != null) {
+      snapshots = snapshots.take(limit);
+    }
+    return snapshots;
+  }
+
   Stream<QuerySnapshot> list({int limit, int offset}) {
     Stream<QuerySnapshot> snapshots = locationCollection
         .where('employees.${this.user.uid}', isEqualTo: true)
