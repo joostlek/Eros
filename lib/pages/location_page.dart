@@ -31,6 +31,11 @@ class LocationPageState extends State<LocationPage> {
       appBar: AppBar(
         title: Text(widget.location.name),
       ),
+      floatingActionButton: new FloatingActionButton(
+        // TODO - Add edit function
+        onPressed: () => {},
+        child: Icon(Icons.edit),
+      ),
       body: Column(
         children: <Widget>[
           Center(
@@ -53,11 +58,14 @@ class LocationPageState extends State<LocationPage> {
               textScaleFactor: 1.5,
             ),
           ),
-          Text(
-            "${widget.location.street} ${widget.location.houseNumber}\n"
-                "${widget.location.country}\n"
-                "${widget.location.city}",
-            style: TextStyle(color: Colors.grey[600]),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 16.0),
+            child: Text(
+              "${widget.location.street} ${widget.location.houseNumber}\n"
+                  "${widget.location.city}\n"
+                  "${widget.location.country}",
+              style: TextStyle(color: Colors.grey[600]),
+            ),
           ),
           FutureBuilder<LocationStorage>(
             future: widget.getLocationStorage(),
@@ -72,6 +80,62 @@ class LocationPageState extends State<LocationPage> {
                       icon: Icon(Icons.chevron_right),
                       onPressed: () {
                         print(widget.location);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LocationEmployeePage(
+                                      locationStorage: locationStorage.data,
+                                      location: widget.location,
+                                    )));
+                      },
+                    ),
+                  ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+          FutureBuilder<LocationStorage>(
+            future: widget.getLocationStorage(),
+            builder: (BuildContext context,
+                AsyncSnapshot<LocationStorage> locationStorage) {
+              if (locationStorage.hasData && locationStorage.data != null) {
+                return Card(
+                  child: ListTile(
+                    title: Text('Coupons'),
+                    leading: Icon(Icons.local_activity),
+                    trailing: IconButton(
+                      icon: Icon(Icons.chevron_right),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LocationEmployeePage(
+                                      locationStorage: locationStorage.data,
+                                      location: widget.location,
+                                    )));
+                      },
+                    ),
+                  ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+          FutureBuilder<LocationStorage>(
+            future: widget.getLocationStorage(),
+            builder: (BuildContext context,
+                AsyncSnapshot<LocationStorage> locationStorage) {
+              if (locationStorage.hasData && locationStorage.data != null) {
+                return Card(
+                  child: ListTile(
+                    title: Text('Series'),
+                    leading: Icon(Icons.view_agenda),
+                    trailing: IconButton(
+                      icon: Icon(Icons.chevron_right),
+                      onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
