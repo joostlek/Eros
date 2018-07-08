@@ -16,34 +16,11 @@ class Location extends Object with _$LocationSerializerMixin {
   @JsonKey(name: 'photo_url')
   final String photoUrl;
   final Map<String, bool> managers;
+  final Map<String, bool> employees;
 
   Location(this.locationId, this.name, this.street, this.houseNumber, this.city,
-      this.country, this.owner, this.photoUrl, this.managers);
+      this.country, this.owner, this.photoUrl, this.managers, this.employees);
 
-//  Location.fromMap(Map<String, dynamic> data)
-//      : this(
-//          data['locationId'],
-//          data['name'],
-//          data['street'],
-//          data['houseNumber'],
-//          data['city'],
-//          data['country'],
-//          data['owner'],
-//          data['photoUrl'],
-//          data['managers'],
-//        );
-//
-//  Map<String, dynamic> toMap() => {
-//        'locationId': this.locationId,
-//        'name': this.name,
-//        'street': this.street,
-//        'houseNumber': this.houseNumber,
-//        'city': this.city,
-//        'country': this.country,
-//        'owner': this.owner,
-//        'photoUrl': this.photoUrl,
-//        'managers': this.managers,
-//      };
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
 }

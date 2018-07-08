@@ -17,7 +17,10 @@ Location _$LocationFromJson(Map<String, dynamic> json) => new Location(
     json['photo_url'] as String,
     json['managers'] == null
         ? null
-        : new Map<String, bool>.from(json['managers'] as Map));
+        : new Map<String, bool>.from(json['managers'] as Map),
+    json['employees'] == null
+        ? null
+        : new Map<String, bool>.from(json['employees'] as Map));
 
 abstract class _$LocationSerializerMixin {
   String get locationId;
@@ -29,6 +32,7 @@ abstract class _$LocationSerializerMixin {
   String get owner;
   String get photoUrl;
   Map<String, bool> get managers;
+  Map<String, bool> get employees;
   Map<String, dynamic> toJson() => <String, dynamic>{
         'location_id': locationId,
         'name': name,
@@ -38,6 +42,7 @@ abstract class _$LocationSerializerMixin {
         'country': country,
         'owner': owner,
         'photo_url': photoUrl,
-        'managers': managers
+        'managers': managers,
+        'employees': employees
       };
 }

@@ -36,8 +36,17 @@ class LocationStorage {
       String city, String country, String photoUrl) async {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot doc = await tx.get(locationCollection.document());
-      final Location location = new Location(doc.documentID, name, street,
-          houseNumber, city, country, this.user.uid, photoUrl, {});
+      final Location location = new Location(
+          doc.documentID,
+          name,
+          street,
+          houseNumber,
+          city,
+          country,
+          this.user.uid,
+          photoUrl,
+          {},
+          {this.user.uid: true});
       final Map<String, dynamic> data = _toMap(location, {
         'created': new DateTime.now().toUtc().toIso8601String(),
       });
@@ -55,7 +64,7 @@ class LocationStorage {
 
   Stream<QuerySnapshot> list({int limit, int offset}) {
     Stream<QuerySnapshot> snapshots = locationCollection
-        .where('managers.${this.user.uid}', isEqualTo: true)
+        .where('employees.${this.user.uid}', isEqualTo: true)
         .snapshots();
     if (offset != null) {
       snapshots = snapshots.skip(offset);
