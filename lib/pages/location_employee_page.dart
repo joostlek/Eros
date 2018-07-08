@@ -36,21 +36,28 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                         .fromDocument(querySnapshot.data.documents[index]);
                     return Card(
                       child: ListTile(
-                        title: Text(user.displayName),
-                        subtitle: widget.location.owner == user.uid
-                            ? Text('Owner')
-                            : widget.location.managers[user.uid] == true
-                                ? Text('Manager')
-                                : Text('Employee'),
-                        leading: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            user.photoUrl,
-                            width: 36.0,
-                            height: 36.0,
+                          title: Text(user.displayName),
+                          subtitle: widget.location.owner == user.uid
+                              ? Text('Owner')
+                              : widget.location.managers[user.uid] == true
+                                  ? Text('Manager')
+                                  : Text('Employee'),
+                          leading: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.network(
+                              user.photoUrl,
+                              width: 36.0,
+                              height: 36.0,
+                            ),
                           ),
-                        ),
-                      ),
+                          trailing: widget.location.owner ==
+                                      widget.locationStorage.user.uid &&
+                                  user.uid != widget.locationStorage.user.uid
+                              ? IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () => {},
+                                )
+                              : null),
                     );
                   });
             } else {
