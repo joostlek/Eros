@@ -58,7 +58,9 @@ class _ErosState extends State<Eros> {
       case 0:
         return new Center(child: new Text("Page 2"));
       case 1:
-        return new Dashboard();
+        return new Dashboard(
+          user: widget.user,
+        );
       case 2:
         return new Profile(
           userStorage: widget.userStorage,

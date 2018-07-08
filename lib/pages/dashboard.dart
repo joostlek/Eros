@@ -1,8 +1,15 @@
+import 'dart:async';
+
+import 'package:eros/models/user.dart';
 import 'package:eros/pages/locations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
+  final Future<User> user;
+
+  Dashboard({this.user});
+
   @override
   State<StatefulWidget> createState() {
     return new DashboardState();
@@ -37,7 +44,7 @@ class DashboardState extends State<Dashboard> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Locations()));
+                                  builder: (context) => Locations(user: widget.user)));
                         }),
                   ),
                   Divider(),
