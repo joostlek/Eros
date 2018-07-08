@@ -1,9 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class User {
+part 'user.g.dart';
+
+@JsonSerializable()
+class User extends Object with _$UserSerializerMixin {
+  @JsonKey(name: 'display_name')
   final String displayName;
   final String email;
   final String uid;
+  @JsonKey(name: 'photo_url')
   final String photoUrl;
 
   User(this.uid, this.displayName, this.email, this.photoUrl);
@@ -20,4 +26,6 @@ class User {
         'email': this.email,
         'photoUrl': this.photoUrl,
       };
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
