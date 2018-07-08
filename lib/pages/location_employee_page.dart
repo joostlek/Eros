@@ -55,6 +55,7 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                                   user.uid != widget.locationStorage.user.uid
                               ? IconButton(
                                   icon: Icon(Icons.delete),
+                                  // TODO - add delete trigger
                                   onPressed: () => {},
                                 )
                               : null),
