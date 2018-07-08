@@ -14,17 +14,14 @@ class User extends Object with _$UserSerializerMixin {
 
   User(this.uid, this.displayName, this.email, this.photoUrl);
 
-  User.fromMap(Map<String, dynamic> data)
-      : this(data['uid'], data['displayName'], data['email'], data['photoUrl']);
-
   User.fromFirebaseUser(FirebaseUser user)
       : this(user.uid, user.displayName, user.email, user.photoUrl);
 
   Map<String, dynamic> toMap() => {
         'uid': this.uid,
-        'displayName': this.displayName,
+        'display_name': this.displayName,
         'email': this.email,
-        'photoUrl': this.photoUrl,
+        'photo_url': this.photoUrl,
       };
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

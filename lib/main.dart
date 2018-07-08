@@ -44,7 +44,7 @@ class ExampleState extends State<Example> {
     } else {
       return new Eros(
           user: getUser(_currentUser),
-          userStorage: UserStorage.forUser(firebaseUser: _currentUser));
+          userStorage: UserStorage.forFirebaseUser(firebaseUser: _currentUser));
     }
   }
 
@@ -60,7 +60,7 @@ class ExampleState extends State<Example> {
   }
 
   Future<User> getUser(FirebaseUser user) async {
-    UserStorage userStorage = UserStorage.forUser(firebaseUser  : user);
+    UserStorage userStorage = UserStorage.forFirebaseUser(firebaseUser: user);
     if (!(await userStorage.isUserStored())) {
       return userStorage.create(User.fromFirebaseUser(user));
     }

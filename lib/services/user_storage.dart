@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/user.dart';
@@ -9,24 +10,28 @@ final CollectionReference userCollection =
     Firestore.instance.collection('users');
 
 class UserStorage {
-  final FirebaseUser firebaseUser;
+  FirebaseUser firebaseUser;
   User user;
 
-  UserStorage.forUser({
+  UserStorage.forFirebaseUser({
     @required this.firebaseUser,
   }) : assert(firebaseUser != null);
+
+  UserStorage.forUser({
+    @required this.user,
+  }) : assert(user != null);
 
   static User fromDocument(DocumentSnapshot document) =>
       _fromMap(document.data);
 
-  static User _fromMap(Map<String, dynamic> data) => new User.fromMap(data);
+  static User _fromMap(Map<String, dynamic> data) => new User.fromJson(data);
 
   Map<String, dynamic> _toMap(User user, [Map<String, dynamic> other]) {
     final Map<String, dynamic> result = {};
     if (other != null) {
       result.addAll(other);
     }
-    result.addAll(user.toMap());
+    result.addAll(json.decode(json.encode(user)));
     return result;
   }
 

@@ -63,7 +63,7 @@ class _ErosState extends State<Eros> {
         );
       case 2:
         return new Profile(
-          userStorage: widget.userStorage,
+          user: widget.user,
         );
     }
   }

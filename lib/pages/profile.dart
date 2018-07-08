@@ -6,9 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
-  final UserStorage userStorage;
+  final Future<User> user;
 
-  Profile({this.userStorage});
+  Profile({this.user});
 
   @override
   State<StatefulWidget> createState() {
@@ -17,12 +17,16 @@ class Profile extends StatefulWidget {
 }
 
 class ProfileState extends State<Profile> {
+  Future<UserStorage> getStorage() async {
+    return new UserStorage.forUser(user: await widget.user);
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<User>(
-        future: widget.userStorage.getUser(),
+        future: widget.user,
         builder: (BuildContext context, AsyncSnapshot<User> user) {
-          print(user.data.toString());
+          print(user.data.toJson().toString());
           if (user.hasData && user.data != null) {
             return new Scaffold(
               appBar: new AppBar(
