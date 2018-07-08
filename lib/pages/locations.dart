@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/pages/location_page.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +82,12 @@ class LocationsState extends State<Locations> {
                 : Text('Employee'),
         trailing: IconButton(
           icon: Icon(Icons.chevron_right),
-          onPressed: () => {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LocationPage(location)));
+          },
         ),
       ),
     );

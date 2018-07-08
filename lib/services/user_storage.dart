@@ -82,6 +82,10 @@ class UserStorage {
     return user;
   }
 
+  Future<User> getUserByUid(String uid) async {
+    return fromDocument(await userCollection.document(uid).get());
+  }
+
   Future<bool> update(User user) async {
     final TransactionHandler updateTransaction = (Transaction tx) async {
       final DocumentSnapshot doc =

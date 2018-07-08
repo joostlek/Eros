@@ -44,7 +44,8 @@ class DashboardState extends State<Dashboard> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Locations(user: widget.user)));
+                                  builder: (context) =>
+                                      Locations(user: widget.user)));
                         }),
                   ),
                   Divider(),
