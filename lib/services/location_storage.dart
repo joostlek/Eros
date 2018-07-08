@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
@@ -19,14 +21,14 @@ class LocationStorage {
       _fromMap(document.data);
 
   static Location _fromMap(Map<String, dynamic> data) =>
-      new Location.fromMap(data);
+      new Location.fromJson(data);
 
   Map<String, dynamic> _toMap(Location location, [Map<String, dynamic> other]) {
     final Map<String, dynamic> result = {};
     if (other != null) {
       result.addAll(other);
     }
-    result.addAll(location.toMap());
+    result.addAll(json.decode(json.encode(location)));
     return result;
   }
 
@@ -35,7 +37,7 @@ class LocationStorage {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot doc = await tx.get(locationCollection.document());
       final Location location = new Location(doc.documentID, name, street,
-          houseNumber, city, country, this.user.uid, photoUrl);
+          houseNumber, city, country, this.user.uid, photoUrl, {});
       final Map<String, dynamic> data = _toMap(location, {
         'created': new DateTime.now().toUtc().toIso8601String(),
       });
@@ -52,8 +54,9 @@ class LocationStorage {
   }
 
   Stream<QuerySnapshot> list({int limit, int offset}) {
-    Stream<QuerySnapshot> snapshots =
-        locationCollection.where('owner', isEqualTo: this.user.uid).snapshots();
+    Stream<QuerySnapshot> snapshots = locationCollection
+        .where('managers.${this.user.uid}', isEqualTo: true)
+        .snapshots();
     if (offset != null) {
       snapshots = snapshots.skip(offset);
     }
