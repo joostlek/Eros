@@ -57,7 +57,12 @@ class LocationsState extends State<Locations> {
                     }
                   }));
         } else {
-          return CircularProgressIndicator();
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Locations'),
+            ),
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
       },
     );
