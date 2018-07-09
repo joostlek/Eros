@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
@@ -18,9 +21,40 @@ class LocationEmployeePage extends StatefulWidget {
 }
 
 class LocationEmployeePageState extends State<LocationEmployeePage> {
+  User tempUser;
+  bool edit = false;
+
+  Future<bool> promoteUser(User user) async {
+    return widget.locationStorage.promoteUser(widget.location, user);
+  }
+
+  Future<bool> demoteUser(User user) async {
+    return widget.locationStorage.demoteUser(widget.location, user);
+  }
+
+  Future<bool> removeUser(User user) async {
+    tempUser = new User.fromJson(user.toJson());
+    return widget.locationStorage.removeUser(widget.location, user);
+  }
+
+  Future<bool> undoRemoveUser() async {
+    print(tempUser.locations);
+    return widget.locationStorage.undoRemoveUser(widget.location, tempUser);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton:
+          widget.location.owner == widget.locationStorage.user.uid
+              ? FloatingActionButton(
+                  child: Icon(Icons.delete),
+                  onPressed: () {
+                    setState(() {
+                      edit = !edit;
+                    });
+                  })
+              : null,
       appBar: AppBar(
         title: Text('Employees'),
       ),
@@ -34,37 +68,123 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                   itemBuilder: (context, index) {
                     User user = UserStorage
                         .fromDocument(querySnapshot.data.documents[index]);
-                    return Card(
-                      child: ListTile(
-                          title: Text(user.displayName),
-                          subtitle: widget.location.owner == user.uid
-                              ? Text('Owner')
-                              : widget.location.managers[user.uid] == true
-                                  ? Text('Manager')
-                                  : Text('Employee'),
-                          leading: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.network(
-                              user.photoUrl,
-                              width: 36.0,
-                              height: 36.0,
-                            ),
-                          ),
-                          trailing: widget.location.owner ==
-                                      widget.locationStorage.user.uid &&
-                                  user.uid != widget.locationStorage.user.uid
-                              ? IconButton(
-                                  icon: Icon(Icons.delete),
-                                  // TODO - add delete trigger
-                                  onPressed: () => {},
-                                )
-                              : null),
-                    );
+                    if (widget.location.employees[user.uid] != true) {
+                      return null;
+                    }
+                    return getEmployeeCard(user: user, context: context);
                   });
             } else {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
           }),
+    );
+  }
+
+  Card getEmployeeCard({User user, BuildContext context}) {
+    return Card(
+      child: ListTile(
+          title: Text(user.displayName),
+          subtitle: widget.location.owner == user.uid
+              ? Text('Owner')
+              : widget.location.managers[user.uid] == true
+                  ? Text('Manager')
+                  : Text('Employee'),
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.network(
+              user.photoUrl,
+              width: 36.0,
+              height: 36.0,
+            ),
+          ),
+          trailing: user.uid != widget.locationStorage.user.uid &&
+                  widget.location.owner == widget.locationStorage.user.uid &&
+                  edit
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    widget.location.managers[user.uid] == true
+                        ? IconButton(
+                            icon: Icon(Icons.keyboard_arrow_down),
+                            onPressed: () {
+                              demoteUser(user).then((success) {
+                                if (success) {
+                                  final snackBar = SnackBar(
+                                      action: SnackBarAction(
+                                          label: 'Undo',
+                                          onPressed: () {
+                                            promoteUser(user).then((success) {
+                                              if (success) {
+                                                final snackBar = SnackBar(
+                                                    content: Text('Undone'));
+                                                Scaffold
+                                                    .of(context)
+                                                    .showSnackBar(snackBar);
+                                              }
+                                            });
+                                          }),
+                                      content: Text(
+                                          '${user.displayName} is now employee'));
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                }
+                              });
+                            },
+                          )
+                        : IconButton(
+                            icon: Icon(Icons.keyboard_arrow_up),
+                            onPressed: () {
+                              promoteUser(user).then((success) {
+                                if (success) {
+                                  final snackBar = SnackBar(
+                                      action: SnackBarAction(
+                                          label: 'Undo',
+                                          onPressed: () {
+                                            demoteUser(user).then((success) {
+                                              if (success) {
+                                                final snackBar = SnackBar(
+                                                    content: Text('Undone'));
+                                                Scaffold
+                                                    .of(context)
+                                                    .showSnackBar(snackBar);
+                                              }
+                                            });
+                                          }),
+                                      content: Text(
+                                          '${user.displayName} is now manager'));
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                }
+                              });
+                            },
+                          ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        removeUser(user).then((success) {
+                          if (success) {
+                            final snackBar = SnackBar(
+                              action: SnackBarAction(
+                                  label: 'Undo',
+                                  onPressed: () {
+                                    undoRemoveUser().then((success) {
+                                      if (success) {
+                                        final snackBar =
+                                            SnackBar(content: Text('Undone'));
+                                        Scaffold
+                                            .of(context)
+                                            .showSnackBar(snackBar);
+                                      }
+                                    });
+                                  }),
+                              content: Text('Removed ${user.displayName}'),
+                            );
+                            Scaffold.of(context).showSnackBar(snackBar);
+                          }
+                        });
+                      },
+                    )
+                  ],
+                )
+              : null),
     );
   }
 }

@@ -86,6 +86,10 @@ class UserStorage {
     return fromDocument(await userCollection.document(uid).get());
   }
 
+  bool getBool(Map<String, dynamic> data) {
+    return data['result'];
+  }
+
   Future<bool> update(User user) async {
     final TransactionHandler updateTransaction = (Transaction tx) async {
       final DocumentSnapshot doc =
@@ -95,7 +99,7 @@ class UserStorage {
     };
     return Firestore.instance
         .runTransaction(updateTransaction)
-        .then((r) => r['result'])
+        .then((r) => getBool(r))
         .catchError((e) {
       print('dart error $e');
       return false;

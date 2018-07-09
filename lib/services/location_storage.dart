@@ -5,6 +5,7 @@ import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/services/user_storage.dart';
 import 'package:flutter/material.dart';
 
 final CollectionReference locationCollection =
@@ -98,6 +99,24 @@ class LocationStorage {
     }));
   }
 
+  Future<bool> promoteUser(Location location, User givenUser) async {
+    location.managers[givenUser.uid] = true;
+    givenUser.manager[location.locationId] = true;
+    return await update(location) ==
+        await UserStorage.forUser(user: user).update(givenUser);
+  }
+
+  Future<bool> demoteUser(Location location, User givenUser) async {
+    location.managers.remove(givenUser.uid);
+    givenUser.manager.remove(location.locationId);
+    return await update(location) ==
+        await UserStorage.forUser(user: user).update(givenUser);
+  }
+
+  bool getBool(Map<String, dynamic> data) {
+    return data['result'];
+  }
+
   Future<bool> update(Location location) async {
     final TransactionHandler updateTransaction = (Transaction tx) async {
       final DocumentSnapshot doc =
@@ -110,7 +129,7 @@ class LocationStorage {
     };
     return Firestore.instance
         .runTransaction(updateTransaction)
-        .then((r) => r['result'])
+        .then((r) => getBool(r))
         .catchError((e) {
       print('dart error $e');
       return false;
@@ -134,5 +153,23 @@ class LocationStorage {
       print('dart error $e');
       return false;
     });
+  }
+
+  Future<bool> removeUser(Location location, User user) async {
+    location.managers.remove(user.uid);
+    location.employees.remove(user.uid);
+    user.locations.remove(location.locationId);
+    user.manager.remove(location.locationId);
+    return await update(location) ==
+        await UserStorage.forUser(user: user).update(user);
+  }
+
+  Future<bool> undoRemoveUser(Location location, User user) async {
+    if (user.manager[location.locationId] == true) {
+      location.managers[user.uid] = true;
+    }
+    location.employees[user.uid] = true;
+    return await update(location) ==
+        await UserStorage.forUser(user: user).update(user);
   }
 }
