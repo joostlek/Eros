@@ -26,7 +26,6 @@ class ProfileState extends State<Profile> {
     return FutureBuilder<User>(
         future: widget.user,
         builder: (BuildContext context, AsyncSnapshot<User> user) {
-          print(user.data.toJson().toString());
           if (user.hasData && user.data != null) {
             return new Scaffold(
               appBar: new AppBar(
