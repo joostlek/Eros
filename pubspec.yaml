@@ -9,6 +9,8 @@ dependencies:
   google_sign_in: ^3.0.4
   json_annotation: ^0.2.3
   qr_flutter: ^1.1.1
+  qrcode_reader:
+    git: git://github.com/bcko/flutter_qrcode_reader.git
 #  flutter_firebase_ui: ^0.0.6
 
   # The following adds the Cupertino Icons font to your application.

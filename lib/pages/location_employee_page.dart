@@ -7,6 +7,7 @@ import 'package:eros/models/user.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:qrcode_reader/QRCodeReader.dart';
 
 class LocationEmployeePage extends StatefulWidget {
   final LocationStorage locationStorage;
@@ -38,8 +39,19 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
   }
 
   Future<bool> undoRemoveUser() async {
-    print(tempUser.locations);
     return widget.locationStorage.undoRemoveUser(widget.location, tempUser);
+  }
+
+  Future<Map<String, dynamic>> addEmployee() async {
+    String uid = await scan();
+    return widget.locationStorage.addUser(widget.location, uid);
+  }
+
+  Future<String> scan() async {
+    return new QRCodeReader()
+        .setHandlePermissions(true)
+        .setExecuteAfterPermissionGranted(true)
+        .scan();
   }
 
   @override
@@ -56,8 +68,28 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                   })
               : null,
       appBar: AppBar(
-        title: Text('Employees'),
-      ),
+          title: Text('Employees'),
+          actions: widget.location.owner == widget.locationStorage.user.uid
+              ? <Widget>[
+                  Builder(
+                    builder: (context) {
+                      return IconButton(
+                          icon: Icon(Icons.person_add),
+                          onPressed: () {
+                            addEmployee().then((data) {
+                              if (data['success'] == true) {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                      '${data['user'].displayName} is now an employee'),
+                                );
+                                Scaffold.of(context).showSnackBar(snackBar);
+                              }
+                            });
+                          });
+                    },
+                  ),
+                ]
+              : null),
       body: StreamBuilder<QuerySnapshot>(
           stream: widget.locationStorage.listEmployees(widget.location),
           builder: (BuildContext context,
