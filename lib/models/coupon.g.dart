@@ -19,7 +19,8 @@ Coupon _$CouponFromJson(Map<String, dynamic> json) => new Coupon(
     json['activated_at'] == null
         ? null
         : DateTime.parse(json['activated_at'] as String),
-    json['activated'] as bool);
+    json['activated'] as bool,
+    json['name'] as String);
 
 abstract class _$CouponSerializerMixin {
   String get couponId;
@@ -28,6 +29,7 @@ abstract class _$CouponSerializerMixin {
   String get locationId;
   String get activatedBy;
   DateTime get activatedAt;
+  String get name;
   bool get activated;
   DateTime get expires;
   double get value;
@@ -38,6 +40,7 @@ abstract class _$CouponSerializerMixin {
         'location_id': locationId,
         'activated_by': activatedBy,
         'activated_at': activatedAt?.toIso8601String(),
+        'name': name,
         'activated': activated,
         'expires': expires?.toIso8601String(),
         'value': value

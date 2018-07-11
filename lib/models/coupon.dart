@@ -16,6 +16,7 @@ class Coupon extends Object with _$CouponSerializerMixin {
   final String activatedBy;
   @JsonKey(name: 'activated_at')
   final DateTime activatedAt;
+  final String name;
   final bool activated;
   final DateTime expires;
   final double value;
@@ -29,7 +30,8 @@ class Coupon extends Object with _$CouponSerializerMixin {
       this.value,
       this.activatedBy,
       this.activatedAt,
-      this.activated);
+      this.activated,
+      this.name);
 
   factory Coupon.fromJson(Map<String, dynamic> json) => _$CouponFromJson(json);
 }
