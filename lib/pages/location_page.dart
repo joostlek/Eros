@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/pages/location_coupon_page.dart';
 import 'package:eros/pages/location_employee_page.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:eros/services/user_storage.dart';
@@ -112,9 +113,8 @@ class LocationPageState extends State<LocationPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LocationEmployeePage(
-                                      locationStorage: locationStorage.data,
-                                      location: widget.location,
+                                builder: (context) => LocationCouponPage(
+                                      widget.location,
                                     )));
                       },
                     ),

@@ -33,7 +33,7 @@ class CouponStorage {
       final Coupon coupon = new Coupon(
           doc.documentID,
           user_id,
-          DateTime.now().toUtc(),
+          DateTime.now(),
           location_id,
           expires != null ? expires : null,
           value,
