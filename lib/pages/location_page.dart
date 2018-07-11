@@ -79,7 +79,6 @@ class LocationPageState extends State<LocationPage> {
                     trailing: IconButton(
                       icon: Icon(Icons.chevron_right),
                       onPressed: () {
-                        print(widget.location);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

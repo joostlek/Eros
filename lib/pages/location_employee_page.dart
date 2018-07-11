@@ -51,6 +51,7 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
     return new QRCodeReader()
         .setHandlePermissions(true)
         .setExecuteAfterPermissionGranted(true)
+        .setAutoFocusIntervalInMs(200)
         .scan();
   }
 
