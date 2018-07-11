@@ -61,7 +61,8 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
       floatingActionButton:
           widget.location.owner == widget.locationStorage.user.uid
               ? FloatingActionButton(
-                  child: Icon(Icons.delete),
+                  tooltip: 'Edit employees',
+                  child: Icon(Icons.edit),
                   onPressed: () {
                     setState(() {
                       edit = !edit;
@@ -76,6 +77,7 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                     builder: (context) {
                       return IconButton(
                           icon: Icon(Icons.person_add),
+                          tooltip: 'Add employee',
                           onPressed: () {
                             addEmployee().then((data) {
                               if (data['success'] == true) {
@@ -91,8 +93,7 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                                 Scaffold.of(context).showSnackBar(snackBar);
                               }
                             });
-                          },
-                      tooltip: 'Add employee',);
+                          });
                     },
                   ),
                 ]
