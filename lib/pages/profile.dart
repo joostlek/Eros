@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:eros/models/user.dart';
+import 'package:eros/pages/profile_qr_page.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,15 @@ class ProfileState extends State<Profile> {
               appBar: new AppBar(
                 title: new Text(user.data.displayName),
                 actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.wallpaper),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileQrPage(user.data)));
+                    },
+                  ),
                   IconButton(
                     icon: Icon(Icons.exit_to_app),
                     onPressed: FirebaseAuth.instance.signOut,
