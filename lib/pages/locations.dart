@@ -32,6 +32,7 @@ class LocationsState extends State<Locations> {
         if (locationStorage.hasData && locationStorage.data != null) {
           return Scaffold(
               floatingActionButton: FloatingActionButton(
+                tooltip: 'Register location',
                 onPressed: () => {},
                 child: Icon(Icons.add),
               ),
@@ -53,7 +54,9 @@ class LocationsState extends State<Locations> {
                                 location: LocationStorage.fromDocument(ds));
                           });
                     } else {
-                      return Text('Loading...');
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
                   }));
         } else {
@@ -87,6 +90,7 @@ class LocationsState extends State<Locations> {
                 : Text('Employee'),
         trailing: IconButton(
           icon: Icon(Icons.chevron_right),
+          tooltip: 'Go to location',
           onPressed: () {
             Navigator.push(
                 context,

@@ -40,6 +40,7 @@ class DashboardState extends State<Dashboard> {
                     trailing: IconButton(
                         iconSize: 36.0,
                         icon: Icon(Icons.chevron_right),
+                        tooltip: 'Go to locations',
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -57,6 +58,7 @@ class DashboardState extends State<Dashboard> {
                       child: Icon(Icons.card_giftcard),
                     ),
                     trailing: IconButton(
+                      tooltip: 'Go to coupons',
                       iconSize: 36.0,
                       icon: Icon(Icons.chevron_right),
                       onPressed: () => {},

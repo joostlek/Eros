@@ -32,6 +32,7 @@ class LocationPageState extends State<LocationPage> {
         title: Text(widget.location.name),
       ),
       floatingActionButton: new FloatingActionButton(
+        tooltip: 'Edit location',
         // TODO - Add edit function
         onPressed: () => {},
         child: Icon(Icons.edit),
@@ -78,6 +79,7 @@ class LocationPageState extends State<LocationPage> {
                     leading: Icon(Icons.person),
                     trailing: IconButton(
                       icon: Icon(Icons.chevron_right),
+                      tooltip: 'Go to employee page',
                       onPressed: () {
                         Navigator.push(
                             context,

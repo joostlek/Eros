@@ -91,7 +91,8 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                                 Scaffold.of(context).showSnackBar(snackBar);
                               }
                             });
-                          });
+                          },
+                      tooltip: 'Add employee',);
                     },
                   ),
                 ]
@@ -144,6 +145,7 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                     widget.location.managers[user.uid] == true
                         ? IconButton(
                             icon: Icon(Icons.keyboard_arrow_down),
+                            tooltip: 'Demote to employee',
                             onPressed: () {
                               demoteUser(user).then((success) {
                                 if (success) {
@@ -170,6 +172,7 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                           )
                         : IconButton(
                             icon: Icon(Icons.keyboard_arrow_up),
+                            tooltip: 'Promote to manager',
                             onPressed: () {
                               promoteUser(user).then((success) {
                                 if (success) {
@@ -196,6 +199,7 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                           ),
                     IconButton(
                       icon: Icon(Icons.delete),
+                      tooltip: 'Remove employee',
                       onPressed: () {
                         removeUser(user).then((success) {
                           if (success) {

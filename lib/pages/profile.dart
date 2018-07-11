@@ -34,6 +34,7 @@ class ProfileState extends State<Profile> {
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.wallpaper),
+                    tooltip: 'Show unique QR-code',
                     onPressed: () {
                       Navigator.push(
                           context,
