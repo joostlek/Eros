@@ -174,17 +174,37 @@ class LocationStorage {
   }
 
   Future<Map<String, dynamic>> addUser(Location location, String uid) async {
-    User user = UserStorage.fromDocument(
-        await Firestore.instance.collection('users').document(uid).get());
-    if (user == null) {
-      throw new Exception('User not found');
+    DocumentSnapshot doc =
+        await Firestore.instance.collection('users').document(uid).get();
+    if (!doc.exists) {
+      return {
+        'success': false,
+        'user': null,
+        'error_message': 'User not found',
+      };
+    } else if (doc.data == null) {
+      return {
+        'success': false,
+        'user': null,
+        'error_message': 'User is empty',
+      };
+    }
+    User user = UserStorage.fromDocument(doc);
+    if (location.employees[user.uid] == true &&
+        user.locations[location.locationId] == true) {
+      return {
+        'success': false,
+        'user': user,
+        'error_message': 'User already added',
+      };
     }
     location.employees[user.uid] = true;
     user.locations[location.locationId] = true;
     return {
       'success': await update(location) ==
           await UserStorage.forUser(user: user).update(user),
-      'user': user
+      'user': user,
+      'error_message': null,
     };
   }
 }

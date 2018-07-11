@@ -84,6 +84,11 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
                                       '${data['user'].displayName} is now an employee'),
                                 );
                                 Scaffold.of(context).showSnackBar(snackBar);
+                              } else {
+                                final snackBar = SnackBar(
+                                  content: Text(data['error_message']),
+                                );
+                                Scaffold.of(context).showSnackBar(snackBar);
                               }
                             });
                           });
