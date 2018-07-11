@@ -93,7 +93,7 @@ class LocationStorage {
 
   Future<Location> get({String locationId}) async {
     return fromDocument(
-        await Firestore.instance.document(locationId).get().catchError((e) {
+        await locationCollection.document(locationId).get().catchError((e) {
       print('dart error $e');
       return null;
     }));
