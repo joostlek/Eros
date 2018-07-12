@@ -13,11 +13,11 @@ class Coupon extends Object with _$CouponSerializerMixin {
   @JsonKey(name: 'location_id')
   final String locationId;
   @JsonKey(name: 'activated_by')
-  final String activatedBy;
+  String activatedBy;
   @JsonKey(name: 'activated_at')
-  final DateTime activatedAt;
+  DateTime activatedAt;
   final String name;
-  final bool activated;
+  bool activated;
   final DateTime expires;
   final double value;
 

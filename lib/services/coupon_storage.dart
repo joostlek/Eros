@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon.dart';
+import 'package:eros/models/user.dart';
 
 final CollectionReference couponCollection =
     Firestore.instance.collection('coupons');
@@ -33,7 +34,7 @@ class CouponStorage {
       final Coupon coupon = new Coupon(
           doc.documentID,
           user_id,
-          DateTime.now(),
+          DateTime.now().toLocal(),
           location_id,
           expires != null ? expires : null,
           value,
@@ -110,5 +111,19 @@ class CouponStorage {
 
   bool getBool(Map<String, dynamic> data) {
     return data['result'];
+  }
+
+  Future<bool> activate(Coupon coupon, User user) {
+    coupon.activatedAt = DateTime.now().toLocal();
+    coupon.activated = true;
+    coupon.activatedBy = user.uid;
+    return update(coupon);
+  }
+
+  Future<bool> undoActivate(Coupon coupon) {
+    coupon.activated = false;
+    coupon.activatedBy = null;
+    coupon.activatedBy = null;
+    return update(coupon);
   }
 }

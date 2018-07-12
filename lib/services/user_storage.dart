@@ -13,6 +13,8 @@ class UserStorage {
   FirebaseUser firebaseUser;
   User user;
 
+  UserStorage();
+
   UserStorage.forFirebaseUser({
     @required this.firebaseUser,
   }) : assert(firebaseUser != null);

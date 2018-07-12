@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon.dart';
 import 'package:eros/models/location.dart';
+import 'package:eros/pages/coupon_page.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:eros/util.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,14 @@ class LocationCouponPageState extends State<LocationCouponPage> {
         subtitle: Text(Util.getWeekday(coupon.issuedAt.weekday) +
             ' ${coupon.issuedAt.day}-${coupon.issuedAt.month}-${coupon.issuedAt.year} ${coupon.issuedAt.hour}:${coupon.issuedAt.minute}'),
         trailing: Text('€' + Util.format(coupon.value)),
-        onTap: () => {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CouponPage(
+                        coupon,
+                      )));
+        },
       ),
     );
   }
