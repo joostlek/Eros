@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/services/coupon_storage.dart';
+import 'package:eros/util.dart';
 import 'package:flutter/material.dart';
 
 class LocationCouponPage extends StatefulWidget {
@@ -50,36 +51,11 @@ class LocationCouponPageState extends State<LocationCouponPage> {
     return Card(
       child: ListTile(
         title: Text(coupon.name),
-        subtitle: Text(getWeekday(coupon.issuedAt.weekday) +
+        subtitle: Text(Util.getWeekday(coupon.issuedAt.weekday) +
             ' ${coupon.issuedAt.day}-${coupon.issuedAt.month}-${coupon.issuedAt.year} ${coupon.issuedAt.hour}:${coupon.issuedAt.minute}'),
-        trailing: Text('€' + format(coupon.value)),
+        trailing: Text('€' + Util.format(coupon.value)),
         onTap: () => {},
       ),
     );
-  }
-
-  String getWeekday(int weekday) {
-    switch (weekday) {
-      case 1:
-        return 'Monday';
-      case 2:
-        return 'Tuesday';
-      case 3:
-        return 'Wednesday';
-      case 4:
-        return 'Thursday';
-      case 5:
-        return 'Friday';
-      case 6:
-        return 'Saturday';
-      case 7:
-        return 'Sunday';
-      default:
-        return 'Day';
-    }
-  }
-
-  String format(double n) {
-    return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 2);
   }
 }
