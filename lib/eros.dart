@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eros/bottom_item.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/pages/camera_page.dart';
 import 'package:eros/pages/dashboard.dart';
 import 'package:eros/pages/profile.dart';
 import 'package:eros/services/user_storage.dart';
@@ -29,7 +30,7 @@ class Eros extends StatefulWidget {
 }
 
 class _ErosState extends State<Eros> {
-  int _selectedNavIndex = 0;
+  int _selectedNavIndex = 1;
   String title = "Eros";
 
   @override
@@ -56,7 +57,7 @@ class _ErosState extends State<Eros> {
   getNavItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new Center(child: new Text("Page 2"));
+        return new CameraPage();
       case 1:
         return new Dashboard(
           user: widget.user,
