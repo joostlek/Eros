@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 class LocationCouponPage extends StatefulWidget {
   final Location location;
-  CouponStorage couponStorage = CouponStorage();
 
   LocationCouponPage(this.location);
 
@@ -17,14 +16,19 @@ class LocationCouponPage extends StatefulWidget {
 }
 
 class LocationCouponPageState extends State<LocationCouponPage> {
+  CouponStorage couponStorage = CouponStorage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Coupons'),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => {},
+      ),
       body: StreamBuilder(
-          stream: widget.couponStorage.listCoupons(widget.location.locationId),
+          stream: couponStorage.listCoupons(widget.location.locationId),
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot> asyncSnapshot) {
             if (asyncSnapshot.hasData && asyncSnapshot.data != null) {
