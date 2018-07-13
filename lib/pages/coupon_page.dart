@@ -31,7 +31,7 @@ class CouponPageState extends State<CouponPage> {
       floatingActionButton: (widget.coupon.activated ||
               (widget.coupon.expires != null
                   ? widget.coupon.expires.isBefore(DateTime.now().toLocal())
-                  : true))
+                  : false))
           ? null
           : Builder(
               builder: (context) {

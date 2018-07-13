@@ -32,7 +32,7 @@ class AddCouponState extends State<AddCoupon> {
           onPressed: () {
             submit().then((bool) {
               if (bool == true) {
-                print('yeet');
+                Navigator.pop(context);
               }
             });
           }),
@@ -97,7 +97,7 @@ class AddCouponState extends State<AddCoupon> {
 
   Future<bool> submit() async {
     if (_formKey.currentState.validate()) {
-      couponStorage
+      return couponStorage
           .create(
               nameController.text,
               (await FirebaseAuth.instance.currentUser()).uid,
