@@ -52,8 +52,10 @@ class CouponPageState extends State<CouponPage> {
           ),
           ListTile(
             title: Text('Expires at'),
-            trailing: Text(Util.getWeekday(widget.coupon.expires.weekday) +
-                ' ${widget.coupon.expires.day}-${widget.coupon.expires.month}-${widget.coupon.expires.year} ${widget.coupon.expires.hour}:${widget.coupon.expires.minute}'),
+            trailing: widget.coupon.expires != null
+                ? Text(Util.getWeekday(widget.coupon.expires.weekday) +
+                    ' ${widget.coupon.expires.day}-${widget.coupon.expires.month}-${widget.coupon.expires.year}')
+                : Text('Doesn\'t expire'),
           ),
           ListTile(
             title: Text('Issued at'),
