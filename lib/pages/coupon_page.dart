@@ -27,6 +27,17 @@ class CouponPageState extends State<CouponPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.coupon.name),
+        actions: (widget.coupon.activated ||
+                (widget.coupon.expires != null
+                    ? widget.coupon.expires.isBefore(DateTime.now().toLocal())
+                    : false))
+            ? null
+            : <Widget>[
+                IconButton(
+                  icon: Icon(Icons.print),
+                  onPressed: () => {},
+                )
+              ],
       ),
       floatingActionButton: (widget.coupon.activated ||
               (widget.coupon.expires != null
@@ -46,6 +57,32 @@ class CouponPageState extends State<CouponPage> {
             ),
       body: Column(
         children: <Widget>[
+          ListTile(
+            title: widget.coupon.activated == true
+                ? Text('Activated')
+                : (widget.coupon.expires != null &&
+                        widget.coupon.expires
+                            .isBefore(DateTime.now().toLocal()))
+                    ? Text('Expired')
+                    : Text('Not activated'),
+            trailing: widget.coupon.activated == true
+                ? Icon(
+                    Icons.done_all,
+                    color: Colors.green,
+                  )
+                : (widget.coupon.expires != null &&
+                        widget.coupon.expires
+                            .isBefore(DateTime.now().toLocal()))
+                    ? Icon(
+                        Icons.update,
+                        color: Colors.red,
+                      )
+                    : Icon(
+                        Icons.done,
+                        color: Colors.blue,
+                      ),
+          ),
+          Divider(),
           ListTile(
             title: Text('Worth'),
             trailing: Text('€' + Util.format(widget.coupon.value)),
@@ -77,7 +114,7 @@ class CouponPageState extends State<CouponPage> {
           ),
           !widget.coupon.activated
               ? ListTile(
-                  title: Text('Not activated'),
+                  title: Text(''),
                 )
               : FutureBuilder<User>(
                   future: userStorage.getUserByUid(widget.coupon.activatedBy),
