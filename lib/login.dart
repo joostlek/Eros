@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                             EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Image.asset('assets/go-logo.png')),
                         new Center(
-                          child: new Text("Sign in with Google"),
+                          child: new Text('Sign in with Google'),
                         ),
                       ],
                     ),
@@ -79,7 +79,7 @@ class _LoginState extends State<Login> {
                             EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Image.asset('assets/fb-logo.png')),
                         new Center(
-                          child: new Text("Sign in with Facebook"),
+                          child: new Text('Sign in with Facebook'),
                         ),
                       ],
                     ),
@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
                             EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Icon(Icons.home)),
                         new Center(
-                          child: new Text("Sign in with Twitter"),
+                          child: new Text('Sign in with Twitter'),
                         ),
                       ],
                     ),
@@ -117,7 +117,7 @@ class _LoginState extends State<Login> {
                             EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Icon(Icons.email)),
                         new Center(
-                          child: new Text("Sign in with email"),
+                          child: new Text('Sign in with email'),
                         ),
                       ],
                     ),
@@ -136,7 +136,7 @@ class _LoginState extends State<Login> {
                             EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                             child: new Icon(Icons.phone)),
                         new Center(
-                          child: new Text("Sign in with phone"),
+                          child: new Text('Sign in with phone'),
                         ),
                       ],
                     ),

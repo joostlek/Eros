@@ -40,7 +40,7 @@ class ExampleState extends State<Example> {
   @override
   Widget build(BuildContext context) {
     if (_currentUser == null) {
-      return new Login("Eros");
+      return new Login('Eros');
     } else {
       return new Eros(
           user: getUser(_currentUser),

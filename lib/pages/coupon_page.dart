@@ -201,7 +201,7 @@ class CouponPageState extends State<CouponPage> {
   Future<bool> _print() async {
     try {
       final bool result = await PRINT_CHANNEL.invokeMethod('print', {
-        "html":
+        'html':
             '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${widget.coupon.couponId}">'
       });
       return result;

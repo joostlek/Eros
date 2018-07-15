@@ -45,7 +45,7 @@ class ProfileState extends State<Profile> {
                   IconButton(
                     icon: Icon(Icons.exit_to_app),
                     onPressed: FirebaseAuth.instance.signOut,
-                    tooltip: "Sign out",
+                    tooltip: 'Sign out',
                   )
                 ],
               ),
@@ -81,14 +81,14 @@ class ProfileState extends State<Profile> {
                             padding: const EdgeInsets.all(8.0),
                             child: const Icon(Icons.camera_alt),
                           ),
-                          title: const Text("Amount of coupons scanned"),
-                          subtitle: const Text("123"),
+                          title: const Text('Amount of coupons scanned'),
+                          subtitle: const Text('123'),
                         ),
                         ButtonTheme.bar(
                           child: ButtonBar(
                             children: <Widget>[
                               FlatButton(
-                                child: const Text("VIEW"),
+                                child: const Text('VIEW'),
                                 onPressed: () => {},
                               )
                             ],

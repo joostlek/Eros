@@ -18,9 +18,9 @@ class Eros extends StatefulWidget {
   Eros({this.user, this.userStorage});
 
   final bottomItems = [
-    new BottomItem("Camera", Icons.camera_alt, Colors.blue),
-    new BottomItem("Dashboard", Icons.dashboard, Colors.blue),
-    new BottomItem("My profile", Icons.person, Colors.blue)
+    new BottomItem('Camera', Icons.camera_alt, Colors.blue),
+    new BottomItem('Dashboard', Icons.dashboard, Colors.blue),
+    new BottomItem('My profile', Icons.person, Colors.blue)
   ];
 
   @override
@@ -31,7 +31,7 @@ class Eros extends StatefulWidget {
 
 class _ErosState extends State<Eros> {
   int _selectedNavIndex = 1;
-  String title = "Eros";
+  String title = 'Eros';
 
   @override
   Widget build(BuildContext context) {
