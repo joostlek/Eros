@@ -7,6 +7,7 @@ import 'package:eros/services/user_storage.dart';
 import 'package:eros/util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CouponPage extends StatefulWidget {
   final Coupon coupon;
@@ -20,6 +21,7 @@ class CouponPage extends StatefulWidget {
 }
 
 class CouponPageState extends State<CouponPage> {
+  static const PRINT_CHANNEL = const MethodChannel('eros.jtosti.nl/print');
   UserStorage userStorage = UserStorage();
   CouponStorage couponStorage = CouponStorage();
   @override
@@ -33,9 +35,27 @@ class CouponPageState extends State<CouponPage> {
                     : false))
             ? null
             : <Widget>[
-                IconButton(
-                  icon: Icon(Icons.print),
-                  onPressed: () => {},
+                Builder(
+                  builder: (context) {
+                    return IconButton(
+                      icon: Icon(Icons.print),
+                      onPressed: () {
+                        _print().then((bool) {
+                          if (bool == true) {
+                            final snackbar = SnackBar(
+                              content: Text('Printing...'),
+                            );
+                            Scaffold.of(context).showSnackBar(snackbar);
+                          } else {
+                            final snackbar = SnackBar(
+                              content: Text('An error occured!'),
+                            );
+                            Scaffold.of(context).showSnackBar(snackbar);
+                          }
+                        });
+                      },
+                    );
+                  },
                 )
               ],
       ),
@@ -176,5 +196,18 @@ class CouponPageState extends State<CouponPage> {
       );
       Scaffold.of(context).showSnackBar(snackBar);
     });
+  }
+
+  Future<bool> _print() async {
+    try {
+      final bool result = await PRINT_CHANNEL.invokeMethod('print', {
+        "html":
+            '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${widget.coupon.couponId}">'
+      });
+      return result;
+    } catch (e) {
+      print('dart error $e');
+    }
+    return false;
   }
 }
