@@ -29,6 +29,7 @@ class AddCouponState extends State<AddCoupon> {
       ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.save),
+          tooltip: 'Save',
           onPressed: () {
             submit().then((bool) {
               if (bool == true) {
@@ -43,6 +44,7 @@ class AddCouponState extends State<AddCoupon> {
           child: Column(
             children: <Widget>[
               TextFormField(
+                decoration: InputDecoration(labelText: 'Name'),
                 controller: nameController,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -51,6 +53,7 @@ class AddCouponState extends State<AddCoupon> {
                 },
               ),
               TextFormField(
+                decoration: InputDecoration(labelText: 'Value'),
                 controller: valueController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 validator: (value) {
@@ -59,26 +62,32 @@ class AddCouponState extends State<AddCoupon> {
                   }
                 },
               ),
-              ListTile(
-                title: expires != null
-                    ? Text('${expires.day}-${expires.month}-${expires.year}')
-                    : Text('Select date'),
-                leading: IconButton(
-                    icon: Icon(Icons.date_range),
-                    onPressed: () {
-                      getDate(context).then((date) {
-                        if (date != null) {
-                          expires = date;
-                          setState(() {});
-                        }
-                      });
-                    }),
-                trailing: IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      expires = null;
-                      setState(() {});
-                    }),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  subtitle: Text('Date of expire'),
+                  title: expires != null
+                      ? Text('${expires.day}-${expires.month}-${expires.year}')
+                      : Text('Select date'),
+                  leading: IconButton(
+                      icon: Icon(Icons.date_range),
+                      tooltip: 'Select date',
+                      onPressed: () {
+                        getDate(context).then((date) {
+                          if (date != null) {
+                            expires = date;
+                            setState(() {});
+                          }
+                        });
+                      }),
+                  trailing: IconButton(
+                      icon: Icon(Icons.cancel),
+                      tooltip: 'Clear current date',
+                      onPressed: () {
+                        expires = null;
+                        setState(() {});
+                      }),
+                ),
               ),
             ],
           ),
