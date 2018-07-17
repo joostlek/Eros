@@ -1,0 +1,33 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'new_coupon.g.dart';
+
+@JsonSerializable()
+class Coupon extends Object with _$CouponSerializerMixin {
+  @JsonKey(name: 'coupon_id')
+  final String couponId;
+  @JsonKey(name: 'issued_by')
+  final String issuedBy;
+  @JsonKey(name: 'issued_at')
+  final DateTime issuedAt;
+  @JsonKey(name: 'location_id')
+  final String locationId;
+  @JsonKey(name: 'activated_by')
+  String activatedBy;
+  @JsonKey(name: 'activated_at')
+  DateTime activatedAt;
+  final String name;
+  bool activated;
+  final DateTime expires;
+
+  Coupon(
+      this.couponId,
+      this.locationId,
+      this.name,
+      this.activated,
+      this.activatedAt,
+      this.activatedBy,
+      this.expires,
+      this.issuedAt,
+      this.issuedBy);
+}
