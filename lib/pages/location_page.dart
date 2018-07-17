@@ -115,6 +115,7 @@ class LocationPageState extends State<LocationPage> {
                             MaterialPageRoute(
                                 builder: (context) => LocationCouponPage(
                                       widget.location,
+                                      widget.user,
                                     )));
                       },
                     ),

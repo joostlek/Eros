@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eros/models/coupon.dart';
+import 'package:eros/models/discount_coupon.dart';
+import 'package:eros/models/item_coupon.dart';
+import 'package:eros/models/money_coupon.dart';
+import 'package:eros/models/new_coupon.dart';
 import 'package:eros/models/location.dart';
+import 'package:eros/models/user.dart';
 import 'package:eros/pages/add_coupon.dart';
 import 'package:eros/pages/coupon_page.dart';
 import 'package:eros/services/coupon_storage.dart';
@@ -9,8 +13,9 @@ import 'package:flutter/material.dart';
 
 class LocationCouponPage extends StatefulWidget {
   final Location location;
+  final User user;
 
-  LocationCouponPage(this.location);
+  LocationCouponPage(this.location, this.user);
 
   @override
   State<StatefulWidget> createState() {
@@ -30,7 +35,7 @@ class LocationCouponPageState extends State<LocationCouponPage> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return AddCoupon(widget.location);
+            return AddCoupon(widget.location, widget.user);
           }));
         },
       ),
@@ -57,9 +62,16 @@ class LocationCouponPageState extends State<LocationCouponPage> {
     return Card(
       child: ListTile(
         title: Text(coupon.name),
-        subtitle: Text(Util.getWeekday(coupon.issuedAt.weekday) +
-            ' ${coupon.issuedAt.day}-${coupon.issuedAt.month}-${coupon.issuedAt.year} ${coupon.issuedAt.hour}:${coupon.issuedAt.minute}'),
-        trailing: Text('€' + Util.format(coupon.value)),
+        subtitle: coupon.activated
+            ? Text('Activated')
+            : coupon.expires != null && coupon.expires.isBefore(DateTime.now())
+                ? Text('Expired')
+                : Text('Not activated'),
+        trailing: coupon is MoneyCoupon
+            ? Text('€' + Util.format(coupon.value))
+            : coupon is DiscountCoupon
+                ? Text('-${coupon.discount}%')
+                : coupon is ItemCoupon ? Text(coupon.item) : null,
         onTap: () {
           Navigator.push(
               context,

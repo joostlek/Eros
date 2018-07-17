@@ -2,7 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eros/models/coupon.dart';
+import 'package:eros/models/coupons.dart';
+import 'package:eros/models/discount_coupon.dart';
+import 'package:eros/models/item_coupon.dart';
+import 'package:eros/models/location.dart';
+import 'package:eros/models/money_coupon.dart';
+import 'package:eros/models/new_coupon.dart';
 import 'package:eros/models/user.dart';
 
 final CollectionReference couponCollection =
@@ -14,8 +19,29 @@ class CouponStorage {
   static Coupon fromDocument(DocumentSnapshot document) =>
       _fromMap(document.data);
 
-  static Coupon _fromMap(Map<String, dynamic> data) =>
-      new Coupon.fromJson(data);
+  static Coupon _fromMap(Map<String, dynamic> data) {
+    switch (data['type'] == null
+        ? null
+        : Coupons.values
+            .singleWhere((x) => x.toString() == 'Coupons.${data['type']}')) {
+      case Coupons.MoneyCoupon:
+        return new MoneyCoupon.fromJson(data);
+      case Coupons.DiscountCoupon:
+        return new DiscountCoupon.fromJson(data);
+      case Coupons.ItemCoupon:
+        return new ItemCoupon.fromJson(data);
+    }
+    return new Coupon.fromJson(data);
+  }
+
+  static MoneyCoupon _fromMoneyCouponMap(Map<String, dynamic> json) =>
+      new MoneyCoupon.fromJson(json);
+
+  static DiscountCoupon _fromDiscountCouponMap(Map<String, dynamic> json) =>
+      new DiscountCoupon.fromJson(json);
+
+  static ItemCoupon _fromItemCouponMap(Map<String, dynamic> json) =>
+      new ItemCoupon.fromJson(json);
 
   Map<String, dynamic> _toMap(Coupon coupon, [Map<String, dynamic> other]) {
     final Map<String, dynamic> result = {};
@@ -26,29 +52,90 @@ class CouponStorage {
     return result;
   }
 
-  Future<Coupon> create(
-      String name, String user_id, String location_id, double value,
+  Future<ItemCoupon> createItemCoupon(
+      String name, User user, Location location, String item,
       [DateTime expires]) async {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot doc = await tx.get(couponCollection.document());
-      final Coupon coupon = new Coupon(
+      final ItemCoupon itemCoupon = new ItemCoupon(
           doc.documentID,
-          user_id,
-          DateTime.now().toLocal(),
-          location_id,
-          expires != null ? expires : null,
-          value,
-          null,
-          null,
+          location.locationId,
+          name,
           false,
-          name);
-      final Map<String, dynamic> data = _toMap(coupon);
+          null,
+          null,
+          expires,
+          DateTime.now(),
+          user.uid,
+          Coupons.ItemCoupon,
+          item);
+      final Map<String, dynamic> data = _toMap(itemCoupon);
       await tx.set(doc.reference, data);
       return data;
     };
     return Firestore.instance
         .runTransaction(createTransaction)
-        .then(_fromMap)
+        .then(_fromItemCouponMap)
+        .catchError((e) {
+      print('dart error $e');
+      return null;
+    });
+  }
+
+  Future<MoneyCoupon> createMoneyCoupon(
+      String name, User user, Location location, double value,
+      [DateTime expires]) async {
+    final TransactionHandler createTransaction = (Transaction tx) async {
+      final DocumentSnapshot doc = await tx.get(couponCollection.document());
+      final MoneyCoupon moneyCoupon = new MoneyCoupon(
+          doc.documentID,
+          location.locationId,
+          name,
+          false,
+          null,
+          null,
+          expires,
+          DateTime.now(),
+          user.uid,
+          Coupons.MoneyCoupon,
+          value);
+      final Map<String, dynamic> data = _toMap(moneyCoupon);
+      await tx.set(doc.reference, data);
+      return data;
+    };
+    return Firestore.instance
+        .runTransaction(createTransaction)
+        .then(_fromMoneyCouponMap)
+        .catchError((e) {
+      print('dart error $e');
+      return null;
+    });
+  }
+
+  Future<DiscountCoupon> createDiscountCoupon(
+      String name, User user, Location location, double discount,
+      [DateTime expires]) async {
+    final TransactionHandler createTransaction = (Transaction tx) async {
+      final DocumentSnapshot doc = await tx.get(couponCollection.document());
+      final DiscountCoupon discountCoupon = new DiscountCoupon(
+          doc.documentID,
+          location.locationId,
+          name,
+          false,
+          null,
+          null,
+          expires,
+          DateTime.now(),
+          user.uid,
+          Coupons.DiscountCoupon,
+          discount);
+      final Map<String, dynamic> data = _toMap(discountCoupon);
+      await tx.set(doc.reference, data);
+      return data;
+    };
+    return Firestore.instance
+        .runTransaction(createTransaction)
+        .then(_fromDiscountCouponMap)
         .catchError((e) {
       print('dart error $e');
       return null;
@@ -114,7 +201,7 @@ class CouponStorage {
   }
 
   Future<bool> activate(Coupon coupon, User user) {
-    coupon.activatedAt = DateTime.now().toLocal();
+    coupon.activatedAt = DateTime.now();
     coupon.activated = true;
     coupon.activatedBy = user.uid;
     return update(coupon);

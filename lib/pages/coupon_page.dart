@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:eros/models/coupon.dart';
+import 'package:eros/models/new_coupon.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:eros/services/user_storage.dart';
@@ -105,7 +105,7 @@ class CouponPageState extends State<CouponPage> {
           Divider(),
           ListTile(
             title: Text('Worth'),
-            trailing: Text('€' + Util.format(widget.coupon.value)),
+//            trailing: Text('€' + Util.format(widget.coupon.value)),
           ),
           ListTile(
             title: Text('Expires at'),

@@ -1,13 +1,15 @@
 import 'dart:async';
 
 import 'package:eros/models/location.dart';
+import 'package:eros/models/user.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddCoupon extends StatefulWidget {
   final Location location;
-  AddCoupon(this.location);
+  final User user;
+  AddCoupon(this.location, this.user);
   @override
   State<StatefulWidget> createState() {
     return AddCouponState();
@@ -107,10 +109,10 @@ class AddCouponState extends State<AddCoupon> {
   Future<bool> submit() async {
     if (_formKey.currentState.validate()) {
       return couponStorage
-          .create(
+          .createMoneyCoupon(
               nameController.text,
-              (await FirebaseAuth.instance.currentUser()).uid,
-              widget.location.locationId,
+              widget.user,
+              widget.location,
               double.parse(valueController.text),
               expires)
           .then((coupon) {

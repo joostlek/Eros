@@ -23,6 +23,10 @@ DiscountCoupon _$DiscountCouponFromJson(Map<String, dynamic> json) =>
             ? null
             : DateTime.parse(json['issued_at'] as String),
         json['issued_by'] as String,
+        json['type'] == null
+            ? null
+            : Coupons.values
+                .singleWhere((x) => x.toString() == 'Coupons.${json['type']}'),
         (json['discount'] as num)?.toDouble());
 
 abstract class _$DiscountCouponSerializerMixin {
@@ -35,6 +39,7 @@ abstract class _$DiscountCouponSerializerMixin {
   String get name;
   bool get activated;
   DateTime get expires;
+  Coupons get type;
   double get discount;
   Map<String, dynamic> toJson() => <String, dynamic>{
         'coupon_id': couponId,
@@ -46,6 +51,7 @@ abstract class _$DiscountCouponSerializerMixin {
         'name': name,
         'activated': activated,
         'expires': expires?.toIso8601String(),
+        'type': type == null ? null : type.toString().split('.')[1],
         'discount': discount
       };
 }
