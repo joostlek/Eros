@@ -1,5 +1,5 @@
 import 'package:eros/models/coupons.dart';
-import 'package:eros/models/new_coupon.dart';
+import 'package:eros/models/coupon.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'discount_coupon.g.dart';

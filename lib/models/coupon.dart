@@ -1,3 +1,4 @@
+import 'package:eros/models/coupons.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'coupon.g.dart';
@@ -19,19 +20,19 @@ class Coupon extends Object with _$CouponSerializerMixin {
   final String name;
   bool activated;
   final DateTime expires;
-  final double value;
+  final Coupons type;
 
   Coupon(
       this.couponId,
-      this.issuedBy,
-      this.issuedAt,
       this.locationId,
-      this.expires,
-      this.value,
-      this.activatedBy,
-      this.activatedAt,
+      this.name,
       this.activated,
-      this.name);
+      this.activatedAt,
+      this.activatedBy,
+      this.expires,
+      this.issuedAt,
+      this.issuedBy,
+      this.type);
 
   factory Coupon.fromJson(Map<String, dynamic> json) => _$CouponFromJson(json);
 }

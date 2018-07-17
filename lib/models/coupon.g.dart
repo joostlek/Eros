@@ -8,19 +8,22 @@ part of 'coupon.dart';
 
 Coupon _$CouponFromJson(Map<String, dynamic> json) => new Coupon(
     json['coupon_id'] as String,
-    json['issued_by'] as String,
-    json['issued_at'] == null
-        ? null
-        : DateTime.parse(json['issued_at'] as String),
     json['location_id'] as String,
-    json['expires'] == null ? null : DateTime.parse(json['expires'] as String),
-    (json['value'] as num)?.toDouble(),
-    json['activated_by'] as String,
+    json['name'] as String,
+    json['activated'] as bool,
     json['activated_at'] == null
         ? null
         : DateTime.parse(json['activated_at'] as String),
-    json['activated'] as bool,
-    json['name'] as String);
+    json['activated_by'] as String,
+    json['expires'] == null ? null : DateTime.parse(json['expires'] as String),
+    json['issued_at'] == null
+        ? null
+        : DateTime.parse(json['issued_at'] as String),
+    json['issued_by'] as String,
+    json['type'] == null
+        ? null
+        : Coupons.values
+            .singleWhere((x) => x.toString() == 'Coupons.${json['type']}'));
 
 abstract class _$CouponSerializerMixin {
   String get couponId;
@@ -32,7 +35,7 @@ abstract class _$CouponSerializerMixin {
   String get name;
   bool get activated;
   DateTime get expires;
-  double get value;
+  Coupons get type;
   Map<String, dynamic> toJson() => <String, dynamic>{
         'coupon_id': couponId,
         'issued_by': issuedBy,
@@ -43,6 +46,6 @@ abstract class _$CouponSerializerMixin {
         'name': name,
         'activated': activated,
         'expires': expires?.toIso8601String(),
-        'value': value
+        'type': type == null ? null : type.toString().split('.')[1]
       };
 }

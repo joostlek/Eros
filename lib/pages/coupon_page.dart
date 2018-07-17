@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:eros/models/new_coupon.dart';
+import 'package:eros/models/coupon.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:eros/services/user_storage.dart';

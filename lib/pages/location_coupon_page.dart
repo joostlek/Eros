@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/discount_coupon.dart';
 import 'package:eros/models/item_coupon.dart';
 import 'package:eros/models/money_coupon.dart';
-import 'package:eros/models/new_coupon.dart';
+import 'package:eros/models/coupon.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/pages/add_coupon.dart';
