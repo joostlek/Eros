@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:eros/bottom_item.dart';
 import 'package:eros/models/user.dart';
-import 'package:eros/pages/camera_page.dart';
-import 'package:eros/pages/dashboard.dart';
-import 'package:eros/pages/profile.dart';
+import 'package:eros/pages/camera/camera_page.dart';
+import 'package:eros/pages/dashboard/dashboard.dart';
+import 'package:eros/pages/profile/profile.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

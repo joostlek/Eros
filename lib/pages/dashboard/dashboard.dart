@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:eros/models/user.dart';
-import 'package:eros/pages/locations.dart';
+import 'package:eros/pages/locations/locations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

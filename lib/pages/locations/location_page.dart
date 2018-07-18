@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
-import 'package:eros/pages/location_coupon_page.dart';
-import 'package:eros/pages/location_employee_page.dart';
+import 'package:eros/pages/locations/location_coupon_page.dart';
+import 'package:eros/pages/locations/location_employee_page.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';

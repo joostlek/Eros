@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:eros/pages/coupon_page.dart';
+import 'package:eros/pages/coupons/coupon_page.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode_reader/QRCodeReader.dart';
