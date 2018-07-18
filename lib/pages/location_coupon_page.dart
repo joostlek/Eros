@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eros/models/coupons.dart';
 import 'package:eros/models/discount_coupon.dart';
 import 'package:eros/models/item_coupon.dart';
 import 'package:eros/models/money_coupon.dart';
@@ -25,11 +28,42 @@ class LocationCouponPage extends StatefulWidget {
 
 class LocationCouponPageState extends State<LocationCouponPage> {
   CouponStorage couponStorage = CouponStorage();
+  Stream<QuerySnapshot> stream;
+  List<Filter> appliedFilters = <Filter>[];
+  List<Filter> availableFilters = <Filter>[
+    Filter('type', 'MoneyCoupon', 'Giftcard'),
+    Filter('type', 'DiscountCoupon', 'Discount'),
+    Filter('type', 'ItemCoupon', 'Free item'),
+  ];
+
+  void addFilters(Filter filter) {
+    if (!appliedFilters.contains(filter)) {
+      setState(() {
+        appliedFilters.clear();
+        appliedFilters.add(filter);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Coupons'),
+        actions: <Widget>[
+          PopupMenuButton<Filter>(
+            icon: Icon(Icons.filter_list),
+            onSelected: addFilters,
+            itemBuilder: (BuildContext context) {
+              return availableFilters.map((Filter filter) {
+                return PopupMenuItem<Filter>(
+                  value: filter,
+                  child: Text(filter.name),
+                );
+              }).toList();
+            },
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -40,22 +74,45 @@ class LocationCouponPageState extends State<LocationCouponPage> {
         },
       ),
       body: StreamBuilder(
-          stream: couponStorage.listCoupons(widget.location.locationId),
+          stream: stream,
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot> asyncSnapshot) {
             if (asyncSnapshot.hasData && asyncSnapshot.data != null) {
               return ListView.builder(
                   itemCount: asyncSnapshot.data.documents.length,
                   itemBuilder: (context, index) {
-                    Coupon coupon = CouponStorage
-                        .fromDocument(asyncSnapshot.data.documents[index]);
-                    return generateCouponCard(coupon);
+                    if (applyFilters(
+                        asyncSnapshot.data.documents[index].data)) {
+                      Coupon coupon = CouponStorage
+                          .fromDocument(asyncSnapshot.data.documents[index]);
+                      return generateCouponCard(coupon);
+                    } else {
+                      return null;
+                    }
                   });
             } else {
               return CircularProgressIndicator();
             }
           }),
     );
+  }
+
+  bool applyFilters(Map<String, dynamic> data) {
+    if (appliedFilters.length == 0) {
+      return true;
+    }
+    for (var i = 0; i < appliedFilters.length; i++) {
+      if (data[appliedFilters[i].attribute] != appliedFilters[i].value) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    stream = couponStorage.listCoupons(widget.location.locationId);
   }
 
   Card generateCouponCard(Coupon coupon) {
@@ -99,4 +156,11 @@ class LocationCouponPageState extends State<LocationCouponPage> {
       ),
     );
   }
+}
+
+class Filter {
+  final String attribute;
+  final dynamic value;
+  final String name;
+  Filter(this.attribute, this.value, this.name);
 }
