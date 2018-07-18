@@ -27,20 +27,30 @@ class LocationCouponPage extends StatefulWidget {
 }
 
 class LocationCouponPageState extends State<LocationCouponPage> {
+  ValueNotifier<Filter> _selectedItem =
+      new ValueNotifier<Filter>(availableFilters[0]);
   CouponStorage couponStorage = CouponStorage();
   Stream<QuerySnapshot> stream;
   List<Filter> appliedFilters = <Filter>[];
-  List<Filter> availableFilters = <Filter>[
+  static List<Filter> availableFilters = <Filter>[
+    Filter('', '', 'None'),
     Filter('type', 'MoneyCoupon', 'Giftcard'),
     Filter('type', 'DiscountCoupon', 'Discount'),
     Filter('type', 'ItemCoupon', 'Free item'),
   ];
 
   void addFilters(Filter filter) {
-    if (!appliedFilters.contains(filter)) {
+    _selectedItem.value = filter;
+    if (filter.name != 'None') {
+      if (!appliedFilters.contains(filter)) {
+        setState(() {
+          appliedFilters.clear();
+          appliedFilters.add(filter);
+        });
+      }
+    } else {
       setState(() {
         appliedFilters.clear();
-        appliedFilters.add(filter);
       });
     }
   }
@@ -55,12 +65,31 @@ class LocationCouponPageState extends State<LocationCouponPage> {
             icon: Icon(Icons.filter_list),
             onSelected: addFilters,
             itemBuilder: (BuildContext context) {
-              return availableFilters.map((Filter filter) {
-                return PopupMenuItem<Filter>(
-                  value: filter,
-                  child: Text(filter.name),
-                );
-              }).toList();
+//              return availableFilters.map((Filter filter) {
+//                return PopupMenuItem<Filter>(
+//                  value: filter,
+//                  child: RadioListTile(
+//                      value: filter, groupValue: null, onChanged: null),
+//                );
+//              }).toList();
+              return new List<PopupMenuEntry<Filter>>.generate(
+                  availableFilters.length, (int index) {
+                return PopupMenuItem(
+                    child: AnimatedBuilder(
+                        child: Text(availableFilters[index].name),
+                        animation: _selectedItem,
+                        builder: (BuildContext context, Widget child) {
+                          return RadioListTile<Filter>(
+                            value: availableFilters[index],
+                            groupValue: _selectedItem.value,
+                            title: child,
+                            onChanged: (Filter filter) {
+                              addFilters(filter);
+                              Navigator.pop(context);
+                            },
+                          );
+                        }));
+              });
             },
           )
         ],
@@ -74,21 +103,19 @@ class LocationCouponPageState extends State<LocationCouponPage> {
         },
       ),
       body: StreamBuilder(
-          stream: stream,
+          stream: appliedFilters.length != 0
+              ? couponStorage.filterCoupons(
+                  appliedFilters[0].attribute, appliedFilters[0].value)
+              : couponStorage.listCoupons(widget.location.locationId),
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot> asyncSnapshot) {
             if (asyncSnapshot.hasData && asyncSnapshot.data != null) {
               return ListView.builder(
                   itemCount: asyncSnapshot.data.documents.length,
                   itemBuilder: (context, index) {
-                    if (applyFilters(
-                        asyncSnapshot.data.documents[index].data)) {
-                      Coupon coupon = CouponStorage
-                          .fromDocument(asyncSnapshot.data.documents[index]);
-                      return generateCouponCard(coupon);
-                    } else {
-                      return null;
-                    }
+                    Coupon coupon = CouponStorage
+                        .fromDocument(asyncSnapshot.data.documents[index]);
+                    return generateCouponCard(coupon);
                   });
             } else {
               return CircularProgressIndicator();
@@ -97,22 +124,9 @@ class LocationCouponPageState extends State<LocationCouponPage> {
     );
   }
 
-  bool applyFilters(Map<String, dynamic> data) {
-    if (appliedFilters.length == 0) {
-      return true;
-    }
-    for (var i = 0; i < appliedFilters.length; i++) {
-      if (data[appliedFilters[i].attribute] != appliedFilters[i].value) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   @override
   void initState() {
     super.initState();
-    stream = couponStorage.listCoupons(widget.location.locationId);
   }
 
   Card generateCouponCard(Coupon coupon) {

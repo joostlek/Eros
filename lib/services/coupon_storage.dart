@@ -156,6 +156,11 @@ class CouponStorage {
     return snapshots;
   }
 
+  Stream<QuerySnapshot> filterCoupons(String attribute, String value) {
+    Stream<QuerySnapshot> snapshots = couponCollection.where(attribute, isEqualTo: value).snapshots();
+    return snapshots;
+  }
+
   Future<Coupon> get(String couponId) async {
     return fromDocument(
         await couponCollection.document(couponId).get().catchError((e) {
