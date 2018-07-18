@@ -83,7 +83,6 @@ class AddCouponState extends State<AddCoupon>
 
   Future<bool> submit() async {
     MyTab tab = myTabs[_tabController.index];
-    print(tab.widget.validate());
     if (tab.widget.validate()) {
       Coupons current = Coupons.values[_tabController.index];
       Map<String, dynamic> data = tab.widget.getValues();
