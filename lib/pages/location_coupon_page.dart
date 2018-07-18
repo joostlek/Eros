@@ -72,6 +72,22 @@ class LocationCouponPageState extends State<LocationCouponPage> {
             : coupon is DiscountCoupon
                 ? Text('-${coupon.discount}%')
                 : coupon is ItemCoupon ? Text(coupon.item) : null,
+        leading: coupon is MoneyCoupon
+            ? Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.card_giftcard),
+              )
+            : coupon is DiscountCoupon
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.trending_down),
+                  )
+                : coupon is ItemCoupon
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.shopping_cart),
+                      )
+                    : null,
         onTap: () {
           Navigator.push(
               context,
