@@ -156,8 +156,12 @@ class CouponStorage {
     return snapshots;
   }
 
-  Stream<QuerySnapshot> filterCoupons(String attribute, String value) {
-    Stream<QuerySnapshot> snapshots = couponCollection.where(attribute, isEqualTo: value).snapshots();
+  Stream<QuerySnapshot> filterCoupons(
+      String attribute, String value, String location_id) {
+    Stream<QuerySnapshot> snapshots = couponCollection
+        .where('location_id', isEqualTo: location_id)
+        .where(attribute, isEqualTo: value)
+        .snapshots();
     return snapshots;
   }
 

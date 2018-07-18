@@ -104,8 +104,8 @@ class LocationCouponPageState extends State<LocationCouponPage> {
       ),
       body: StreamBuilder(
           stream: appliedFilters.length != 0
-              ? couponStorage.filterCoupons(
-                  appliedFilters[0].attribute, appliedFilters[0].value)
+              ? couponStorage.filterCoupons(appliedFilters[0].attribute,
+                  appliedFilters[0].value, widget.location.locationId)
               : couponStorage.listCoupons(widget.location.locationId),
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot> asyncSnapshot) {
