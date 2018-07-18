@@ -4,7 +4,6 @@ import 'package:eros/pages/locations/location_coupon_page.dart';
 import 'package:eros/pages/locations/location_employee_page.dart';
 import 'package:eros/pages/locations/location_page.dart';
 import 'package:eros/services/location_storage.dart';
-import 'package:eros/vertical_divider.dart';
 import 'package:flutter/material.dart';
 
 class LocationCard extends StatelessWidget {
