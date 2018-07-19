@@ -20,11 +20,7 @@ class LocationCard extends StatelessWidget {
       child: Card(
         child: Column(children: <Widget>[
           ListTile(
-//              isThreeLine: true,
-            title: Text(
-              location.name,
-//                style: TextStyle(fontSize: 20.0),
-            ),
+            title: Text(location.name),
             subtitle: location.owner == user.uid
                 ? Text('Owner')
                 : location.managers.containsKey(user.uid)

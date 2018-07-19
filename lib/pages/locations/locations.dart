@@ -8,7 +8,7 @@ import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
 
 class Locations extends StatefulWidget {
-  final Future<User> user;
+  final User user;
 
   Locations({this.user});
 
@@ -19,56 +19,44 @@ class Locations extends StatefulWidget {
 }
 
 class LocationsState extends State<Locations> {
-  Future<LocationStorage> getStorage() async {
-    return new LocationStorage.forUser(user: await widget.user);
+  LocationStorage locationStorage;
+
+  @override
+  void initState() {
+    super.initState();
+    locationStorage = LocationStorage.forUser(user: widget.user);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<LocationStorage>(
-      future: getStorage(),
-      builder: (BuildContext context,
-          AsyncSnapshot<LocationStorage> locationStorage) {
-        if (locationStorage.hasData && locationStorage.data != null) {
-          return Scaffold(
-              floatingActionButton: FloatingActionButton(
-                tooltip: 'Register location',
-                onPressed: () => {},
-                child: Icon(Icons.add),
-              ),
-              appBar: AppBar(
-                title: Text('Locations'),
-              ),
-              body: StreamBuilder<QuerySnapshot>(
-                  stream: locationStorage.data.list(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> querySnapshot) {
-                    if (querySnapshot.hasData && querySnapshot.data != null) {
-                      return ListView.builder(
-                          itemCount: querySnapshot.data.documents.length,
-                          itemBuilder: (context, index) {
-                            DocumentSnapshot ds =
-                                querySnapshot.data.documents[index];
-                            return createCard(
-                                user: locationStorage.data.user,
-                                location: LocationStorage.fromDocument(ds));
-                          });
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  }));
-        } else {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Locations'),
-            ),
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-      },
-    );
+    return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Register location',
+          onPressed: () => {},
+          child: Icon(Icons.add),
+        ),
+        appBar: AppBar(
+          title: Text('Locations'),
+        ),
+        body: StreamBuilder<QuerySnapshot>(
+            stream: locationStorage.list(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot> querySnapshot) {
+              if (querySnapshot.hasData && querySnapshot.data != null) {
+                return ListView.builder(
+                    itemCount: querySnapshot.data.documents.length,
+                    itemBuilder: (context, index) {
+                      DocumentSnapshot ds = querySnapshot.data.documents[index];
+                      return createCard(
+                          user: locationStorage.user,
+                          location: LocationStorage.fromDocument(ds));
+                    });
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }));
   }
 
   Card createCard({User user, Location location}) {
@@ -76,11 +64,16 @@ class LocationsState extends State<Locations> {
       child: ListTile(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Image.network(
-            location.photoUrl,
-            width: 36.0,
-            height: 36.0,
-          ),
+          child: location.photoUrl != null
+              ? Image.network(
+                  location.photoUrl,
+                  width: 36.0,
+                  height: 36.0,
+                )
+              : Icon(
+                  Icons.store,
+                  size: 36.0,
+                ),
         ),
         title: Text(location.name),
         subtitle: location.owner == user.uid

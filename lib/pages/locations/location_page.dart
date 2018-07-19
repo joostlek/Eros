@@ -43,15 +43,21 @@ class LocationPageState extends State<LocationPage> {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 96.0,
-                height: 96.0,
-                decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                        fit: BoxFit.fill,
-                        image: new NetworkImage(widget.location.photoUrl))),
-              ),
+              child: widget.location.photoUrl != null
+                  ? Container(
+                      width: 96.0,
+                      height: 96.0,
+                      decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: new DecorationImage(
+                              fit: BoxFit.fill,
+                              image:
+                                  new NetworkImage(widget.location.photoUrl))),
+                    )
+                  : Icon(
+                      Icons.store,
+                      size: 96.0,
+                    ),
             ),
           ),
           Center(
