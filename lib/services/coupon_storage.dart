@@ -222,4 +222,8 @@ class CouponStorage {
     coupon.activatedBy = null;
     return update(coupon);
   }
+
+  Future<int> countCoupons(Location location) async {
+    return (await couponCollection.where('location_id', isEqualTo: location.locationId).getDocuments()).documents.length;
+  }
 }

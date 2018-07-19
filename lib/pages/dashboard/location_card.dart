@@ -3,6 +3,7 @@ import 'package:eros/models/user.dart';
 import 'package:eros/pages/locations/location_coupon_page.dart';
 import 'package:eros/pages/locations/location_employee_page.dart';
 import 'package:eros/pages/locations/location_page.dart';
+import 'package:eros/services/coupon_storage.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -68,20 +69,30 @@ class LocationCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         Divider(),
-        ListTile(
-            title: Text('Coupons'),
-            subtitle: Text(location.employees.length.toString()),
-            leading: Icon(Icons.local_activity),
-            trailing: IconButton(
-              icon: Icon(Icons.chevron_right),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            LocationCouponPage(location, user)));
-              },
-            )),
+        FutureBuilder<int>(
+          future: CouponStorage().countCoupons(location),
+          builder: (BuildContext context, AsyncSnapshot<int> result) {
+            if (result.hasData && result.data != null) {
+              return ListTile(
+                title: Text('Coupons'),
+                subtitle: Text(result.data.toString()),
+                leading: Icon(Icons.local_activity),
+                trailing: IconButton(
+                  icon: Icon(Icons.chevron_right),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                LocationCouponPage(location, user)));
+                  },
+                ),
+              );
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+        ),
       ],
     );
   }
