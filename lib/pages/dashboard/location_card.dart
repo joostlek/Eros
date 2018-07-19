@@ -38,7 +38,7 @@ class LocationCard extends StatelessWidget {
                   )
                 : Icon(
                     Icons.store,
-                    size: 72.0,
+                    size: 36.0,
                   ),
             trailing: IconButton(
               icon: Icon(Icons.chevron_right),
