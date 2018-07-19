@@ -57,6 +57,7 @@ class LocationPageState extends State<LocationPage> {
                   : Icon(
                       Icons.store,
                       size: 96.0,
+                      color: Theme.of(context).disabledColor,
                     ),
             ),
           ),
