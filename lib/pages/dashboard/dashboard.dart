@@ -43,54 +43,37 @@ class DashboardState extends State<Dashboard> {
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> locations) {
                     if (locations.hasData && locations.data != null) {
+                      List<Object> items = <Object>[
+                        getHeader(locationStorage),
+                      ];
+                      if (locations.data.documents.length == 0) {
+                        items.add(Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                                'Let your boss scan your QR code to add you to his location'),
+                          ),
+                        ));
+                      }
+                      items.addAll(locations.data.documents);
                       return ListView.builder(
-                          itemCount: locations.data.documents.length + 1,
+                          itemCount: items.length,
                           itemBuilder: (context, index) {
-                            if (index == 0) {
-                              return Card(
-                                child: Column(
-                                  children: <Widget>[
-                                    ListTile(
-                                      leading: Icon(Icons.store),
-                                      title: Text('Locations'),
-                                      trailing: IconButton(
-                                          icon: Icon(Icons.chevron_right),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Locations(
-                                                          user: locationStorage
-                                                              .user,
-                                                        )));
-                                          }),
-                                    ),
-                                    Divider(),
-                                    ListTile(
-                                      leading: Icon(Icons.local_activity),
-                                      title: Text('Scanned coupons'),
-                                      trailing: IconButton(
-                                          icon: Icon(Icons.chevron_right),
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Locations(
-                                                          user: locationStorage
-                                                              .user,
-                                                        )));
-                                          }),
-                                    )
-                                  ],
-                                ),
-                              );
-                            } else {
+                            if (!(items[index] is Card)) {
                               return LocationCard(
-                                location: LocationStorage.fromDocument(
-                                    locations.data.documents[index - 1]),
+                                location:
+                                    LocationStorage.fromDocument(items[index]),
                                 user: locationStorage.user,
+                              );
+                            } else if (index == 0) {
+                              return items[index];
+                            } else {
+                              return Dismissible(
+                                child: items[index],
+                                onDismissed: (direction) {
+                                  items.removeAt(index);
+                                },
+                                key: Key(items[index].toString()),
                               );
                             }
                           });
@@ -103,5 +86,43 @@ class DashboardState extends State<Dashboard> {
                 return CircularProgressIndicator();
               }
             }));
+  }
+
+  Card getHeader(LocationStorage locationStorage) {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.store),
+            title: Text('Locations'),
+            trailing: IconButton(
+                icon: Icon(Icons.chevron_right),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Locations(
+                                user: locationStorage.user,
+                              )));
+                }),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.local_activity),
+            title: Text('Scanned coupons'),
+            trailing: IconButton(
+                icon: Icon(Icons.chevron_right),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Locations(
+                                user: locationStorage.user,
+                              )));
+                }),
+          )
+        ],
+      ),
+    );
   }
 }
