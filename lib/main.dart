@@ -7,9 +7,15 @@ import 'package:eros/models/user.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 
 void main() {
+  FirebaseAnalytics analytics = new FirebaseAnalytics();
   runApp(new MaterialApp(
+    navigatorObservers: [
+      new FirebaseAnalyticsObserver(analytics: analytics),
+    ],
     home: new Example(),
   ));
 }
