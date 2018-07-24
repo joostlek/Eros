@@ -10,7 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
-  final Future<User> user;
+  final User user;
 
   Dashboard({this.user});
 
@@ -22,7 +22,7 @@ class Dashboard extends StatefulWidget {
 
 class DashboardState extends State<Dashboard> {
   Future<LocationStorage> getLocationStorage() async {
-    return LocationStorage.forUser(user: await widget.user);
+    return LocationStorage.forUser(user: widget.user);
   }
 
   @override

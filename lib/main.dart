@@ -48,9 +48,20 @@ class ExampleState extends State<Example> {
     if (_currentUser == null) {
       return new Login('Eros');
     } else {
-      return new Eros(
-          user: getUser(_currentUser),
-          userStorage: UserStorage.forFirebaseUser(firebaseUser: _currentUser));
+      return FutureBuilder<User>(
+          future: getUser(_currentUser),
+          builder: (BuildContext context, AsyncSnapshot<User> user) {
+            if (user.hasData && user.data != null) {
+              return Eros(
+                user: user.data,
+                userStorage: UserStorage.forUser(user: user.data),
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          });
     }
   }
 

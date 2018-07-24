@@ -12,7 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Eros extends StatefulWidget {
-  Future<User> user;
+  User user;
   UserStorage userStorage;
 
   Eros({this.user, this.userStorage});
