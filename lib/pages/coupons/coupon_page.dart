@@ -128,7 +128,7 @@ class CouponPageState extends State<CouponPage> {
                   trailing: Text(user.data.displayName),
                 );
               } else {
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               }
             },
           ),
@@ -155,7 +155,7 @@ class CouponPageState extends State<CouponPage> {
                         ],
                       );
                     } else {
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
                     }
                   },
                 ),

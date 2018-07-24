@@ -118,7 +118,7 @@ class LocationCouponPageState extends State<LocationCouponPage> {
                     return generateCouponCard(coupon);
                   });
             } else {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
           }),
     );

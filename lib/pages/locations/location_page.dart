@@ -101,7 +101,7 @@ class LocationPageState extends State<LocationPage> {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               }
             },
           ),
@@ -129,7 +129,7 @@ class LocationPageState extends State<LocationPage> {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               }
             },
           ),
@@ -157,7 +157,7 @@ class LocationPageState extends State<LocationPage> {
                   ),
                 );
               } else {
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               }
             },
           ),

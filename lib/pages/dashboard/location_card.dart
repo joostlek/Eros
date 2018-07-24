@@ -85,7 +85,12 @@ class LocationCard extends StatelessWidget {
                 ),
               );
             } else {
-              return CircularProgressIndicator();
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircularProgressIndicator(),
+                ),
+              );
             }
           },
         ),

@@ -78,12 +78,12 @@ class DashboardState extends State<Dashboard> {
                             }
                           });
                     } else {
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
                     }
                   },
                 );
               } else {
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               }
             }));
   }
