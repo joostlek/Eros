@@ -9,7 +9,7 @@ class ProfileQrPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new ProfileQrPageState();
+    return ProfileQrPageState();
   }
 }
 

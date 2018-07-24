@@ -26,7 +26,7 @@ class UserStorage {
   static User fromDocument(DocumentSnapshot document) =>
       _fromMap(document.data);
 
-  static User _fromMap(Map<String, dynamic> data) => new User.fromJson(data);
+  static User _fromMap(Map<String, dynamic> data) => User.fromJson(data);
 
   Map<String, dynamic> _toMap(User user, [Map<String, dynamic> other]) {
     final Map<String, dynamic> result = {};
@@ -44,7 +44,7 @@ class UserStorage {
       await tx.set(
           newDoc.reference,
           _toMap(
-              user, {'created': new DateTime.now().toUtc().toIso8601String()}));
+              user, {'created': DateTime.now().toUtc().toIso8601String()}));
       return user;
     };
     return Firestore.instance

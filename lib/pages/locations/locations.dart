@@ -14,7 +14,7 @@ class Locations extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new LocationsState();
+    return LocationsState();
   }
 }
 

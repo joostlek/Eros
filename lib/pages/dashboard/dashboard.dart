@@ -16,7 +16,7 @@ class Dashboard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new DashboardState();
+    return DashboardState();
   }
 }
 

@@ -16,7 +16,7 @@ class CameraPageState extends State<CameraPage> {
   CouponStorage couponStorage = CouponStorage();
 
   Future<String> scan() async {
-    return new QRCodeReader()
+    return QRCodeReader()
         .setHandlePermissions(true)
         .setExecuteAfterPermissionGranted(true)
         .setAutoFocusIntervalInMs(200)

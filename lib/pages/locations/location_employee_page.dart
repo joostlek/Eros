@@ -48,7 +48,7 @@ class LocationEmployeePageState extends State<LocationEmployeePage> {
   }
 
   Future<String> scan() async {
-    return new QRCodeReader()
+    return QRCodeReader()
         .setHandlePermissions(true)
         .setExecuteAfterPermissionGranted(true)
         .setAutoFocusIntervalInMs(200)

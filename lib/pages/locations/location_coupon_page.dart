@@ -72,7 +72,7 @@ class LocationCouponPageState extends State<LocationCouponPage> {
 //                      value: filter, groupValue: null, onChanged: null),
 //                );
 //              }).toList();
-              return new List<PopupMenuEntry<Filter>>.generate(
+              return List<PopupMenuEntry<Filter>>.generate(
                   availableFilters.length, (int index) {
                 return PopupMenuItem(
                     child: AnimatedBuilder(

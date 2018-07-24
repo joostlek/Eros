@@ -25,23 +25,23 @@ class CouponStorage {
         : Coupons.values
             .singleWhere((x) => x.toString() == 'Coupons.${data['type']}')) {
       case Coupons.MoneyCoupon:
-        return new MoneyCoupon.fromJson(data);
+        return MoneyCoupon.fromJson(data);
       case Coupons.DiscountCoupon:
-        return new DiscountCoupon.fromJson(data);
+        return DiscountCoupon.fromJson(data);
       case Coupons.ItemCoupon:
-        return new ItemCoupon.fromJson(data);
+        return ItemCoupon.fromJson(data);
     }
-    return new Coupon.fromJson(data);
+    return Coupon.fromJson(data);
   }
 
   static MoneyCoupon _fromMoneyCouponMap(Map<String, dynamic> json) =>
-      new MoneyCoupon.fromJson(json);
+      MoneyCoupon.fromJson(json);
 
   static DiscountCoupon _fromDiscountCouponMap(Map<String, dynamic> json) =>
-      new DiscountCoupon.fromJson(json);
+      DiscountCoupon.fromJson(json);
 
   static ItemCoupon _fromItemCouponMap(Map<String, dynamic> json) =>
-      new ItemCoupon.fromJson(json);
+      ItemCoupon.fromJson(json);
 
   Map<String, dynamic> _toMap(Coupon coupon, [Map<String, dynamic> other]) {
     final Map<String, dynamic> result = {};
@@ -57,7 +57,7 @@ class CouponStorage {
       [DateTime expires]) async {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot doc = await tx.get(couponCollection.document());
-      final ItemCoupon itemCoupon = new ItemCoupon(
+      final ItemCoupon itemCoupon = ItemCoupon(
           doc.documentID,
           location.locationId,
           name,
@@ -87,7 +87,7 @@ class CouponStorage {
       [DateTime expires]) async {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot doc = await tx.get(couponCollection.document());
-      final MoneyCoupon moneyCoupon = new MoneyCoupon(
+      final MoneyCoupon moneyCoupon = MoneyCoupon(
           doc.documentID,
           location.locationId,
           name,
@@ -117,7 +117,7 @@ class CouponStorage {
       [DateTime expires]) async {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot doc = await tx.get(couponCollection.document());
-      final DiscountCoupon discountCoupon = new DiscountCoupon(
+      final DiscountCoupon discountCoupon = DiscountCoupon(
           doc.documentID,
           location.locationId,
           name,
@@ -224,6 +224,10 @@ class CouponStorage {
   }
 
   Future<int> countCoupons(Location location) async {
-    return (await couponCollection.where('location_id', isEqualTo: location.locationId).getDocuments()).documents.length;
+    return (await couponCollection
+            .where('location_id', isEqualTo: location.locationId)
+            .getDocuments())
+        .documents
+        .length;
   }
 }

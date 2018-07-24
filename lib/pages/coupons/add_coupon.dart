@@ -30,9 +30,9 @@ class AddCouponState extends State<AddCoupon>
   CouponStorage couponStorage = CouponStorage();
 
   final List<MyTab> myTabs = <MyTab>[
-    new MyTab(Icon(Icons.card_giftcard), 'Gift', MoneyTab()),
-    new MyTab(Icon(Icons.shopping_cart), 'Free item', ItemTab()),
-    new MyTab(Icon(Icons.trending_down), 'Discount', DiscountTab()),
+    MyTab(Icon(Icons.card_giftcard), 'Gift', MoneyTab()),
+    MyTab(Icon(Icons.shopping_cart), 'Free item', ItemTab()),
+    MyTab(Icon(Icons.trending_down), 'Discount', DiscountTab()),
   ];
 
   TabController _tabController;
@@ -40,7 +40,7 @@ class AddCouponState extends State<AddCoupon>
   @override
   void initState() {
     super.initState();
-    _tabController = new TabController(length: myTabs.length, vsync: this);
+    _tabController = TabController(length: myTabs.length, vsync: this);
   }
 
   @override

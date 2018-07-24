@@ -32,7 +32,7 @@ class LocationPageState extends State<LocationPage> {
       appBar: AppBar(
         title: Text(widget.location.name),
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         tooltip: 'Edit location',
         // TODO - Add edit function
         onPressed: () => {},
@@ -47,12 +47,11 @@ class LocationPageState extends State<LocationPage> {
                   ? Container(
                       width: 96.0,
                       height: 96.0,
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          image: new DecorationImage(
+                          image: DecorationImage(
                               fit: BoxFit.fill,
-                              image:
-                                  new NetworkImage(widget.location.photoUrl))),
+                              image: NetworkImage(widget.location.photoUrl))),
                     )
                   : Icon(
                       Icons.store,

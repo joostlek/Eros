@@ -13,20 +13,20 @@ class Profile extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new ProfileState();
+    return ProfileState();
   }
 }
 
 class ProfileState extends State<Profile> {
   Future<UserStorage> getStorage() async {
-    return new UserStorage.forUser(user: await widget.user);
+    return UserStorage.forUser(user: await widget.user);
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.user.displayName),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.user.displayName),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.wallpaper),
@@ -53,11 +53,11 @@ class ProfileState extends State<Profile> {
               child: Container(
                 width: 96.0,
                 height: 96.0,
-                decoration: new BoxDecoration(
+                decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    image: new DecorationImage(
+                    image: DecorationImage(
                         fit: BoxFit.fill,
-                        image: new NetworkImage(widget.user.photoUrl))),
+                        image: NetworkImage(widget.user.photoUrl))),
               ),
             ),
           ),

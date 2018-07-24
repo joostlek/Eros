@@ -22,7 +22,7 @@ class LocationStorage {
       _fromMap(document.data);
 
   static Location _fromMap(Map<String, dynamic> data) =>
-      new Location.fromJson(data);
+      Location.fromJson(data);
 
   Map<String, dynamic> _toMap(Location location, [Map<String, dynamic> other]) {
     final Map<String, dynamic> result = {};
@@ -37,7 +37,7 @@ class LocationStorage {
       String city, String country, String photoUrl) async {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot doc = await tx.get(locationCollection.document());
-      final Location location = new Location(
+      final Location location = Location(
           doc.documentID,
           name,
           street,
