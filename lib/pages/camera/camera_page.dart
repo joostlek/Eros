@@ -52,11 +52,13 @@ class CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Eros'),
+      ),
       body: Center(
         child: Builder(
           builder: (BuildContext context) {
-            return IconButton(
-                icon: Icon(Icons.camera_alt),
+            return FlatButton.icon(
                 onPressed: () {
                   getCoupon().then((data) {
                     if (data['error'] == false) {
@@ -69,7 +71,9 @@ class CameraPageState extends State<CameraPage> {
                           SnackBar(content: Text(data['message'])));
                     }
                   });
-                });
+                },
+                icon: Icon(Icons.camera_alt),
+                label: Text('Scan coupon'));
           },
         ),
       ),
