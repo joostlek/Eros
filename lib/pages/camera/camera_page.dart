@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:eros/models/coupon.dart';
 import 'package:eros/pages/coupons/coupon_page.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:flutter/material.dart';
@@ -25,22 +26,52 @@ class CameraPageState extends State<CameraPage> {
 
   Future<Map<String, dynamic>> getCoupon() async {
     String couponString = await scan();
-    return {'item': await couponStorage.get(couponString)};
+    if (couponString == null || couponString == '') {
+      return {
+        'item': null,
+        'error': true,
+        'message': 'No QR-code found!',
+      };
+    }
+    Coupon coupon = await couponStorage.get(couponString);
+    if (coupon == null) {
+      return {
+        'item': null,
+        'error': true,
+        'message': 'Coupon not found',
+      };
+    } else {
+      return {
+        'item': await couponStorage.get(couponString),
+        'error': false,
+        'message': null,
+      };
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: IconButton(
-            icon: Icon(Icons.camera_alt),
-            onPressed: () {
-              getCoupon().then((data) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return CouponPage(data['item']);
-                }));
-              });
-            }),
+        child: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+                icon: Icon(Icons.camera_alt),
+                onPressed: () {
+                  getCoupon().then((data) {
+                    if (data['error'] == false) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CouponPage(data['item']);
+                      }));
+                    } else {
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text(data['message'])));
+                    }
+                  });
+                });
+          },
+        ),
       ),
     );
   }
