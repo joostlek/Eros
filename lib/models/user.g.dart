@@ -19,7 +19,10 @@ User _$UserFromJson(Map<String, dynamic> json) => new User(
         : new Map<String, bool>.from(json['owner'] as Map),
     json['manager'] == null
         ? null
-        : new Map<String, bool>.from(json['manager'] as Map));
+        : new Map<String, bool>.from(json['manager'] as Map),
+    json['scanned_coupons'] == null
+        ? null
+        : new Map<String, bool>.from(json['scanned_coupons'] as Map));
 
 abstract class _$UserSerializerMixin {
   String get displayName;
@@ -29,6 +32,7 @@ abstract class _$UserSerializerMixin {
   Map<String, bool> get locations;
   Map<String, bool> get owner;
   Map<String, bool> get manager;
+  Map<String, bool> get scannedCoupons;
   Map<String, dynamic> toJson() => <String, dynamic>{
         'display_name': displayName,
         'email': email,
@@ -36,6 +40,7 @@ abstract class _$UserSerializerMixin {
         'photo_url': photoUrl,
         'locations': locations,
         'owner': owner,
-        'manager': manager
+        'manager': manager,
+        'scanned_coupons': scannedCoupons
       };
 }

@@ -11,8 +11,9 @@ import 'package:flutter/services.dart';
 
 class CouponPage extends StatefulWidget {
   final Coupon coupon;
+  final bool newCoupon;
 
-  CouponPage(this.coupon);
+  CouponPage(this.coupon, this.newCoupon);
 
   @override
   State<StatefulWidget> createState() {
@@ -209,5 +210,21 @@ class CouponPageState extends State<CouponPage> {
       print('dart error $e');
     }
     return false;
+  }
+
+  addRecentCoupon() async {
+    UserStorage userStorage = UserStorage.forFirebaseUser(
+        firebaseUser: await FirebaseAuth.instance.currentUser());
+    User user = await userStorage.getUser();
+    user.scannedCoupons[widget.coupon.couponId] == true;
+    userStorage.update(user);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.newCoupon == true) {
+      addRecentCoupon();
+    }
   }
 }
