@@ -25,4 +25,18 @@ class DiscountCoupon extends Coupon with _$DiscountCouponSerializerMixin {
 
   factory DiscountCoupon.fromJson(Map<String, dynamic> json) =>
       _$DiscountCouponFromJson(json);
+
+  @override
+  Map<String, dynamic> toChild() {
+    return {
+      'name': this.name,
+      'coupon_id': this.couponId,
+      'location_id': this.locationId,
+      'activated': this.activated,
+      'type': this.type,
+      'value': this.discount,
+    };
+  }
+
+
 }

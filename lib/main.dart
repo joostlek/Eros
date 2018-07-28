@@ -51,6 +51,7 @@ class ExampleState extends State<Example> {
       return FutureBuilder<User>(
           future: getUser(_currentUser),
           builder: (BuildContext context, AsyncSnapshot<User> user) {
+            print(user.hasData);
             if (user.hasData && user.data != null) {
               return Eros(
                 user: user.data,
@@ -81,6 +82,6 @@ class ExampleState extends State<Example> {
     if (!(await userStorage.isUserStored())) {
       return userStorage.create(User.fromFirebaseUser(user));
     }
-    return userStorage.getUser();
+    return await userStorage.getUser();
   }
 }

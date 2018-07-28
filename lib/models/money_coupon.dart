@@ -25,4 +25,16 @@ class MoneyCoupon extends Coupon with _$MoneyCouponSerializerMixin {
 
   factory MoneyCoupon.fromJson(Map<String, dynamic> json) =>
       _$MoneyCouponFromJson(json);
+
+  @override
+  Map<String, dynamic> toChild() {
+    return {
+      'name': this.name,
+      'coupon_id': this.couponId,
+      'location_id': this.locationId,
+      'activated': this.activated,
+      'type': this.type,
+      'value': this.value,
+    };
+  }
 }
