@@ -51,7 +51,6 @@ class ExampleState extends State<Example> {
       return FutureBuilder<User>(
           future: getUser(_currentUser),
           builder: (BuildContext context, AsyncSnapshot<User> user) {
-            print(user.hasData);
             if (user.hasData && user.data != null) {
               return Eros(
                 user: user.data,

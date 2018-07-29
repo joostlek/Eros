@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/pages/locations/add_location.dart';
 import 'package:eros/pages/locations/location_page.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,12 @@ class LocationsState extends State<Locations> {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           tooltip: 'Register location',
-          onPressed: () => {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddLocation(widget.user)));
+          },
           child: Icon(Icons.add),
         ),
         appBar: AppBar(

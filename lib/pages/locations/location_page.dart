@@ -16,7 +16,7 @@ class LocationPage extends StatefulWidget {
 
   LocationPage(this.user, this.location);
 
-  Future<LocationStorage> getLocationStorage() async {
+  LocationStorage getLocationStorage() {
     return LocationStorage.forUser(user: user);
   }
 
@@ -76,91 +76,89 @@ class LocationPageState extends State<LocationPage> {
               style: TextStyle(color: Colors.grey[600]),
             ),
           ),
-          FutureBuilder<LocationStorage>(
-            future: widget.getLocationStorage(),
-            builder: (BuildContext context,
-                AsyncSnapshot<LocationStorage> locationStorage) {
-              if (locationStorage.hasData && locationStorage.data != null) {
-                return Card(
-                  child: ListTile(
-                    title: Text('Employees'),
-                    leading: Icon(Icons.person),
-                    trailing: IconButton(
-                      icon: Icon(Icons.chevron_right),
-                      tooltip: 'Go to employee page',
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LocationEmployeePage(
-                                      locationStorage: locationStorage.data,
-                                      location: widget.location,
-                                    )));
-                      },
-                    ),
-                  ),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-          FutureBuilder<LocationStorage>(
-            future: widget.getLocationStorage(),
-            builder: (BuildContext context,
-                AsyncSnapshot<LocationStorage> locationStorage) {
-              if (locationStorage.hasData && locationStorage.data != null) {
-                return Card(
-                  child: ListTile(
-                    title: Text('Coupons'),
-                    leading: Icon(Icons.local_activity),
-                    trailing: IconButton(
-                      icon: Icon(Icons.chevron_right),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LocationCouponPage(
-                                      widget.location,
-                                      widget.user,
-                                    )));
-                      },
-                    ),
-                  ),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
-          FutureBuilder<LocationStorage>(
-            future: widget.getLocationStorage(),
-            builder: (BuildContext context,
-                AsyncSnapshot<LocationStorage> locationStorage) {
-              if (locationStorage.hasData && locationStorage.data != null) {
-                return Card(
-                  child: ListTile(
-                    title: Text('Coupon layouts'),
-                    leading: Icon(Icons.straighten),
-                    trailing: IconButton(
-                      icon: Icon(Icons.chevron_right),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LocationCouponLayoutPage(
-                                      location: widget.location,
-                                    )));
-                      },
-                    ),
-                  ),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
+          getCards(),
         ],
+      ),
+    );
+  }
+
+  Column getCards() {
+    if (widget.location.owner == widget.user.uid) {
+      return Column(
+        children: <Widget>[
+          getEmployeeCard(),
+          getCouponsCard(),
+          getLayoutCard()
+        ],
+      );
+    } else if (widget.location.managers[widget.user.uid] == true) {
+      return Column(
+        children: <Widget>[getCouponsCard()],
+      );
+    } else {
+      return Column();
+    }
+  }
+
+  Card getEmployeeCard() {
+    return Card(
+      child: ListTile(
+        title: Text('Employees'),
+        leading: Icon(Icons.person),
+        trailing: IconButton(
+          icon: Icon(Icons.chevron_right),
+          tooltip: 'Go to employee page',
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LocationEmployeePage(
+                          locationStorage: widget.getLocationStorage(),
+                          location: widget.location,
+                        )));
+          },
+        ),
+      ),
+    );
+  }
+
+  Card getCouponsCard() {
+    return Card(
+      child: ListTile(
+        title: Text('Coupons'),
+        leading: Icon(Icons.local_activity),
+        trailing: IconButton(
+          icon: Icon(Icons.chevron_right),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LocationCouponPage(
+                          widget.location,
+                          widget.user,
+                        )));
+          },
+        ),
+      ),
+    );
+  }
+
+  Card getLayoutCard() {
+    return Card(
+      child: ListTile(
+        title: Text('Coupon layouts'),
+        leading: Icon(Icons.straighten),
+        trailing: IconButton(
+          icon: Icon(Icons.chevron_right),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LocationCouponLayoutPage(
+                          location: widget.location,
+                        )));
+          },
+        ),
       ),
     );
   }
