@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon_layout.dart';
 import 'package:eros/models/location.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CouponLayoutPage extends StatefulWidget {
   final CouponLayout couponLayout;
@@ -15,6 +18,7 @@ class CouponLayoutPage extends StatefulWidget {
 }
 
 class CouponLayoutPageState extends State<CouponLayoutPage> {
+  static const PRINT_CHANNEL = const MethodChannel('eros.jtosti.nl/print');
   CouponLayout couponLayout;
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController;
@@ -38,6 +42,15 @@ class CouponLayoutPageState extends State<CouponLayoutPage> {
     return Scaffold(
       appBar: AppBar(
         title: widget.newLayout ? Text('Add layout') : Text(couponLayout.name),
+        actions: <Widget>[
+          IconButton(
+            tooltip: 'Test current layout',
+            icon: Icon(Icons.print),
+            onPressed: () {
+              _print(couponLayout);
+            },
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _handleChange(),
@@ -151,5 +164,20 @@ class CouponLayoutPageState extends State<CouponLayoutPage> {
 
   bool getBool(Map<String, dynamic> data) {
     return data['result'];
+  }
+
+  Future<bool> _print(CouponLayout couponLayout) async {
+    try {
+      final bool result = await PRINT_CHANNEL.invokeMethod('print', {
+        'html': _htmlController.text
+            .replaceAll('<!--QRCODE-->',
+                '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=test">')
+            .replaceAll('<!--VALUE-->', '€10,00')
+      });
+      return result;
+    } catch (e) {
+      print('dart error $e');
+    }
+    return false;
   }
 }
