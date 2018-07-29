@@ -66,13 +66,6 @@ class LocationCouponPageState extends State<LocationCouponPage> {
             icon: Icon(Icons.filter_list),
             onSelected: addFilters,
             itemBuilder: (BuildContext context) {
-//              return availableFilters.map((Filter filter) {
-//                return PopupMenuItem<Filter>(
-//                  value: filter,
-//                  child: RadioListTile(
-//                      value: filter, groupValue: null, onChanged: null),
-//                );
-//              }).toList();
               return List<PopupMenuEntry<Filter>>.generate(
                   availableFilters.length, (int index) {
                 return PopupMenuItem(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/pages/locations/location_coupon_layout_page.dart';
 import 'package:eros/pages/locations/location_coupon_page.dart';
 import 'package:eros/pages/locations/location_employee_page.dart';
 import 'package:eros/services/location_storage.dart';
@@ -139,16 +140,15 @@ class LocationPageState extends State<LocationPage> {
               if (locationStorage.hasData && locationStorage.data != null) {
                 return Card(
                   child: ListTile(
-                    title: Text('Series'),
-                    leading: Icon(Icons.view_agenda),
+                    title: Text('Coupon layouts'),
+                    leading: Icon(Icons.straighten),
                     trailing: IconButton(
                       icon: Icon(Icons.chevron_right),
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LocationEmployeePage(
-                                      locationStorage: locationStorage.data,
+                                builder: (context) => LocationCouponLayoutPage(
                                       location: widget.location,
                                     )));
                       },
