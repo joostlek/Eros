@@ -268,10 +268,12 @@ class CouponPageState extends State<CouponPage> {
   Future<bool> _print(CouponLayout couponLayout) async {
     try {
       final bool result = await PRINT_CHANNEL.invokeMethod('print', {
-        'html': couponLayout.html.replaceAll(
-            '<!--QRCODE-->',
-            '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${widget
+        'html': couponLayout.html
+            .replaceAll(
+                '<!--QRCODE-->',
+                '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${widget
             .coupon.couponId}">')
+            .replaceAll('<!--VALUE-->', getValue())
       });
       return result;
     } catch (e) {
@@ -295,5 +297,14 @@ class CouponPageState extends State<CouponPage> {
 //    if (widget.newCoupon == true) {
 //      addRecentCoupon();
 //    }
+  }
+
+  String getValue() {
+    Coupon coupon = widget.coupon;
+    return coupon is MoneyCoupon
+        ? '€' + Util.format(coupon.value)
+        : coupon is DiscountCoupon
+            ? '-' + Util.format(coupon.discount) + '%'
+            : coupon is ItemCoupon ? coupon.item : '-';
   }
 }
