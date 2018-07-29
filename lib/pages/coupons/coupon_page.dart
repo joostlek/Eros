@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon.dart';
 import 'package:eros/models/coupon_layout.dart';
+import 'package:eros/models/discount_coupon.dart';
+import 'package:eros/models/item_coupon.dart';
+import 'package:eros/models/money_coupon.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:eros/services/user_storage.dart';
@@ -45,6 +48,7 @@ class CouponPageState extends State<CouponPage> {
 
   @override
   Widget build(BuildContext context) {
+    Coupon coupon = widget.coupon;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.coupon.name),
@@ -146,10 +150,24 @@ class CouponPageState extends State<CouponPage> {
                       ),
           ),
           Divider(),
-          ListTile(
-            title: Text('Worth'),
-//            trailing: Text('€' + Util.format(widget.coupon.value)),
-          ),
+          coupon is MoneyCoupon
+              ? ListTile(
+                  title: Text('Worth'),
+                  trailing: Text('€' + Util.format(coupon.value)),
+                )
+              : coupon is DiscountCoupon
+                  ? ListTile(
+                      title: Text('Discount'),
+                      trailing: Text('-' + Util.format(coupon.discount) + '%'),
+                    )
+                  : coupon is ItemCoupon
+                      ? ListTile(
+                          title: Text('Item'),
+                          trailing: Text(coupon.item),
+                        )
+                      : ListTile(
+                          title: Text('-'),
+                        ),
           ListTile(
             title: Text('Expires at'),
             trailing: widget.coupon.expires != null
