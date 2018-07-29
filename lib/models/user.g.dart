@@ -21,7 +21,7 @@ User _$UserFromJson(Map<String, dynamic> json) => new User(
         ? null
         : new Map<String, bool>.from(json['manager'] as Map),
     json['scanned_coupons'] == null
-        ? {}
+        ? null
         : new Map<String, Map<String, dynamic>>.fromIterables(
             (json['scanned_coupons'] as Map<String, dynamic>).keys,
             (json['scanned_coupons'] as Map)

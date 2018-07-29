@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon.dart';
+import 'package:eros/models/coupon_layout.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:eros/services/user_storage.dart';
@@ -24,7 +26,23 @@ class CouponPage extends StatefulWidget {
 class CouponPageState extends State<CouponPage> {
   static const PRINT_CHANNEL = const MethodChannel('eros.jtosti.nl/print');
   UserStorage userStorage = UserStorage();
+
   CouponStorage couponStorage = CouponStorage();
+  QuerySnapshot couponLayouts;
+
+  getStorage() async {
+    this.userStorage = UserStorage.forFirebaseUser(
+        firebaseUser: await FirebaseAuth.instance.currentUser());
+    User user = await this.userStorage.getUser();
+    if (user.manager[widget.coupon.locationId] == true ||
+        user.owner[widget.coupon.locationId] == true) {
+      this.couponLayouts = await Firestore.instance
+          .collection('coupon_layouts')
+          .where('location_id', isEqualTo: widget.coupon.locationId)
+          .getDocuments();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,24 +56,48 @@ class CouponPageState extends State<CouponPage> {
             : <Widget>[
                 Builder(
                   builder: (context) {
-                    return IconButton(
+                    return PopupMenuButton<CouponLayout>(
+                      onSelected: (CouponLayout couponLayout) =>
+                          _print(couponLayout),
                       icon: Icon(Icons.print),
-                      onPressed: () {
-                        _print().then((bool) {
-                          if (bool == true) {
-                            final snackbar = SnackBar(
-                              content: Text('Printing...'),
+                      itemBuilder: (BuildContext context) {
+                        return List<PopupMenuItem<CouponLayout>>.generate(
+                            this.couponLayouts.documents.length + 1,
+                            (int index) {
+                          if (index == 0) {
+                            return PopupMenuItem(
+                              value: CouponLayout('asd', '<!--QRCODE-->', ''),
+                              child: Text('Default'),
                             );
-                            Scaffold.of(context).showSnackBar(snackbar);
-                          } else {
-                            final snackbar = SnackBar(
-                              content: Text('An error occured!'),
-                            );
-                            Scaffold.of(context).showSnackBar(snackbar);
                           }
+                          return PopupMenuItem(
+                              value: CouponLayout.fromJson(
+                                  this.couponLayouts.documents[index - 1].data),
+                              child: Text(this
+                                  .couponLayouts
+                                  .documents[index - 1]
+                                  .data['name']));
                         });
                       },
                     );
+//                    return IconButton(
+//                      icon: Icon(Icons.print),
+//                      onPressed: () {
+//                        _print().then((bool) {
+//                          if (bool == true) {
+//                            final snackbar = SnackBar(
+//                              content: Text('Printing...'),
+//                            );
+//                            Scaffold.of(context).showSnackBar(snackbar);
+//                          } else {
+//                            final snackbar = SnackBar(
+//                              content: Text('An error occured!'),
+//                            );
+//                            Scaffold.of(context).showSnackBar(snackbar);
+//                          }
+//                        });
+//                      },
+//                    );
                   },
                 )
               ],
@@ -112,13 +154,16 @@ class CouponPageState extends State<CouponPage> {
             title: Text('Expires at'),
             trailing: widget.coupon.expires != null
                 ? Text(Util.getWeekday(widget.coupon.expires.weekday) +
-                    ' ${widget.coupon.expires.day}-${widget.coupon.expires.month}-${widget.coupon.expires.year}')
+                    ' ${widget.coupon.expires.day}-${widget.coupon.expires
+                    .month}-${widget.coupon.expires.year}')
                 : Text('Doesn\'t expire'),
           ),
           ListTile(
             title: Text('Issued at'),
             trailing: Text(Util.getWeekday(widget.coupon.issuedAt.weekday) +
-                ' ${widget.coupon.issuedAt.day}-${widget.coupon.issuedAt.month}-${widget.coupon.issuedAt.year} ${widget.coupon.issuedAt.hour}:${widget.coupon.issuedAt.minute}'),
+                ' ${widget.coupon.issuedAt.day}-${widget.coupon.issuedAt
+                    .month}-${widget.coupon.issuedAt.year} ${widget.coupon
+                    .issuedAt.hour}:${widget.coupon.issuedAt.minute}'),
           ),
           FutureBuilder<User>(
             future: userStorage.getUserByUid(widget.coupon.issuedBy),
@@ -147,7 +192,10 @@ class CouponPageState extends State<CouponPage> {
                             title: Text('Activated at'),
                             trailing: Text(Util.getWeekday(
                                     widget.coupon.activatedAt.weekday) +
-                                ' ${widget.coupon.activatedAt.day}-${widget.coupon.activatedAt.month}-${widget.coupon.activatedAt.year} ${widget.coupon.activatedAt.hour}:${widget.coupon.activatedAt.minute}'),
+                                ' ${widget.coupon.activatedAt.day}-${widget.coupon
+                              .activatedAt.month}-${widget.coupon.activatedAt
+                              .year} ${widget.coupon.activatedAt.hour}:${widget
+                              .coupon.activatedAt.minute}'),
                           ),
                           ListTile(
                             title: Text('Activated by'),
@@ -199,11 +247,13 @@ class CouponPageState extends State<CouponPage> {
     });
   }
 
-  Future<bool> _print() async {
+  Future<bool> _print(CouponLayout couponLayout) async {
     try {
       final bool result = await PRINT_CHANNEL.invokeMethod('print', {
-        'html':
-            '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${widget.coupon.couponId}">'
+        'html': couponLayout.html.replaceAll(
+            '<!--QRCODE-->',
+            '<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${widget
+            .coupon.couponId}">')
       });
       return result;
     } catch (e) {
@@ -223,6 +273,7 @@ class CouponPageState extends State<CouponPage> {
   @override
   void initState() {
     super.initState();
+    getStorage();
 //    if (widget.newCoupon == true) {
 //      addRecentCoupon();
 //    }
