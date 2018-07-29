@@ -7,13 +7,18 @@ part of 'coupon_layout.dart';
 // **************************************************************************
 
 CouponLayout _$CouponLayoutFromJson(Map<String, dynamic> json) =>
-    new CouponLayout(json['name'] as String, json['html'] as String,
-        json['location_id'] as String);
+    new CouponLayout(json['coupon_layout_id'] as String, json['name'] as String,
+        json['html'] as String, json['location_id'] as String);
 
 abstract class _$CouponLayoutSerializerMixin {
+  String get couponLayoutId;
   String get name;
   String get html;
   String get locationId;
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'name': name, 'html': html, 'location_id': locationId};
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'coupon_layout_id': couponLayoutId,
+        'name': name,
+        'html': html,
+        'location_id': locationId
+      };
 }

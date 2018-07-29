@@ -70,7 +70,7 @@ class CouponPageState extends State<CouponPage> {
                             (int index) {
                           if (index == 0) {
                             return PopupMenuItem(
-                              value: CouponLayout('asd', '<!--QRCODE-->', ''),
+                              value: CouponLayout('Default', 'Default', '<!--QRCODE-->', ''),
                               child: Text('Default'),
                             );
                           }

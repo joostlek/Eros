@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon_layout.dart';
 import 'package:eros/models/location.dart';
+import 'package:eros/pages/locations/coupon_layout_page.dart';
 import 'package:flutter/material.dart';
 
 class LocationCouponLayoutPage extends StatefulWidget {
@@ -20,7 +21,13 @@ class LocationCouponLayoutPageState extends State<LocationCouponLayoutPage> {
         title: Text('Coupon layouts'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      CouponLayoutPage(null, widget.location, true)));
+        },
         child: Icon(Icons.add),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -35,8 +42,8 @@ class LocationCouponLayoutPageState extends State<LocationCouponLayoutPage> {
                   itemCount: snapshot.data.documents.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
-                      return getCouponLayoutCard(
-                          CouponLayout('Default', '<!--QRCODE-->', ''));
+                      return getCouponLayoutCard(CouponLayout(
+                          'Default', 'Default', '<!--QRCODE-->', ''));
                     } else {
                       return getCouponLayoutCard(CouponLayout
                           .fromJson(snapshot.data.documents[index - 1].data));
@@ -54,7 +61,13 @@ class LocationCouponLayoutPageState extends State<LocationCouponLayoutPage> {
   Card getCouponLayoutCard(CouponLayout couponLayout) {
     return Card(
       child: ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CouponLayoutPage(
+                        couponLayout, widget.location, false)));
+          },
           title: Text(couponLayout.name),
           trailing: Icon(Icons.chevron_right)),
     );

@@ -21,11 +21,6 @@ class AddCoupon extends StatefulWidget {
 
 class AddCouponState extends State<AddCoupon>
     with SingleTickerProviderStateMixin {
-  final _giftFormKey = GlobalKey<FormState>();
-  final _discountFormKey = GlobalKey<FormState>();
-  final _itemFormKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final valueController = TextEditingController();
   DateTime expires;
   CouponStorage couponStorage = CouponStorage();
 
@@ -109,14 +104,6 @@ class AddCouponState extends State<AddCoupon>
             return coupon.couponId != null;
           });
       }
-      return couponStorage
-          .createMoneyCoupon(nameController.text, widget.user, widget.location,
-              double.parse(valueController.text), expires)
-          .then((coupon) {
-        if (coupon.couponId != null) {
-          return true;
-        }
-      });
     }
     return false;
   }
