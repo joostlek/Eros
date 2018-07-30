@@ -66,11 +66,14 @@ class CouponPageState extends State<CouponPage> {
                       icon: Icon(Icons.print),
                       itemBuilder: (BuildContext context) {
                         return List<PopupMenuItem<CouponLayout>>.generate(
-                            this.couponLayouts.documents.length + 1,
+                            this.couponLayouts == null
+                                ? 1
+                                : this.couponLayouts.documents.length + 1,
                             (int index) {
                           if (index == 0) {
                             return PopupMenuItem(
-                              value: CouponLayout('Default', 'Default', '<!--QRCODE-->', ''),
+                              value: CouponLayout(
+                                  'Default', 'Default', '<!--QRCODE-->', ''),
                               child: Text('Default'),
                             );
                           }
