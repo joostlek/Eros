@@ -25,36 +25,59 @@ class LocationStatsPageState extends State<LocationStatsPage> {
       appBar: AppBar(
         title: Text('Statistics'),
       ),
-      body: Center(
-          child: StreamBuilder<QuerySnapshot>(
-        stream: couponStorage.listCoupons(widget.location.locationId),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> data) {
-          if (data.hasData && data.data != null) {
-            List<MoneyCoupon> coupons = data.data.documents
-                .where((coupon) => coupon.data['type'] == 'MoneyCoupon')
-                .map((DocumentSnapshot document) =>
-                    MoneyCoupon.fromJson(document.data))
-                .toList();
-            coupons.sort((MoneyCoupon a, MoneyCoupon b) => a
-                .issuedAt.millisecondsSinceEpoch
-                .compareTo(b.issuedAt.millisecondsSinceEpoch));
-            List<charts.Series<MoneyCoupon, DateTime>> series = [
-              new charts.Series<MoneyCoupon, DateTime>(
-                  id: 'amount',
-                  colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-                  displayName: 'amount',
-                  domainFn: (MoneyCoupon coupon, int _) => coupon.issuedAt,
-                  measureFn: (MoneyCoupon coupon, int _) =>
-                      coupon.value.floor(),
-                  data: coupons)
-            ];
+      body: Column(
+        children: <Widget>[
+          StreamBuilder<QuerySnapshot>(
+            stream: couponStorage.listCoupons(widget.location.locationId),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> data) {
+              if (data.hasData && data.data != null) {
+                List<MoneyCoupon> coupons = data.data.documents
+                    .where((coupon) => coupon.data['type'] == 'MoneyCoupon')
+                    .map((DocumentSnapshot document) =>
+                        MoneyCoupon.fromJson(document.data))
+                    .toList();
+                coupons.sort((MoneyCoupon a, MoneyCoupon b) => a
+                    .issuedAt.millisecondsSinceEpoch
+                    .compareTo(b.issuedAt.millisecondsSinceEpoch));
+                List<charts.Series<MoneyCoupon, DateTime>> series = [
+                  new charts.Series<MoneyCoupon, DateTime>(
+                      id: 'amount',
+                      colorFn: (_, __) =>
+                          charts.MaterialPalette.blue.shadeDefault,
+                      displayName: 'amount',
+                      domainFn: (MoneyCoupon coupon, int _) => coupon.issuedAt,
+                      measureFn: (MoneyCoupon coupon, int _) =>
+                          coupon.value.floor(),
+                      data: coupons)
+                ];
 
-            return charts.TimeSeriesChart(series);
-          } else {
-            return CircularProgressIndicator();
-          }
-        },
-      )),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                      child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.attach_money),
+                        title: Text('Money coupons'),
+                        subtitle: Text('Total amount of money in coupons'),
+                      ),
+                      Container(
+                          height: 150.0,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+                            child: charts.TimeSeriesChart(series),
+                          )),
+                    ],
+                  )),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }
