@@ -10,6 +10,7 @@ dependencies:
   json_annotation: ^0.2.3
   qr_flutter: ^1.1.1
   firebase_analytics: ^1.0.2
+  charts_flutter: ^0.3.0
   qrcode_reader:
     git: git://github.com/bcko/flutter_qrcode_reader.git
 #  flutter_firebase_ui: ^0.0.6

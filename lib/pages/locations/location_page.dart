@@ -5,6 +5,7 @@ import 'package:eros/models/user.dart';
 import 'package:eros/pages/locations/location_coupon_layout_page.dart';
 import 'package:eros/pages/locations/location_coupon_page.dart';
 import 'package:eros/pages/locations/location_employee_page.dart';
+import 'package:eros/pages/locations/location_stats_page.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -88,7 +89,8 @@ class LocationPageState extends State<LocationPage> {
         children: <Widget>[
           getEmployeeCard(),
           getCouponsCard(),
-          getLayoutCard()
+          getLayoutCard(),
+          getStatsCard(),
         ],
       );
     } else if (widget.location.managers[widget.user.uid] == true) {
@@ -155,6 +157,26 @@ class LocationPageState extends State<LocationPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => LocationCouponLayoutPage(
+                          location: widget.location,
+                        )));
+          },
+        ),
+      ),
+    );
+  }
+
+  Card getStatsCard() {
+    return Card(
+      child: ListTile(
+        title: Text('Statistics'),
+        leading: Icon(Icons.trending_up),
+        trailing: IconButton(
+          icon: Icon(Icons.chevron_right),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LocationStatsPage(
                           location: widget.location,
                         )));
           },
