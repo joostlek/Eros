@@ -15,6 +15,7 @@ class RecentScannedCouponsState extends State<RecentScannedCoupons> {
 
   @override
   void initState() {
+    super.initState();
     if (widget.user.scannedCoupons != null &&
         widget.user.scannedCoupons.length > 0) {
       coupons = widget.user.scannedCoupons.keys.toList();

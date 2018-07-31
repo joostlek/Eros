@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/eros.dart';
 import 'package:eros/login.dart';
 import 'package:eros/models/user.dart';
@@ -29,7 +28,6 @@ class ExampleState extends State<Example> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   StreamSubscription<FirebaseUser> _listener;
   FirebaseUser _currentUser;
-  User _user;
 
   @override
   void initState() {

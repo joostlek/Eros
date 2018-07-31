@@ -4,7 +4,6 @@ import 'package:eros/models/coupons.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/services/coupon_storage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddCoupon extends StatefulWidget {

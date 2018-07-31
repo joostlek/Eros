@@ -1,19 +1,15 @@
-import 'dart:async';
-
 import 'package:eros/bottom_item.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/pages/camera/camera_page.dart';
 import 'package:eros/pages/dashboard/dashboard.dart';
 import 'package:eros/pages/profile/profile.dart';
 import 'package:eros/services/user_storage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 
 class Eros extends StatefulWidget {
-  User user;
-  UserStorage userStorage;
+  final User user;
+  final UserStorage userStorage;
 
   Eros({this.user, this.userStorage});
 

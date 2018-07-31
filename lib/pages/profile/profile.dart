@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:eros/models/user.dart';
 import 'package:eros/pages/profile/profile_qr_page.dart';
 import 'package:eros/services/user_storage.dart';
