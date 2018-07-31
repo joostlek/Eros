@@ -3,7 +3,7 @@ import 'package:eros/models/user.dart';
 import 'package:eros/pages/locations/location_coupon_layout_page.dart';
 import 'package:eros/pages/locations/location_coupon_page.dart';
 import 'package:eros/pages/locations/location_employee_page.dart';
-import 'package:eros/pages/locations/location_stats_page.dart';
+import 'package:eros/pages/locations/stats/location_stats_page.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
 
