@@ -53,7 +53,11 @@ class MoneyCouponLineChart extends StatelessWidget {
                     height: 150.0,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-                      child: charts.TimeSeriesChart(series),
+                      child: charts.TimeSeriesChart(
+                        series,
+                        defaultRenderer: charts.LineRendererConfig(
+                            includeArea: true, stacked: true),
+                      ),
                     )),
               ],
             )),
