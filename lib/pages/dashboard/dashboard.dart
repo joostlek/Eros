@@ -94,31 +94,29 @@ class DashboardState extends State<Dashboard> {
           ListTile(
             leading: Icon(Icons.store),
             title: Text('Locations'),
-            trailing: IconButton(
-                icon: Icon(Icons.chevron_right),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Locations(
-                                user: locationStorage.user,
-                              )));
-                }),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Locations(
+                            user: locationStorage.user,
+                          )));
+            },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.local_activity),
             title: Text('Scanned coupons'),
-            trailing: IconButton(
-                icon: Icon(Icons.chevron_right),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RecentScannedCoupons(
-                                user: locationStorage.user,
-                              )));
-                }),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RecentScannedCoupons(
+                            user: locationStorage.user,
+                          )));
+            },
           )
         ],
       ),

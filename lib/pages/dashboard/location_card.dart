@@ -36,16 +36,13 @@ class LocationCard extends StatelessWidget {
                     Icons.store,
                     size: 36.0,
                   ),
-            trailing: IconButton(
-              icon: Icon(Icons.chevron_right),
-              tooltip: 'Go to location',
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LocationPage(user, location)));
-              },
-            ),
+            trailing: Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LocationPage(user, location)));
+            },
           ),
           location.owner == user.uid
               ? getOwnerVersion(context)
@@ -73,16 +70,14 @@ class LocationCard extends StatelessWidget {
                 title: Text('Coupons'),
                 subtitle: Text(result.data.toString()),
                 leading: Icon(Icons.local_activity),
-                trailing: IconButton(
-                  icon: Icon(Icons.chevron_right),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                LocationCouponPage(location, user)));
-                  },
-                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              LocationCouponPage(location, user)));
+                },
+                trailing: Icon(Icons.chevron_right),
               );
             } else {
               return Center(
@@ -106,19 +101,16 @@ class LocationCard extends StatelessWidget {
           title: Text('Employees'),
           subtitle: Text(location.employees.length.toString()),
           leading: Icon(Icons.people),
-          trailing: IconButton(
-            icon: Icon(Icons.chevron_right),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LocationEmployeePage(
-                            locationStorage:
-                                LocationStorage.forUser(user: user),
-                            location: location,
-                          )));
-            },
-          ),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LocationEmployeePage(
+                          locationStorage: LocationStorage.forUser(user: user),
+                          location: location,
+                        )));
+          },
+          trailing: Icon(Icons.chevron_right),
         ),
         getManagerVersion(context),
       ],

@@ -101,12 +101,9 @@ class LocationPageState extends State<LocationPage> {
   Card getEmployeeCard() {
     return Card(
       child: ListTile(
-        title: Text('Employees'),
-        leading: Icon(Icons.person),
-        trailing: IconButton(
-          icon: Icon(Icons.chevron_right),
-          tooltip: 'Go to employee page',
-          onPressed: () {
+          title: Text('Employees'),
+          leading: Icon(Icons.person),
+          onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -115,19 +112,16 @@ class LocationPageState extends State<LocationPage> {
                           location: widget.location,
                         )));
           },
-        ),
-      ),
+          trailing: Icon(Icons.chevron_right)),
     );
   }
 
   Card getCouponsCard() {
     return Card(
       child: ListTile(
-        title: Text('Coupons'),
-        leading: Icon(Icons.local_activity),
-        trailing: IconButton(
-          icon: Icon(Icons.chevron_right),
-          onPressed: () {
+          title: Text('Coupons'),
+          leading: Icon(Icons.local_activity),
+          onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -136,19 +130,16 @@ class LocationPageState extends State<LocationPage> {
                           widget.user,
                         )));
           },
-        ),
-      ),
+          trailing: Icon(Icons.chevron_right)),
     );
   }
 
   Card getLayoutCard() {
     return Card(
       child: ListTile(
-        title: Text('Coupon layouts'),
-        leading: Icon(Icons.straighten),
-        trailing: IconButton(
-          icon: Icon(Icons.chevron_right),
-          onPressed: () {
+          title: Text('Coupon layouts'),
+          leading: Icon(Icons.straighten),
+          onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -156,19 +147,16 @@ class LocationPageState extends State<LocationPage> {
                           location: widget.location,
                         )));
           },
-        ),
-      ),
+          trailing: Icon(Icons.chevron_right)),
     );
   }
 
   Card getStatsCard() {
     return Card(
       child: ListTile(
-        title: Text('Statistics'),
-        leading: Icon(Icons.trending_up),
-        trailing: IconButton(
-          icon: Icon(Icons.chevron_right),
-          onPressed: () {
+          title: Text('Statistics'),
+          leading: Icon(Icons.trending_up),
+          onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -176,8 +164,7 @@ class LocationPageState extends State<LocationPage> {
                           location: widget.location,
                         )));
           },
-        ),
-      ),
+          trailing: Icon(Icons.chevron_right)),
     );
   }
 }
