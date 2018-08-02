@@ -1,4 +1,5 @@
 import 'package:eros/models/coupons.dart';
+import 'package:eros/models/status.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'coupon.g.dart';
@@ -44,5 +45,28 @@ class Coupon extends Object with _$CouponSerializerMixin {
       'activated': this.activated,
       'type': this.type
     };
+  }
+
+  Status getStatus() => getStatusAt(DateTime.now());
+
+  Status getStatusAt(DateTime dateTime) {
+    if (dateTime == null) {
+      return null;
+    }
+    if (this.expires != null && dateTime.isAfter(this.expires)) {
+      return Status.Expired;
+    } else if (this.activatedAt != null &&
+        this.activatedAt.isAfter(dateTime) &&
+        this.issuedAt.isBefore(dateTime)) {
+      return Status.Active;
+    } else if (this.activated == true && this.activatedAt.isBefore(dateTime)) {
+      return Status.Redeemed;
+    } else if (this.issuedAt.isBefore(dateTime)) {
+      return Status.Active;
+    } else if (this.issuedAt.isAfter(dateTime)) {
+      return null;
+    } else {
+      return null;
+    }
   }
 }

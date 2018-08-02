@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/money_coupon.dart';
+import 'package:eros/pages/locations/stats/coupon_activated_chart.dart';
 import 'package:eros/pages/locations/stats/coupon_amount_chart.dart';
 import 'package:eros/pages/locations/stats/coupon_percentage_chart.dart';
 import 'package:eros/pages/locations/stats/money_coupon_line_chart.dart';
@@ -24,6 +25,7 @@ class LocationStatsPageState extends State<LocationStatsPage> {
 
   @override
   void initState() {
+    super.initState();
     _couponStream = couponStorage.listCoupons(widget.location.locationId);
   }
 
@@ -39,6 +41,9 @@ class LocationStatsPageState extends State<LocationStatsPage> {
           constraints: BoxConstraints(),
           child: Column(
             children: <Widget>[
+              CouponActivatedChart(
+                stream: _couponStream,
+              ),
               MoneyCouponLineChart(
                 location: widget.location,
                 stream: _couponStream,
