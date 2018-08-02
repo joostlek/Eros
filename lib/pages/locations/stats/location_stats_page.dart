@@ -34,27 +34,26 @@ class LocationStatsPageState extends State<LocationStatsPage> {
         title: Text('Statistics'),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                MoneyCouponLineChart(
-                  location: widget.location,
-                  stream: _couponStream,
-                ),
-                CouponAmountChart(
-                  location: widget.location,
-                  stream: _couponStream,
-                ),
-                CouponPercentageChart(
-                  stream: _couponStream,
-                )
-              ],
-            ),
-          ],
+          child: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(),
+          child: Column(
+            children: <Widget>[
+              MoneyCouponLineChart(
+                location: widget.location,
+                stream: _couponStream,
+              ),
+              CouponAmountChart(
+                location: widget.location,
+                stream: _couponStream,
+              ),
+              CouponPercentageChart(
+                stream: _couponStream,
+              )
+            ],
+          ),
         ),
-      ),
+      )),
     );
   }
 }
