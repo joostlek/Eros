@@ -118,6 +118,7 @@ class CouponAmountChartState extends State<CouponAmountChart>
               return itemCoupon;
             }).toList()),
       ];
+      setState(() {});
     });
   }
 
@@ -163,11 +164,13 @@ class CouponAmountChartState extends State<CouponAmountChart>
           height: 150.0,
           child: Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-              child: graphs[_tabController.index].series[0].data.length > 1
-                  ? charts.TimeSeriesChart(
-                      graphs[_tabController.index].series,
-                    )
-                  : Center(child: Text('Not enough data'))),
+              child: graphs[0].series.length > 0
+                  ? graphs[_tabController.index].series[0].data.length > 1
+                      ? charts.TimeSeriesChart(
+                          graphs[_tabController.index].series,
+                        )
+                      : Center(child: Text('Not enough data'))
+                  : Center(child: CircularProgressIndicator())),
         )
       ],
     ));
