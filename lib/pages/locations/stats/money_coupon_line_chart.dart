@@ -39,29 +39,26 @@ class MoneyCouponLineChart extends StatelessWidget {
                 data: coupons)
           ];
 
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-                child: Column(
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.attach_money),
-                  title: Text('Money coupons'),
-                  subtitle: Text('Total amount of money in coupons'),
-                ),
-                Container(
-                    height: 150.0,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-                      child: charts.TimeSeriesChart(
-                        series,
-                        defaultRenderer: charts.LineRendererConfig(
-                            includeArea: true, stacked: true),
-                      ),
-                    )),
-              ],
-            )),
-          );
+          return Card(
+              child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.attach_money),
+                title: Text('Money coupons'),
+                subtitle: Text('Total amount of money in coupons'),
+              ),
+              Container(
+                  height: 150.0,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+                    child: charts.TimeSeriesChart(
+                      series,
+                      defaultRenderer: charts.LineRendererConfig(
+                          includeArea: true, stacked: true),
+                    ),
+                  )),
+            ],
+          ));
         } else {
           return CircularProgressIndicator();
         }
