@@ -137,8 +137,8 @@ class CouponAmountChartState extends State<CouponAmountChart>
       children: <Widget>[
         ListTile(
           leading: Icon(Icons.local_activity),
-          title: Text('Total amount of coupons'),
-          subtitle: Text('Total amount of coupons'),
+          title: Text('Amount of coupons'),
+          subtitle: Text('Total amount of coupons created using the app'),
         ),
         TabBar(
           controller: _tabController,
