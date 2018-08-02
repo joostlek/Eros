@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/money_coupon.dart';
@@ -17,6 +19,13 @@ class LocationStatsPage extends StatefulWidget {
 
 class LocationStatsPageState extends State<LocationStatsPage> {
   CouponStorage couponStorage = CouponStorage();
+  Stream<QuerySnapshot> _couponStream;
+
+  @override
+  void initState() {
+    _couponStream = couponStorage.listCoupons(widget.location.locationId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +36,11 @@ class LocationStatsPageState extends State<LocationStatsPage> {
         children: <Widget>[
           MoneyCouponLineChart(
             location: widget.location,
+            stream: _couponStream,
           ),
           CouponAmountChart(
             location: widget.location,
+            stream: _couponStream,
           )
         ],
       ),

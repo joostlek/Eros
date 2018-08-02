@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon.dart';
 import 'package:eros/models/coupons.dart';
@@ -11,8 +13,9 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class CouponAmountChart extends StatefulWidget {
   final Location location;
+  final Stream<QuerySnapshot> stream;
 
-  CouponAmountChart({this.location});
+  CouponAmountChart({this.location, this.stream});
 
   @override
   State<StatefulWidget> createState() => CouponAmountChartState();
@@ -33,9 +36,7 @@ class CouponAmountChartState extends State<CouponAmountChart>
   TabController _tabController;
 
   _getCoupons() {
-    couponStorage
-        .listCoupons(widget.location.locationId)
-        .listen((QuerySnapshot snapshot) {
+    widget.stream.listen((QuerySnapshot snapshot) {
       coupons = snapshot.documents
           .map((DocumentSnapshot document) =>
               CouponStorage.fromDocument(document))
