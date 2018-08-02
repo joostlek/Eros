@@ -47,8 +47,8 @@ class MoneyCouponLineChart extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 leading: Icon(Icons.attach_money),
-                title: Text('Money coupons'),
-                subtitle: Text('Total amount of money in coupons'),
+                title: Text('Giftcards'),
+                subtitle: Text('Total worth of all giftcards'),
               ),
               Container(
                   height: 150.0,
