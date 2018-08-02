@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/money_coupon.dart';
 import 'package:eros/pages/locations/stats/coupon_amount_chart.dart';
+import 'package:eros/pages/locations/stats/coupon_percentage_chart.dart';
 import 'package:eros/pages/locations/stats/money_coupon_line_chart.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:flutter/material.dart';
@@ -32,17 +33,27 @@ class LocationStatsPageState extends State<LocationStatsPage> {
       appBar: AppBar(
         title: Text('Statistics'),
       ),
-      body: Column(
-        children: <Widget>[
-          MoneyCouponLineChart(
-            location: widget.location,
-            stream: _couponStream,
-          ),
-          CouponAmountChart(
-            location: widget.location,
-            stream: _couponStream,
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                MoneyCouponLineChart(
+                  location: widget.location,
+                  stream: _couponStream,
+                ),
+                CouponAmountChart(
+                  location: widget.location,
+                  stream: _couponStream,
+                ),
+                CouponPercentageChart(
+                  stream: _couponStream,
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
