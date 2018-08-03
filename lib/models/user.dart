@@ -25,4 +25,12 @@ class User extends Object with _$UserSerializerMixin {
             {});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toShort() {
+    return {
+      'displayName': displayName,
+      'uid': uid,
+      'photoUrl': photoUrl,
+    };
+  }
 }
