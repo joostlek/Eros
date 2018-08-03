@@ -37,6 +37,4 @@ class DiscountCoupon extends Coupon with _$DiscountCouponSerializerMixin {
       'value': this.discount,
     };
   }
-
-
 }

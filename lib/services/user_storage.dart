@@ -41,10 +41,8 @@ class UserStorage {
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot newDoc =
           await tx.get(userCollection.document(user.uid));
-      await tx.set(
-          newDoc.reference,
-          _toMap(
-              user, {'created': DateTime.now().toUtc().toIso8601String()}));
+      await tx.set(newDoc.reference,
+          _toMap(user, {'created': DateTime.now().toUtc().toIso8601String()}));
       return user;
     };
     return Firestore.instance
