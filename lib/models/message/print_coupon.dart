@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'print_coupon.g.dart';
 
 @JsonSerializable()
-class PrintCoupon extends Message with _$PrintCouponSerializerMixin {
+class PrintCoupon extends Activity with _$PrintCouponSerializerMixin {
   final Map<String, dynamic> coupon;
   @JsonKey(name: 'location_id')
   final String locationId;

@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'promote_user.g.dart';
 
 @JsonSerializable()
-class PromoteUser extends Message with _$PromoteUserSerializerMixin {
+class PromoteUser extends Activity with _$PromoteUserSerializerMixin {
   @JsonKey(name: 'target_user')
   final Map<String, dynamic> targetUser;
 

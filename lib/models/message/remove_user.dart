@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'remove_user.g.dart';
 
 @JsonSerializable()
-class RemoveUser extends Message with _$RemoveUserSerializerMixin {
+class RemoveUser extends Activity with _$RemoveUserSerializerMixin {
   @JsonKey(name: 'target_user')
   final Map<String, dynamic> targetUser;
   @JsonKey(name: 'location_id')

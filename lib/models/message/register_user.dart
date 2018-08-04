@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'register_user.g.dart';
 
 @JsonSerializable()
-class RegisterUser extends Message with _$RegisterUserSerializerMixin {
+class RegisterUser extends Activity with _$RegisterUserSerializerMixin {
   RegisterUser(String messageId, Map<String, dynamic> originUser, DateTime date)
       : super(messageId, originUser, Activities.RegisterUser, date);
 

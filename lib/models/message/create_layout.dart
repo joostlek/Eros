@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'create_layout.g.dart';
 
 @JsonSerializable()
-class CreateLayout extends Message with _$CreateLayoutSerializerMixin {
+class CreateLayout extends Activity with _$CreateLayoutSerializerMixin {
   final Map<String, dynamic> layout;
   @JsonKey(name: 'location_id')
   final String locationId;

@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'remove_layout.g.dart';
 
 @JsonSerializable()
-class RemoveLayout extends Message with _$RemoveLayoutSerializerMixin {
+class RemoveLayout extends Activity with _$RemoveLayoutSerializerMixin {
   final Map<String, dynamic> layout;
   @JsonKey(name: 'location_id')
   final String locationId;

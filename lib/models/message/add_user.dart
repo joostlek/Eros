@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'add_user.g.dart';
 
 @JsonSerializable()
-class AddUser extends Message with _$AddUserSerializerMixin {
+class AddUser extends Activity with _$AddUserSerializerMixin {
   @JsonKey(name: 'target_user')
   final Map<String, dynamic> targetUser;
   @JsonKey(name: 'location_id')

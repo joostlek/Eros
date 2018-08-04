@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'create_coupon.g.dart';
 
 @JsonSerializable()
-class CreateCoupon extends Message with _$CreateCouponSerializerMixin {
+class CreateCoupon extends Activity with _$CreateCouponSerializerMixin {
   final Map<String, dynamic> coupon;
   @JsonKey(name: 'location_id')
   final String locationId;

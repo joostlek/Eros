@@ -6,7 +6,7 @@ part of 'activity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Message _$MessageFromJson(Map<String, dynamic> json) => new Message(
+Activity _$MessageFromJson(Map<String, dynamic> json) => new Activity(
     json['message_id'] as String,
     json['origin_user'] as Map<String, dynamic>,
     json['type'] == null

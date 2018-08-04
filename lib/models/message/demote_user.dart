@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'demote_user.g.dart';
 
 @JsonSerializable()
-class DemoteUser extends Message with _$DemoteUserSerializerMixin {
+class DemoteUser extends Activity with _$DemoteUserSerializerMixin {
   @JsonKey(name: 'target_user')
   final Map<String, dynamic> targetUser;
   @JsonKey(name: 'location_id')
