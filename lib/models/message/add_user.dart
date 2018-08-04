@@ -1,5 +1,5 @@
-import 'package:eros/models/message/message.dart';
-import 'package:eros/models/message/messages.dart';
+import 'package:eros/models/message/activity.dart';
+import 'package:eros/models/message/activities.dart';
 import 'package:eros/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,11 +14,11 @@ class AddUser extends Message with _$AddUserSerializerMixin {
 
   AddUser(String messageId, Map<String, dynamic> originUser, DateTime date,
       this.targetUser, this.locationId)
-      : super(messageId, originUser, Messages.AddUser, date);
+      : super(messageId, originUser, Activities.AddUser, date);
 
   AddUser.withUser(String messageId, User user, DateTime date, this.targetUser,
       this.locationId)
-      : super.withUser('', user, Messages.AddUser, date);
+      : super.withUser('', user, Activities.AddUser, date);
 
   factory AddUser.fromJson(Map<String, dynamic> json) =>
       _$AddUserFromJson(json);

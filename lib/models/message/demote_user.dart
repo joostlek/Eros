@@ -1,5 +1,5 @@
-import 'package:eros/models/message/message.dart';
-import 'package:eros/models/message/messages.dart';
+import 'package:eros/models/message/activity.dart';
+import 'package:eros/models/message/activities.dart';
 import 'package:eros/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,11 +18,11 @@ class DemoteUser extends Message with _$DemoteUserSerializerMixin {
     DateTime date,
     this.targetUser,
     this.locationId,
-  ) : super(messageId, originUser, Messages.DemoteUser, date);
+  ) : super(messageId, originUser, Activities.DemoteUser, date);
 
   DemoteUser.withUser(String messageId, User user, DateTime date,
       this.targetUser, this.locationId)
-      : super.withUser('', user, Messages.DemoteUser, date);
+      : super.withUser('', user, Activities.DemoteUser, date);
 
   factory DemoteUser.fromJson(Map<String, dynamic> json) =>
       _$DemoteUserFromJson(json);

@@ -1,8 +1,8 @@
-import 'package:eros/models/message/messages.dart';
+import 'package:eros/models/message/activities.dart';
 import 'package:eros/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'package:eros/models/message/message.g.dart';
+part 'package:eros/models/message/activity.g.dart';
 
 @JsonSerializable()
 class Message extends Object with _$MessageSerializerMixin {
@@ -10,7 +10,7 @@ class Message extends Object with _$MessageSerializerMixin {
   final String messageId;
   @JsonKey(name: 'origin_user')
   final Map<String, dynamic> originUser;
-  final Messages type;
+  final Activities type;
   final DateTime date;
 
   Message(this.messageId, this.originUser, this.type, this.date);
@@ -18,7 +18,7 @@ class Message extends Object with _$MessageSerializerMixin {
   Message.withUser(
     String messageId,
     User user,
-    Messages type,
+    Activities type,
     DateTime date,
   ) : this(
           messageId,

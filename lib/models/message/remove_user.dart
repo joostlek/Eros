@@ -1,5 +1,5 @@
-import 'package:eros/models/message/message.dart';
-import 'package:eros/models/message/messages.dart';
+import 'package:eros/models/message/activity.dart';
+import 'package:eros/models/message/activities.dart';
 import 'package:eros/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -14,11 +14,11 @@ class RemoveUser extends Message with _$RemoveUserSerializerMixin {
 
   RemoveUser(String messageId, Map<String, dynamic> originUser, DateTime date,
       this.targetUser, this.locationId)
-      : super(messageId, originUser, Messages.RemoveUser, date);
+      : super(messageId, originUser, Activities.RemoveUser, date);
 
   RemoveUser.withUser(String messageId, User user, DateTime date,
       this.targetUser, this.locationId)
-      : super.withUser('', user, Messages.RemoveUser, date);
+      : super.withUser('', user, Activities.RemoveUser, date);
 
   factory RemoveUser.fromJson(Map<String, dynamic> json) =>
       _$RemoveUserFromJson(json);

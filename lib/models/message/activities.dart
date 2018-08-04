@@ -1,4 +1,4 @@
-enum Messages {
+enum Activities {
   RegisterUser,
   PromoteUser,
   DemoteUser,
