@@ -1,8 +1,8 @@
-import 'package:eros/models/message/activities.dart';
+import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'package:eros/models/message/activity.g.dart';
+part 'activity.g.dart';
 
 @JsonSerializable()
 class Activity extends Object with _$ActivitySerializerMixin {

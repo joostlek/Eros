@@ -1,6 +1,5 @@
-import 'package:eros/models/message/activity.dart';
-import 'package:eros/models/message/activities.dart';
-import 'package:eros/models/user.dart';
+import 'package:eros/models/activity/activities.dart';
+import 'package:eros/models/activity/activity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'create_layout.g.dart';

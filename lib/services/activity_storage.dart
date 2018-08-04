@@ -1,19 +1,19 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eros/models/message/activate_coupon.dart';
-import 'package:eros/models/message/activities.dart';
-import 'package:eros/models/message/activity.dart';
-import 'package:eros/models/message/add_user.dart';
-import 'package:eros/models/message/create_coupon.dart';
-import 'package:eros/models/message/create_layout.dart';
-import 'package:eros/models/message/create_location.dart';
-import 'package:eros/models/message/demote_user.dart';
-import 'package:eros/models/message/print_coupon.dart';
-import 'package:eros/models/message/promote_user.dart';
-import 'package:eros/models/message/register_user.dart';
-import 'package:eros/models/message/remove_layout.dart';
-import 'package:eros/models/message/remove_user.dart';
+import 'package:eros/models/activity/activate_coupon.dart';
+import 'package:eros/models/activity/activities.dart';
+import 'package:eros/models/activity/activity.dart';
+import 'package:eros/models/activity/add_user.dart';
+import 'package:eros/models/activity/create_coupon.dart';
+import 'package:eros/models/activity/create_layout.dart';
+import 'package:eros/models/activity/create_location.dart';
+import 'package:eros/models/activity/demote_user.dart';
+import 'package:eros/models/activity/print_coupon.dart';
+import 'package:eros/models/activity/promote_user.dart';
+import 'package:eros/models/activity/register_user.dart';
+import 'package:eros/models/activity/remove_layout.dart';
+import 'package:eros/models/activity/remove_user.dart';
 import 'package:eros/models/user.dart';
 
 final activityCollection = Firestore.instance.collection('recent_activities');
