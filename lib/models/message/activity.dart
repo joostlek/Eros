@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'package:eros/models/message/activity.g.dart';
 
 @JsonSerializable()
-class Activity extends Object with _$MessageSerializerMixin {
+class Activity extends Object with _$ActivitySerializerMixin {
   @JsonKey(name: 'message_id')
   final String messageId;
   @JsonKey(name: 'origin_user')
@@ -28,5 +28,5 @@ class Activity extends Object with _$MessageSerializerMixin {
         );
 
   factory Activity.fromJson(Map<String, dynamic> json) =>
-      _$MessageFromJson(json);
+      _$ActivityFromJson(json);
 }

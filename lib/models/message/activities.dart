@@ -9,4 +9,5 @@ enum Activities {
   ActivateCoupon,
   CreateLayout,
   RemoveLayout,
+  CreateLocation,
 }

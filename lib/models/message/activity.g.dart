@@ -6,16 +6,16 @@ part of 'activity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Activity _$MessageFromJson(Map<String, dynamic> json) => new Activity(
+Activity _$ActivityFromJson(Map<String, dynamic> json) => new Activity(
     json['message_id'] as String,
     json['origin_user'] as Map<String, dynamic>,
     json['type'] == null
         ? null
         : Activities.values
-            .singleWhere((x) => x.toString() == 'Messages.${json['type']}'),
+            .singleWhere((x) => x.toString() == 'Activities.${json['type']}'),
     json['date'] == null ? null : DateTime.parse(json['date'] as String));
 
-abstract class _$MessageSerializerMixin {
+abstract class _$ActivitySerializerMixin {
   String get messageId;
   Map<String, dynamic> get originUser;
   Activities get type;
