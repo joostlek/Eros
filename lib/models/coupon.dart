@@ -37,13 +37,12 @@ class Coupon extends Object with _$CouponSerializerMixin {
 
   factory Coupon.fromJson(Map<String, dynamic> json) => _$CouponFromJson(json);
 
-  Map<String, dynamic> toChild() {
+  Map<String, dynamic> toShort() {
     return {
       'name': this.name,
       'coupon_id': this.couponId,
-      'location_id': this.locationId,
-      'activated': this.activated,
-      'type': this.type
+      'type': type,
+      'value': '',
     };
   }
 

@@ -27,12 +27,10 @@ class MoneyCoupon extends Coupon with _$MoneyCouponSerializerMixin {
       _$MoneyCouponFromJson(json);
 
   @override
-  Map<String, dynamic> toChild() {
+  Map<String, dynamic> toShort() {
     return {
       'name': this.name,
       'coupon_id': this.couponId,
-      'location_id': this.locationId,
-      'activated': this.activated,
       'type': this.type,
       'value': this.value,
     };
