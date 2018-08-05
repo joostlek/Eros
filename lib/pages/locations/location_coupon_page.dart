@@ -103,7 +103,7 @@ class LocationCouponPageState extends State<LocationCouponPage> {
                   itemBuilder: (context, index) {
                     Coupon coupon = CouponStorage
                         .fromDocument(asyncSnapshot.data.documents[index]);
-                    return CouponCard(coupon: coupon);
+                    return CouponCard(coupon: coupon, user: widget.user);
                   });
             } else {
               return Center(child: CircularProgressIndicator());

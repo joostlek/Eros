@@ -132,7 +132,6 @@ class ActivityStorage {
               doc.documentID, originUser.toShort(), DateTime.now(), location);
           break;
       }
-      print(JSON.encode(activity));
       final Map<String, dynamic> data = activity.toJson();
       await tx.set(doc.reference, data);
       return data;

@@ -64,6 +64,8 @@ class CouponStorage {
 
   _activateCouponActivity(Coupon coupon) {
     ActivityStorage activityStorage = ActivityStorage(user);
+    print(coupon.toShort().toString());
+    print(coupon.locationId);
     activityStorage.createActivity(Activities.ActivateCoupon,
         coupon: coupon.toShort(), locationId: coupon.locationId);
   }

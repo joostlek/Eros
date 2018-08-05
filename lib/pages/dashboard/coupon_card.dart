@@ -2,14 +2,16 @@ import 'package:eros/models/coupon.dart';
 import 'package:eros/models/discount_coupon.dart';
 import 'package:eros/models/item_coupon.dart';
 import 'package:eros/models/money_coupon.dart';
+import 'package:eros/models/user.dart';
 import 'package:eros/pages/coupons/coupon_page.dart';
 import 'package:eros/util.dart';
 import 'package:flutter/material.dart';
 
 class CouponCard extends StatelessWidget {
   final Coupon coupon;
+  final User user;
 
-  CouponCard({this.coupon});
+  CouponCard({this.coupon, this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class CouponCard extends StatelessWidget {
                   builder: (context) => CouponPage(
                         coupon,
                         false,
+                    user: user,
                       )));
         },
       ),
