@@ -13,7 +13,8 @@ class RemoveUser extends Activity with _$RemoveUserSerializerMixin {
   final String locationId;
 
   RemoveUser(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.targetUser, this.locationId)
+      this.targetUser, this.locationId,
+      [Activities type])
       : super(messageId, originUser, Activities.RemoveUser, date);
 
   RemoveUser.withUser(String messageId, User user, DateTime date,

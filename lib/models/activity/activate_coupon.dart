@@ -10,8 +10,9 @@ class ActivateCoupon extends Activity with _$ActivateCouponSerializerMixin {
   @JsonKey(name: 'location_id')
   final String locationId;
 
-  ActivateCoupon(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.coupon, this.locationId)
+  ActivateCoupon(String messageId, Map<String, dynamic> originUser,
+      DateTime date, this.coupon, this.locationId,
+      [Activities type])
       : super(messageId, originUser, Activities.ActivateCoupon, date);
 
   factory ActivateCoupon.fromJson(Map<String, dynamic> json) =>

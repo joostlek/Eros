@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/activity/activate_coupon.dart';
@@ -127,10 +128,11 @@ class ActivityStorage {
               DateTime.now(), layout, locationId);
           break;
         case Activities.CreateLocation:
-          activity = CreateLayout(doc.documentID, originUser.toShort(),
-              DateTime.now(), layout, locationId);
+          activity = CreateLocation(
+              doc.documentID, originUser.toShort(), DateTime.now(), location);
           break;
       }
+      print(JSON.encode(activity));
       final Map<String, dynamic> data = activity.toJson();
       await tx.set(doc.reference, data);
       return data;

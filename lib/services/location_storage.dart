@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/services/activity_storage.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +34,12 @@ class LocationStorage {
     return result;
   }
 
+  createLocationActivity(Location location) {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.CreateLocation,
+        location: location.toShort());
+  }
+
   Future<Location> create(String name, String street, String houseNumber,
       String city, String country, String photoUrl) async {
     final TransactionHandler createTransaction = (Transaction tx) async {
@@ -53,10 +61,11 @@ class LocationStorage {
       await tx.set(doc.reference, data);
       return data;
     };
-    return Firestore.instance
-        .runTransaction(createTransaction)
-        .then(_fromMap)
-        .catchError((e) {
+    return Firestore.instance.runTransaction(createTransaction).then((data) {
+      Location location = _fromMap(data);
+      createLocationActivity(location);
+      return location;
+    }).catchError((e) {
       print('dart error $e');
       return null;
     });

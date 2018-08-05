@@ -23,4 +23,12 @@ class Location extends Object with _$LocationSerializerMixin {
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
+
+  Map<String, dynamic> toShort() {
+    return {
+      'locationId': locationId,
+      'name': name,
+      'photoUrl': photoUrl,
+    };
+  }
 }

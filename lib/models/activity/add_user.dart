@@ -13,7 +13,8 @@ class AddUser extends Activity with _$AddUserSerializerMixin {
   final String locationId;
 
   AddUser(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.targetUser, this.locationId)
+      this.targetUser, this.locationId,
+      [Activities type])
       : super(messageId, originUser, Activities.AddUser, date);
 
   AddUser.withUser(String messageId, User user, DateTime date, this.targetUser,

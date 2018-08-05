@@ -11,7 +11,8 @@ class PrintCoupon extends Activity with _$PrintCouponSerializerMixin {
   final String locationId;
 
   PrintCoupon(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.coupon, this.locationId)
+      this.coupon, this.locationId,
+      [Activities type])
       : super(messageId, originUser, Activities.PrintCoupon, date);
 
   factory PrintCoupon.fromJson(Map<String, dynamic> json) =>

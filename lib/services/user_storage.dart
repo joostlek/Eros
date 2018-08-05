@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/services/activity_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +40,8 @@ class UserStorage {
   }
 
   Future<User> create(User user) async {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.RegisterUser);
     final TransactionHandler createTransaction = (Transaction tx) async {
       final DocumentSnapshot newDoc =
           await tx.get(userCollection.document(user.uid));

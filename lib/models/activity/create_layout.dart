@@ -11,7 +11,8 @@ class CreateLayout extends Activity with _$CreateLayoutSerializerMixin {
   final String locationId;
 
   CreateLayout(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.layout, this.locationId)
+      this.layout, this.locationId,
+      [Activities type])
       : super(messageId, originUser, Activities.CreateLayout, date);
 
   factory CreateLayout.fromJson(Map<String, dynamic> json) =>

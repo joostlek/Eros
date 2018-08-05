@@ -11,7 +11,8 @@ class RemoveLayout extends Activity with _$RemoveLayoutSerializerMixin {
   final String locationId;
 
   RemoveLayout(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.layout, this.locationId)
+      this.layout, this.locationId,
+      [Activities type])
       : super(messageId, originUser, Activities.CreateCoupon, date);
 
   factory RemoveLayout.fromJson(Map<String, dynamic> json) =>

@@ -8,9 +8,10 @@ part 'create_location.g.dart';
 class CreateLocation extends Activity with _$CreateLocationSerializerMixin {
   final Map<String, dynamic> location;
 
-  CreateLocation(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.location)
-      : super(messageId, originUser, Activities.CreateCoupon, date);
+  CreateLocation(String messageId, Map<String, dynamic> originUser,
+      DateTime date, this.location,
+      [Activities type])
+      : super(messageId, originUser, Activities.CreateLocation, date);
 
   factory CreateLocation.fromJson(Map<String, dynamic> json) =>
       _$CreateLocationFromJson(json);

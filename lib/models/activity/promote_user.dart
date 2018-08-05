@@ -14,7 +14,8 @@ class PromoteUser extends Activity with _$PromoteUserSerializerMixin {
   final String locationId;
 
   PromoteUser(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.targetUser, this.locationId)
+      this.targetUser, this.locationId,
+      [Activities type])
       : super(messageId, originUser, Activities.PromoteUser, date);
 
   PromoteUser.withUser(String messageId, User user, DateTime date,

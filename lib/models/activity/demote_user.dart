@@ -12,13 +12,10 @@ class DemoteUser extends Activity with _$DemoteUserSerializerMixin {
   @JsonKey(name: 'location_id')
   final String locationId;
 
-  DemoteUser(
-    String messageId,
-    Map<String, dynamic> originUser,
-    DateTime date,
-    this.targetUser,
-    this.locationId,
-  ) : super(messageId, originUser, Activities.DemoteUser, date);
+  DemoteUser(String messageId, Map<String, dynamic> originUser, DateTime date,
+      this.targetUser, this.locationId,
+      [Activities type])
+      : super(messageId, originUser, Activities.DemoteUser, date);
 
   DemoteUser.withUser(String messageId, User user, DateTime date,
       this.targetUser, this.locationId)

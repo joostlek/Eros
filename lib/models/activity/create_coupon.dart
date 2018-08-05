@@ -11,7 +11,8 @@ class CreateCoupon extends Activity with _$CreateCouponSerializerMixin {
   final String locationId;
 
   CreateCoupon(String messageId, Map<String, dynamic> originUser, DateTime date,
-      this.coupon, this.locationId)
+      this.coupon, this.locationId,
+      [Activities type])
       : super(messageId, originUser, Activities.CreateCoupon, date);
 
   factory CreateCoupon.fromJson(Map<String, dynamic> json) =>
