@@ -63,7 +63,7 @@ class LocationCard extends StatelessWidget {
       children: <Widget>[
         Divider(),
         FutureBuilder<int>(
-          future: CouponStorage().countCoupons(location),
+          future: CouponStorage(user).countCoupons(location),
           builder: (BuildContext context, AsyncSnapshot<int> result) {
             if (result.hasData && result.data != null) {
               return ListTile(

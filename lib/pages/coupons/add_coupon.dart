@@ -21,7 +21,7 @@ class AddCoupon extends StatefulWidget {
 class AddCouponState extends State<AddCoupon>
     with SingleTickerProviderStateMixin {
   DateTime expires;
-  CouponStorage couponStorage = CouponStorage();
+  CouponStorage couponStorage;
 
   final List<MyTab> myTabs = <MyTab>[
     MyTab(Icon(Icons.card_giftcard), 'Gift', MoneyTab()),
@@ -34,6 +34,7 @@ class AddCouponState extends State<AddCoupon>
   @override
   void initState() {
     super.initState();
+    couponStorage = CouponStorage(widget.user);
     _tabController = TabController(length: myTabs.length, vsync: this);
   }
 

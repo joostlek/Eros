@@ -7,6 +7,7 @@ import 'package:eros/models/discount_coupon.dart';
 import 'package:eros/models/item_coupon.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/money_coupon.dart';
+import 'package:eros/models/user.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -14,8 +15,9 @@ import 'package:charts_flutter/flutter.dart' as charts;
 class CouponAmountChart extends StatefulWidget {
   final Location location;
   final Stream<QuerySnapshot> stream;
+  final User user;
 
-  CouponAmountChart({this.location, this.stream});
+  CouponAmountChart({this.location, this.stream, this.user});
 
   @override
   State<StatefulWidget> createState() => CouponAmountChartState();
@@ -23,7 +25,6 @@ class CouponAmountChart extends StatefulWidget {
 
 class CouponAmountChartState extends State<CouponAmountChart>
     with SingleTickerProviderStateMixin {
-  CouponStorage couponStorage = CouponStorage();
   List<Coupon> coupons = <Coupon>[];
 
   static List<CouponGraph> graphs = <CouponGraph>[
@@ -125,6 +126,7 @@ class CouponAmountChartState extends State<CouponAmountChart>
   @override
   void initState() {
     super.initState();
+    CouponStorage couponStorage = CouponStorage(widget.user);
     _getCoupons();
     _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(() {

@@ -24,7 +24,6 @@ class LocationCouponPage extends StatefulWidget {
 class LocationCouponPageState extends State<LocationCouponPage> {
   ValueNotifier<Filter> _selectedItem =
       new ValueNotifier<Filter>(availableFilters[0]);
-  CouponStorage couponStorage = CouponStorage();
   Stream<QuerySnapshot> stream;
   List<Filter> appliedFilters = <Filter>[];
   static List<Filter> availableFilters = <Filter>[
@@ -52,6 +51,7 @@ class LocationCouponPageState extends State<LocationCouponPage> {
 
   @override
   Widget build(BuildContext context) {
+    CouponStorage couponStorage = CouponStorage(widget.user);
     return Scaffold(
       appBar: AppBar(
         title: Text('Coupons'),

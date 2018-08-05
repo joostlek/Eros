@@ -1,12 +1,17 @@
 import 'dart:async';
 
 import 'package:eros/models/coupon.dart';
+import 'package:eros/models/user.dart';
 import 'package:eros/pages/coupons/coupon_page.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:qrcode_reader/QRCodeReader.dart';
 
 class CameraPage extends StatefulWidget {
+  final User user;
+
+  CameraPage({this.user});
+
   @override
   State<StatefulWidget> createState() {
     return CameraPageState();
@@ -14,7 +19,6 @@ class CameraPage extends StatefulWidget {
 }
 
 class CameraPageState extends State<CameraPage> {
-  CouponStorage couponStorage = CouponStorage();
 
   Future<String> scan() async {
     return QRCodeReader()
@@ -25,6 +29,7 @@ class CameraPageState extends State<CameraPage> {
   }
 
   Future<Map<String, dynamic>> getCoupon() async {
+    CouponStorage couponStorage = CouponStorage(widget.user);
     String couponString = await scan();
     if (couponString == null || couponString == '') {
       return {

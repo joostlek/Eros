@@ -14,7 +14,8 @@ final CollectionReference couponCollection =
     Firestore.instance.collection('coupons');
 
 class CouponStorage {
-  CouponStorage();
+  final User user;
+  CouponStorage(this.user);
 
   static Coupon fromDocument(DocumentSnapshot document) =>
       _fromMap(document.data);

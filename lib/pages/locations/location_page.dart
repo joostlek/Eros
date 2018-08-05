@@ -162,6 +162,7 @@ class LocationPageState extends State<LocationPage> {
                 MaterialPageRoute(
                     builder: (context) => LocationStatsPage(
                           location: widget.location,
+                          user: widget.user,
                         )));
           },
           trailing: Icon(Icons.chevron_right)),

@@ -17,8 +17,9 @@ import 'package:flutter/services.dart';
 class CouponPage extends StatefulWidget {
   final Coupon coupon;
   final bool newCoupon;
+  final User user;
 
-  CouponPage(this.coupon, this.newCoupon);
+  CouponPage(this.coupon, this.newCoupon, {this.user});
 
   @override
   State<StatefulWidget> createState() {
@@ -29,8 +30,8 @@ class CouponPage extends StatefulWidget {
 class CouponPageState extends State<CouponPage> {
   static const PRINT_CHANNEL = const MethodChannel('eros.jtosti.nl/print');
   UserStorage userStorage = UserStorage();
+  CouponStorage couponStorage;
 
-  CouponStorage couponStorage = CouponStorage();
   QuerySnapshot couponLayouts;
 
   getStorage() async {
@@ -289,13 +290,14 @@ class CouponPageState extends State<CouponPage> {
     UserStorage userStorage = UserStorage.forFirebaseUser(
         firebaseUser: await FirebaseAuth.instance.currentUser());
     User user = await userStorage.getUser();
-    user.scannedCoupons[widget.coupon.couponId] == widget.coupon.toChild();
+    user.scannedCoupons[widget.coupon.couponId] == widget.coupon.toShort();
     userStorage.update(user);
   }
 
   @override
   void initState() {
     super.initState();
+    couponStorage = CouponStorage(widget.user);
     getStorage();
 //    if (widget.newCoupon == true) {
 //      addRecentCoupon();
