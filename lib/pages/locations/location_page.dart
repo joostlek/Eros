@@ -3,6 +3,7 @@ import 'package:eros/models/user.dart';
 import 'package:eros/pages/locations/location_coupon_layout_page.dart';
 import 'package:eros/pages/locations/location_coupon_page.dart';
 import 'package:eros/pages/locations/location_employee_page.dart';
+import 'package:eros/pages/locations/location_recent_activity_page.dart';
 import 'package:eros/pages/locations/stats/location_stats_page.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +88,7 @@ class LocationPageState extends State<LocationPage> {
           getCouponsCard(),
           getLayoutCard(),
           getStatsCard(),
+          getActivityCard(),
         ],
       );
     } else if (widget.location.managers[widget.user.uid] == true) {
@@ -163,6 +165,24 @@ class LocationPageState extends State<LocationPage> {
                     builder: (context) => LocationStatsPage(
                           location: widget.location,
                           user: widget.user,
+                        )));
+          },
+          trailing: Icon(Icons.chevron_right)),
+    );
+  }
+
+  Card getActivityCard() {
+    return Card(
+      child: ListTile(
+          title: Text('Recent activity'),
+          leading: Icon(Icons.settings_backup_restore),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LocationRecentActivityPage(
+                          widget.user,
+                          widget.location,
                         )));
           },
           trailing: Icon(Icons.chevron_right)),

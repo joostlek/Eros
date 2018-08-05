@@ -46,6 +46,6 @@ abstract class _$CouponSerializerMixin {
         'name': name,
         'activated': activated,
         'expires': expires?.toIso8601String(),
-        'type': type == null ? null : type.toString().split('.')[1]
+        'type': type?.toString()?.split('.')?.last
       };
 }

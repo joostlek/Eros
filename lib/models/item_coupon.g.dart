@@ -6,25 +6,26 @@ part of 'item_coupon.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ItemCoupon _$ItemCouponFromJson(Map<String, dynamic> json) => new ItemCoupon(
-    json['coupon_id'] as String,
-    json['location_id'] as String,
-    json['name'] as String,
-    json['activated'] as bool,
-    json['activated_at'] == null
-        ? null
-        : DateTime.parse(json['activated_at'] as String),
-    json['activated_by'] as String,
-    json['expires'] == null ? null : DateTime.parse(json['expires'] as String),
-    json['issued_at'] == null
-        ? null
-        : DateTime.parse(json['issued_at'] as String),
-    json['issued_by'] as String,
-    json['type'] == null
-        ? null
-        : Coupons.values
-            .singleWhere((x) => x.toString() == 'Coupons.${json['type']}'),
-    json['item'] as String);
+ItemCoupon _$ItemCouponFromJson(Map<String, dynamic> json) {
+  return new ItemCoupon(
+      json['coupon_id'] as String,
+      json['location_id'] as String,
+      json['name'] as String,
+      json['activated'] as bool,
+      json['activated_at'] == null
+          ? null
+          : DateTime.parse(json['activated_at'] as String),
+      json['activated_by'] as String,
+      json['expires'] == null
+          ? null
+          : DateTime.parse(json['expires'] as String),
+      json['issued_at'] == null
+          ? null
+          : DateTime.parse(json['issued_at'] as String),
+      json['issued_by'] as String,
+      $enumDecodeNullable('Coupons', Coupons.values, json['type'] as String),
+      json['item'] as String);
+}
 
 abstract class _$ItemCouponSerializerMixin {
   String get couponId;
@@ -48,7 +49,7 @@ abstract class _$ItemCouponSerializerMixin {
         'name': name,
         'activated': activated,
         'expires': expires?.toIso8601String(),
-        'type': type == null ? null : type.toString().split('.')[1],
+        'type': type?.toString()?.split('.')?.last,
         'item': item
       };
 }

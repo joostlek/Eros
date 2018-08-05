@@ -33,8 +33,8 @@ class ExampleState extends State<Example> {
 
   @override
   void initState() {
-    super.initState();
     _checkCurrentUser();
+    super.initState();
   }
 
   @override
@@ -77,13 +77,14 @@ class ExampleState extends State<Example> {
   }
 
   Future<User> getUser(FirebaseUser firebaseUser) async {
-    UserStorage userStorage = UserStorage.forFirebaseUser(firebaseUser: firebaseUser);
+    UserStorage userStorage =
+        UserStorage.forFirebaseUser(firebaseUser: firebaseUser);
     if (!(await userStorage.isUserStored())) {
       User user = await userStorage.create(User.fromFirebaseUser(firebaseUser));
       _createUserActivity(user);
       return user;
     }
-    return await userStorage.getUser();
+    return userStorage.getUser();
   }
 
   _createUserActivity(User user) {

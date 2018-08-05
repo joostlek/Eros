@@ -6,25 +6,26 @@ part of 'money_coupon.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MoneyCoupon _$MoneyCouponFromJson(Map<String, dynamic> json) => new MoneyCoupon(
-    json['coupon_id'] as String,
-    json['location_id'] as String,
-    json['name'] as String,
-    json['activated'] as bool,
-    json['activated_at'] == null
-        ? null
-        : DateTime.parse(json['activated_at'] as String),
-    json['activated_by'] as String,
-    json['expires'] == null ? null : DateTime.parse(json['expires'] as String),
-    json['issued_at'] == null
-        ? null
-        : DateTime.parse(json['issued_at'] as String),
-    json['issued_by'] as String,
-    json['type'] == null
-        ? null
-        : Coupons.values
-            .singleWhere((x) => x.toString() == 'Coupons.${json['type']}'),
-    (json['value'] as num)?.toDouble());
+MoneyCoupon _$MoneyCouponFromJson(Map<String, dynamic> json) {
+  return new MoneyCoupon(
+      json['coupon_id'] as String,
+      json['location_id'] as String,
+      json['name'] as String,
+      json['activated'] as bool,
+      json['activated_at'] == null
+          ? null
+          : DateTime.parse(json['activated_at'] as String),
+      json['activated_by'] as String,
+      json['expires'] == null
+          ? null
+          : DateTime.parse(json['expires'] as String),
+      json['issued_at'] == null
+          ? null
+          : DateTime.parse(json['issued_at'] as String),
+      json['issued_by'] as String,
+      $enumDecodeNullable('Coupons', Coupons.values, json['type'] as String),
+      (json['value'] as num)?.toDouble());
+}
 
 abstract class _$MoneyCouponSerializerMixin {
   String get couponId;
@@ -48,7 +49,7 @@ abstract class _$MoneyCouponSerializerMixin {
         'name': name,
         'activated': activated,
         'expires': expires?.toIso8601String(),
-        'type': type == null ? null : type.toString().split('.')[1],
+        'type': type?.toString()?.split('.')?.last,
         'value': value
       };
 }

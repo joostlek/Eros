@@ -24,7 +24,7 @@ class ActivityStorage {
 
   ActivityStorage(this.originUser);
 
-  static Activity _fromDocument(DocumentSnapshot doc) => _fromMap(doc.data);
+  static Activity fromDocument(DocumentSnapshot doc) => _fromMap(doc.data);
 
   static Activity _fromMap(Map<String, dynamic> data) {
     switch (data['type'] == null
@@ -54,7 +54,7 @@ class ActivityStorage {
       case Activities.CreateLocation:
         return CreateLocation.fromJson(data);
     }
-    return Activity.fromJson(data);
+    return null;
   }
 
   Future<Activity> createActivity(
@@ -143,5 +143,18 @@ class ActivityStorage {
       print('dart error $e');
       return null;
     });
+  }
+
+  Stream<QuerySnapshot> list(String locationId, {int limit, int offset}) {
+    Stream<QuerySnapshot> snapshots = activityCollection
+        .where('location_id', isEqualTo: locationId)
+        .snapshots();
+    if (offset != null) {
+      snapshots = snapshots.skip(offset);
+    }
+    if (limit != null) {
+      snapshots = snapshots.take(limit);
+    }
+    return snapshots;
   }
 }

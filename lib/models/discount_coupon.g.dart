@@ -6,28 +6,26 @@ part of 'discount_coupon.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DiscountCoupon _$DiscountCouponFromJson(Map<String, dynamic> json) =>
-    new DiscountCoupon(
-        json['coupon_id'] as String,
-        json['location_id'] as String,
-        json['name'] as String,
-        json['activated'] as bool,
-        json['activated_at'] == null
-            ? null
-            : DateTime.parse(json['activated_at'] as String),
-        json['activated_by'] as String,
-        json['expires'] == null
-            ? null
-            : DateTime.parse(json['expires'] as String),
-        json['issued_at'] == null
-            ? null
-            : DateTime.parse(json['issued_at'] as String),
-        json['issued_by'] as String,
-        json['type'] == null
-            ? null
-            : Coupons.values
-                .singleWhere((x) => x.toString() == 'Coupons.${json['type']}'),
-        (json['discount'] as num)?.toDouble());
+DiscountCoupon _$DiscountCouponFromJson(Map<String, dynamic> json) {
+  return new DiscountCoupon(
+      json['coupon_id'] as String,
+      json['location_id'] as String,
+      json['name'] as String,
+      json['activated'] as bool,
+      json['activated_at'] == null
+          ? null
+          : DateTime.parse(json['activated_at'] as String),
+      json['activated_by'] as String,
+      json['expires'] == null
+          ? null
+          : DateTime.parse(json['expires'] as String),
+      json['issued_at'] == null
+          ? null
+          : DateTime.parse(json['issued_at'] as String),
+      json['issued_by'] as String,
+      $enumDecodeNullable('Coupons', Coupons.values, json['type'] as String),
+      (json['discount'] as num)?.toDouble());
+}
 
 abstract class _$DiscountCouponSerializerMixin {
   String get couponId;
@@ -51,7 +49,7 @@ abstract class _$DiscountCouponSerializerMixin {
         'name': name,
         'activated': activated,
         'expires': expires?.toIso8601String(),
-        'type': type == null ? null : type.toString().split('.')[1],
+        'type': type?.toString()?.split('.')?.last,
         'discount': discount
       };
 }
