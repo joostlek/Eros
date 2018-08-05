@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/coupon.dart';
 import 'package:eros/models/coupon_layout.dart';
 import 'package:eros/models/discount_coupon.dart';
 import 'package:eros/models/item_coupon.dart';
 import 'package:eros/models/money_coupon.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/services/activity_storage.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:eros/util.dart';
@@ -33,6 +35,12 @@ class CouponPageState extends State<CouponPage> {
   CouponStorage couponStorage;
 
   QuerySnapshot couponLayouts;
+
+  _printCouponActivity() {
+    ActivityStorage activityStorage = ActivityStorage(widget.user);
+    activityStorage.createActivity(Activities.PrintCoupon,
+        coupon: widget.coupon.toShort(), locationId: widget.coupon.locationId);
+  }
 
   getStorage() async {
     this.userStorage = UserStorage.forFirebaseUser(
@@ -270,6 +278,7 @@ class CouponPageState extends State<CouponPage> {
   }
 
   Future<bool> _print(CouponLayout couponLayout) async {
+    _printCouponActivity();
     try {
       final bool result = await PRINT_CHANNEL.invokeMethod('print', {
         'html': couponLayout.html

@@ -34,10 +34,34 @@ class LocationStorage {
     return result;
   }
 
-  createLocationActivity(Location location) {
+  _createLocationActivity(Location location) {
     ActivityStorage activityStorage = ActivityStorage(user);
     activityStorage.createActivity(Activities.CreateLocation,
         location: location.toShort());
+  }
+
+  _promoteUserActivity(User targetUser, Location location) {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.PromoteUser,
+        targetUser: targetUser.toShort(), locationId: location.locationId);
+  }
+
+  _demoteUserActivity(User targetUser, Location location) {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.DemoteUser,
+        targetUser: targetUser.toShort(), locationId: location.locationId);
+  }
+
+  _addUserActivity(User targetUser, Location location) {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.AddUser,
+        targetUser: targetUser.toShort(), locationId: location.locationId);
+  }
+
+  _removeUserActivity(User targetUser, Location location) {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.RemoveUser,
+        targetUser: targetUser.toShort(), locationId: location.locationId);
   }
 
   Future<Location> create(String name, String street, String houseNumber,
@@ -63,7 +87,7 @@ class LocationStorage {
     };
     return Firestore.instance.runTransaction(createTransaction).then((data) {
       Location location = _fromMap(data);
-      createLocationActivity(location);
+      _createLocationActivity(location);
       return location;
     }).catchError((e) {
       print('dart error $e');
@@ -110,6 +134,7 @@ class LocationStorage {
   Future<bool> promoteUser(Location location, User givenUser) async {
     location.managers[givenUser.uid] = true;
     givenUser.manager[location.locationId] = true;
+    _promoteUserActivity(givenUser, location);
     return await update(location) ==
         await UserStorage.forUser(user: user).update(givenUser);
   }
@@ -117,6 +142,7 @@ class LocationStorage {
   Future<bool> demoteUser(Location location, User givenUser) async {
     location.managers.remove(givenUser.uid);
     givenUser.manager.remove(location.locationId);
+    _demoteUserActivity(givenUser, location);
     return await update(location) ==
         await UserStorage.forUser(user: user).update(givenUser);
   }
@@ -168,6 +194,7 @@ class LocationStorage {
     location.employees.remove(user.uid);
     user.locations.remove(location.locationId);
     user.manager.remove(location.locationId);
+    _removeUserActivity(user, location);
     return await update(location) ==
         await UserStorage.forUser(user: user).update(user);
   }
@@ -208,6 +235,7 @@ class LocationStorage {
     }
     location.employees[user.uid] = true;
     user.locations[location.locationId] = true;
+    _addUserActivity(user, location);
     return {
       'success': await update(location) ==
           await UserStorage.forUser(user: user).update(user),

@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:eros/eros.dart';
 import 'package:eros/login.dart';
+import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/services/activity_storage.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
@@ -74,11 +76,18 @@ class ExampleState extends State<Example> {
     });
   }
 
-  Future<User> getUser(FirebaseUser user) async {
-    UserStorage userStorage = UserStorage.forFirebaseUser(firebaseUser: user);
+  Future<User> getUser(FirebaseUser firebaseUser) async {
+    UserStorage userStorage = UserStorage.forFirebaseUser(firebaseUser: firebaseUser);
     if (!(await userStorage.isUserStored())) {
-      return userStorage.create(User.fromFirebaseUser(user));
+      User user = await userStorage.create(User.fromFirebaseUser(firebaseUser));
+      _createUserActivity(user);
+      return user;
     }
     return await userStorage.getUser();
+  }
+
+  _createUserActivity(User user) {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.RegisterUser);
   }
 }
