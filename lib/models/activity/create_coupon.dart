@@ -1,5 +1,6 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'create_coupon.g.dart';
@@ -17,4 +18,13 @@ class CreateCoupon extends Activity with _$CreateCouponSerializerMixin {
 
   factory CreateCoupon.fromJson(Map<String, dynamic> json) =>
       _$CreateCouponFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title: Text('${originUser['displayName']} created ${coupon['name']}'),
+      ),
+    );
+  }
 }

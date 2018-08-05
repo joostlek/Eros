@@ -1,6 +1,7 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
 import 'package:eros/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'promote_user.g.dart';
@@ -24,4 +25,15 @@ class PromoteUser extends Activity with _$PromoteUserSerializerMixin {
 
   factory PromoteUser.fromJson(Map<String, dynamic> json) =>
       _$PromoteUserFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title:
+            Text('${originUser['displayName']} promoted ${targetUser['name']}'),
+        trailing: Image.network(targetUser['photoUrl']),
+      ),
+    );
+  }
 }

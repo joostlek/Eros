@@ -1,6 +1,7 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
 import 'package:eros/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'demote_user.g.dart';
@@ -23,4 +24,14 @@ class DemoteUser extends Activity with _$DemoteUserSerializerMixin {
 
   factory DemoteUser.fromJson(Map<String, dynamic> json) =>
       _$DemoteUserFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title: Text('${originUser['displayName']} demoted ${targetUser['displayName']}'),
+        trailing: Image.network(targetUser['photoUrl']),
+      ),
+    );
+  }
 }

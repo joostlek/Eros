@@ -1,5 +1,6 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'remove_layout.g.dart';
@@ -17,4 +18,13 @@ class RemoveLayout extends Activity with _$RemoveLayoutSerializerMixin {
 
   factory RemoveLayout.fromJson(Map<String, dynamic> json) =>
       _$RemoveLayoutFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title: Text('${originUser['displayName']} removed ${layout['name']}'),
+      ),
+    );
+  }
 }

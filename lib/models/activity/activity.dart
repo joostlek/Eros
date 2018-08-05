@@ -1,11 +1,12 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'activity.g.dart';
 
 @JsonSerializable()
-class Activity extends Object with _$ActivitySerializerMixin {
+abstract class Activity extends Object with _$ActivitySerializerMixin {
   @JsonKey(name: 'message_id')
   final String messageId;
   @JsonKey(name: 'origin_user')
@@ -29,4 +30,6 @@ class Activity extends Object with _$ActivitySerializerMixin {
 
   factory Activity.fromJson(Map<String, dynamic> json) =>
       _$ActivityFromJson(json);
+
+  Card toCard();
 }

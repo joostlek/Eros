@@ -1,6 +1,7 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
 import 'package:eros/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'register_user.g.dart';
@@ -16,4 +17,13 @@ class RegisterUser extends Activity with _$RegisterUserSerializerMixin {
 
   factory RegisterUser.fromJson(Map<String, dynamic> json) =>
       _$RegisterUserFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title: Text('${originUser['displayName']} registered'),
+      ),
+    );
+  }
 }

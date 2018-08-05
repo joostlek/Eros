@@ -1,5 +1,6 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'create_layout.g.dart';
@@ -17,4 +18,13 @@ class CreateLayout extends Activity with _$CreateLayoutSerializerMixin {
 
   factory CreateLayout.fromJson(Map<String, dynamic> json) =>
       _$CreateLayoutFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title: Text('${originUser['displayName']} created ${layout['name']}'),
+      ),
+    );
+  }
 }

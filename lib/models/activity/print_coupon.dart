@@ -1,5 +1,6 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'print_coupon.g.dart';
@@ -17,4 +18,13 @@ class PrintCoupon extends Activity with _$PrintCouponSerializerMixin {
 
   factory PrintCoupon.fromJson(Map<String, dynamic> json) =>
       _$PrintCouponFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title: Text('${originUser['displayName']} printed ${coupon['name']}'),
+      ),
+    );
+  }
 }

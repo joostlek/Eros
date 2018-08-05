@@ -1,6 +1,7 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
 import 'package:eros/models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'add_user.g.dart';
@@ -23,4 +24,14 @@ class AddUser extends Activity with _$AddUserSerializerMixin {
 
   factory AddUser.fromJson(Map<String, dynamic> json) =>
       _$AddUserFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title: Text('${originUser['displayName']} added ${targetUser['displayName']}'),
+        trailing: Image.network(targetUser['photoUrl']),
+      ),
+    );
+  }
 }

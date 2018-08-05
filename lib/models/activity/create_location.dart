@@ -1,5 +1,6 @@
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/activity/activity.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'create_location.g.dart';
@@ -15,4 +16,15 @@ class CreateLocation extends Activity with _$CreateLocationSerializerMixin {
 
   factory CreateLocation.fromJson(Map<String, dynamic> json) =>
       _$CreateLocationFromJson(json);
+
+  Card toCard() {
+    return Card(
+      child: ListTile(
+        leading: Image.network(originUser['photoUrl']),
+        title: Text(
+            '${originUser['displayName']} created location ${location['name']}'),
+        trailing: Image.network(location['photoUrl']),
+      ),
+    );
+  }
 }
