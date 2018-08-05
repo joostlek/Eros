@@ -57,7 +57,6 @@ class ActivityStorage {
   }
 
   Future<Activity> createActivity(
-    User originUser,
     Activities type, {
     String locationId,
     Map<String, dynamic> coupon,
