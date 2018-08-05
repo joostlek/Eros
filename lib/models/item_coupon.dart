@@ -31,7 +31,7 @@ class ItemCoupon extends Coupon with _$ItemCouponSerializerMixin {
     return {
       'name': this.name,
       'coupon_id': this.couponId,
-      'type': this.type,
+      'type': type == null ? null : type.toString().split('.')[1],
       'value': this.item,
     };
   }

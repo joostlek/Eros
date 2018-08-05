@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eros/models/activity/activities.dart';
+import 'package:eros/models/activity/activity.dart';
 import 'package:eros/models/coupons.dart';
 import 'package:eros/models/discount_coupon.dart';
 import 'package:eros/models/item_coupon.dart';
@@ -9,6 +11,7 @@ import 'package:eros/models/location.dart';
 import 'package:eros/models/money_coupon.dart';
 import 'package:eros/models/coupon.dart';
 import 'package:eros/models/user.dart';
+import 'package:eros/services/activity_storage.dart';
 
 final CollectionReference couponCollection =
     Firestore.instance.collection('coupons');
@@ -53,6 +56,18 @@ class CouponStorage {
     return result;
   }
 
+  _createCouponActivity(Coupon coupon, String locationId) {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.CreateCoupon,
+        coupon: coupon.toShort(), locationId: locationId);
+  }
+
+  _activateCouponActivity(Coupon coupon) {
+    ActivityStorage activityStorage = ActivityStorage(user);
+    activityStorage.createActivity(Activities.ActivateCoupon,
+        coupon: coupon.toShort(), locationId: coupon.locationId);
+  }
+
   Future<ItemCoupon> createItemCoupon(
       String name, User user, Location location, String item,
       [DateTime expires]) async {
@@ -74,10 +89,11 @@ class CouponStorage {
       await tx.set(doc.reference, data);
       return data;
     };
-    return Firestore.instance
-        .runTransaction(createTransaction)
-        .then(_fromItemCouponMap)
-        .catchError((e) {
+    return Firestore.instance.runTransaction(createTransaction).then((data) {
+      ItemCoupon itemCoupon = _fromItemCouponMap(data);
+      _createCouponActivity(itemCoupon, location.locationId);
+      return itemCoupon;
+    }).catchError((e) {
       print('dart error $e');
       return null;
     });
@@ -104,10 +120,11 @@ class CouponStorage {
       await tx.set(doc.reference, data);
       return data;
     };
-    return Firestore.instance
-        .runTransaction(createTransaction)
-        .then(_fromMoneyCouponMap)
-        .catchError((e) {
+    return Firestore.instance.runTransaction(createTransaction).then((data) {
+      MoneyCoupon moneyCoupon = _fromMoneyCouponMap(data);
+      _createCouponActivity(moneyCoupon, location.locationId);
+      return moneyCoupon;
+    }).catchError((e) {
       print('dart error $e');
       return null;
     });
@@ -134,10 +151,11 @@ class CouponStorage {
       await tx.set(doc.reference, data);
       return data;
     };
-    return Firestore.instance
-        .runTransaction(createTransaction)
-        .then(_fromDiscountCouponMap)
-        .catchError((e) {
+    return Firestore.instance.runTransaction(createTransaction).then((data) {
+      DiscountCoupon discountCoupon = _fromDiscountCouponMap(data);
+      _createCouponActivity(discountCoupon, location.locationId);
+      return discountCoupon;
+    }).catchError((e) {
       print('dart error $e');
       return null;
     });
@@ -214,6 +232,7 @@ class CouponStorage {
     coupon.activatedAt = DateTime.now();
     coupon.activated = true;
     coupon.activatedBy = user.uid;
+    _activateCouponActivity(coupon);
     return update(coupon);
   }
 

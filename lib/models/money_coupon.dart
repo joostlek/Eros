@@ -31,7 +31,7 @@ class MoneyCoupon extends Coupon with _$MoneyCouponSerializerMixin {
     return {
       'name': this.name,
       'coupon_id': this.couponId,
-      'type': this.type,
+      'type': type == null ? null : type.toString().split('.')[1],
       'value': this.value,
     };
   }
