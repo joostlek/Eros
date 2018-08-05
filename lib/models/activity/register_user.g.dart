@@ -9,7 +9,9 @@ part of 'register_user.dart';
 RegisterUser _$RegisterUserFromJson(Map<String, dynamic> json) {
   return new RegisterUser(
       json['message_id'] as String,
-      json['origin_user'] as Map<String, dynamic>,
+      json['origin_user'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['origin_user'] as Map),
       json['date'] == null ? null : DateTime.parse(json['date'] as String),
       $enumDecodeNullable(
           'Activities', Activities.values, json['type'] as String));

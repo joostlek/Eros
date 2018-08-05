@@ -20,10 +20,19 @@ class CreateLocation extends Activity with _$CreateLocationSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text(
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        title: Text('Create location'),
+        subtitle: Text(
             '${originUser['displayName']} created location ${location['name']}'),
-        trailing: Image.network(location['photoUrl']),
+        trailing: location['photoUrl'] != null
+            ? Image.network(
+                location['photoUrl'],
+                width: 36.0,
+              )
+            : Icon(Icons.store),
       ),
     );
   }

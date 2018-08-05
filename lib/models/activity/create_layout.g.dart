@@ -9,9 +9,13 @@ part of 'create_layout.dart';
 CreateLayout _$CreateLayoutFromJson(Map<String, dynamic> json) {
   return new CreateLayout(
       json['message_id'] as String,
-      json['origin_user'] as Map<String, dynamic>,
+      json['origin_user'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['origin_user'] as Map),
       json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      json['layout'] as Map<String, dynamic>,
+      json['layout'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['layout'] as Map),
       json['location_id'] as String,
       $enumDecodeNullable(
           'Activities', Activities.values, json['type'] as String));

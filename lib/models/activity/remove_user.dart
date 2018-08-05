@@ -28,10 +28,18 @@ class RemoveUser extends Activity with _$RemoveUserSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text(
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        isThreeLine: true,
+        title: Text('Removed user'),
+        subtitle: Text(
             '${originUser['displayName']} removed ${targetUser['displayName']}'),
-        trailing: Image.network(targetUser['photoUrl']),
+        trailing: Image.network(
+          targetUser['photoUrl'],
+          width: 36.0,
+        ),
       ),
     );
   }

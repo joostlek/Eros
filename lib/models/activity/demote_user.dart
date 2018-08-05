@@ -28,9 +28,18 @@ class DemoteUser extends Activity with _$DemoteUserSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text('${originUser['displayName']} demoted ${targetUser['displayName']}'),
-        trailing: Image.network(targetUser['photoUrl']),
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        title: Text('Demotion'),
+        isThreeLine: true,
+        subtitle: Text(
+            '${originUser['displayName']} demoted ${targetUser['displayName']}'),
+        trailing: Image.network(
+          targetUser['photoUrl'],
+          width: 36.0,
+        ),
       ),
     );
   }

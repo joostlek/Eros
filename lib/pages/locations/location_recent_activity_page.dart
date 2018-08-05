@@ -20,6 +20,9 @@ class LocationRecentActivityPageState
   Widget build(BuildContext context) {
     ActivityStorage activityStorage = ActivityStorage(widget.user);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Recent activities'),
+      ),
       body: StreamBuilder<QuerySnapshot>(
           stream: activityStorage.list(widget.location.locationId),
           builder:
@@ -28,8 +31,8 @@ class LocationRecentActivityPageState
               return ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (BuildContext context, int i) {
-                    Activity activity = ActivityStorage
-                        .fromDocument(snapshot.data.documents[i]);
+                    Activity activity = ActivityStorage.fromDocument(
+                        snapshot.data.documents.reversed.toList()[i]);
                     return activity.toCard();
                   });
             } else {

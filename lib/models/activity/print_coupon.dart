@@ -22,8 +22,14 @@ class PrintCoupon extends Activity with _$PrintCouponSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text('${originUser['displayName']} printed ${coupon['name']}'),
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        title: Text('Printed coupon'),
+        subtitle:
+            Text('${originUser['displayName']} printed ${coupon['name']}'),
+        trailing: Icon(Icons.local_activity),
       ),
     );
   }

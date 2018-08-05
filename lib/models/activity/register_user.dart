@@ -21,8 +21,9 @@ class RegisterUser extends Activity with _$RegisterUserSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text('${originUser['displayName']} registered'),
+        leading: Image.network(originUser['photoUrl'], width: 36.0,),
+        title: Text('User registered'),
+        subtitle: Text('${originUser['displayName']} registered'),
       ),
     );
   }

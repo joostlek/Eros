@@ -9,9 +9,13 @@ part of 'activate_coupon.dart';
 ActivateCoupon _$ActivateCouponFromJson(Map<String, dynamic> json) {
   return new ActivateCoupon(
       json['message_id'] as String,
-      json['origin_user'] as Map<String, dynamic>,
+      json['origin_user'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['origin_user'] as Map),
       json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      json['coupon'] as Map<String, dynamic>,
+      json['coupon'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['coupon'] as Map),
       json['location_id'] as String,
       $enumDecodeNullable(
           'Activities', Activities.values, json['type'] as String));

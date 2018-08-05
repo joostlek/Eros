@@ -29,10 +29,18 @@ class PromoteUser extends Activity with _$PromoteUserSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title:
-            Text('${originUser['displayName']} promoted ${targetUser['name']}'),
-        trailing: Image.network(targetUser['photoUrl']),
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        title: Text('Promotion'),
+        isThreeLine: true,
+        subtitle: Text(
+            '${originUser['displayName']} promoted ${targetUser['displayName']}'),
+        trailing: Image.network(
+          targetUser['photoUrl'],
+          width: 36.0,
+        ),
       ),
     );
   }

@@ -9,9 +9,13 @@ part of 'demote_user.dart';
 DemoteUser _$DemoteUserFromJson(Map<String, dynamic> json) {
   return new DemoteUser(
       json['message_id'] as String,
-      json['origin_user'] as Map<String, dynamic>,
+      json['origin_user'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['origin_user'] as Map),
       json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      json['target_user'] as Map<String, dynamic>,
+      json['target_user'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['target_user'] as Map),
       json['location_id'] as String,
       $enumDecodeNullable(
           'Activities', Activities.values, json['type'] as String));

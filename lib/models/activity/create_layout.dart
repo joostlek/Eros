@@ -22,8 +22,14 @@ class CreateLayout extends Activity with _$CreateLayoutSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text('${originUser['displayName']} created ${layout['name']}'),
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        subtitle:
+            Text('${originUser['displayName']} created ${layout['name']}'),
+        title: Text('Created layout'),
+        trailing: Icon(Icons.straighten),
       ),
     );
   }

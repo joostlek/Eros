@@ -22,8 +22,14 @@ class RemoveLayout extends Activity with _$RemoveLayoutSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text('${originUser['displayName']} removed ${layout['name']}'),
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        title: Text('Removed layout'),
+        subtitle:
+            Text('${originUser['displayName']} removed ${layout['name']}'),
+        trailing: Icon(Icons.straighten),
       ),
     );
   }

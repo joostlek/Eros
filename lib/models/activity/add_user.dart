@@ -28,9 +28,17 @@ class AddUser extends Activity with _$AddUserSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text('${originUser['displayName']} added ${targetUser['displayName']}'),
-        trailing: Image.network(targetUser['photoUrl']),
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        title: Text('Add user'),
+        subtitle: Text(
+            '${originUser['displayName']} added ${targetUser['displayName']}'),
+        trailing: Image.network(
+          targetUser['photoUrl'],
+          width: 36.0,
+        ),
       ),
     );
   }

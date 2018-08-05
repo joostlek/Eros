@@ -22,8 +22,14 @@ class ActivateCoupon extends Activity with _$ActivateCouponSerializerMixin {
   Card toCard() {
     return Card(
       child: ListTile(
-        leading: Image.network(originUser['photoUrl']),
-        title: Text('${originUser['displayName']} activated ${coupon['name']}'),
+        leading: Image.network(
+          originUser['photoUrl'],
+          width: 36.0,
+        ),
+        title: Text('Activation'),
+        subtitle:
+            Text('${originUser['displayName']} activated ${coupon['name']}'),
+        trailing: Icon(Icons.local_activity),
       ),
     );
   }
