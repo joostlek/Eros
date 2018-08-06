@@ -47,14 +47,21 @@ class LocationsState extends State<Locations> {
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot> querySnapshot) {
               if (querySnapshot.hasData && querySnapshot.data != null) {
-                return ListView.builder(
-                    itemCount: querySnapshot.data.documents.length,
-                    itemBuilder: (context, index) {
-                      DocumentSnapshot ds = querySnapshot.data.documents[index];
-                      return createCard(
-                          user: locationStorage.user,
-                          location: LocationStorage.fromDocument(ds));
-                    });
+                if (querySnapshot.data.documents.length > 0) {
+                  return ListView.builder(
+                      itemCount: querySnapshot.data.documents.length,
+                      itemBuilder: (context, index) {
+                        DocumentSnapshot ds =
+                            querySnapshot.data.documents[index];
+                        return createCard(
+                            user: locationStorage.user,
+                            location: LocationStorage.fromDocument(ds));
+                      });
+                } else {
+                  return Center(
+                    child: Text('No locations found!'),
+                  );
+                }
               } else {
                 return Center(
                   child: CircularProgressIndicator(),
