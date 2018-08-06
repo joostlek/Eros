@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/pages/dashboard/location_card.dart';
+import 'package:eros/pages/dashboard/scan_qr_code_card.dart';
 import 'package:eros/pages/locations/locations.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
@@ -45,26 +46,20 @@ class DashboardState extends State<Dashboard> {
                         getHeader(locationStorage),
                       ];
                       if (locations.data.documents.length == 0) {
-                        items.add(Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                'Let your boss scan your QR code to add you to his location'),
-                          ),
-                        ));
+                        items.add(ScanQrCodeCard(widget.user));
                       }
                       items.addAll(locations.data.documents);
                       return ListView.builder(
                           itemCount: items.length,
                           itemBuilder: (context, index) {
-                            if (!(items[index] is Card)) {
+                            if (index == 0) {
+                              return items[index];
+                            } else if (!(items[index] is ScanQrCodeCard)) {
                               return LocationCard(
                                 location:
                                     LocationStorage.fromDocument(items[index]),
                                 user: locationStorage.user,
                               );
-                            } else if (index == 0) {
-                              return items[index];
                             } else {
                               return Dismissible(
                                 child: items[index],
