@@ -295,22 +295,11 @@ class CouponPageState extends State<CouponPage> {
     return false;
   }
 
-  addRecentCoupon() async {
-    UserStorage userStorage = UserStorage.forFirebaseUser(
-        firebaseUser: await FirebaseAuth.instance.currentUser());
-    User user = await userStorage.getUser();
-    user.scannedCoupons[widget.coupon.couponId] == widget.coupon.toShort();
-    userStorage.update(user);
-  }
-
   @override
   void initState() {
     super.initState();
     couponStorage = CouponStorage(widget.user);
     getStorage();
-//    if (widget.newCoupon == true) {
-//      addRecentCoupon();
-//    }
   }
 
   String getValue() {

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/pages/dashboard/location_card.dart';
-import 'package:eros/pages/dashboard/recent_scanned_coupons.dart';
 import 'package:eros/pages/locations/locations.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
@@ -104,20 +103,20 @@ class DashboardState extends State<Dashboard> {
                           )));
             },
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.local_activity),
-            title: Text('Scanned coupons'),
-            trailing: Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => RecentScannedCoupons(
-                            user: locationStorage.user,
-                          )));
-            },
-          )
+//          Divider(),
+//          ListTile(
+//            leading: Icon(Icons.local_activity),
+//            title: Text('Scanned coupons'),
+//            trailing: Icon(Icons.chevron_right),
+//            onTap: () {
+//              Navigator.push(
+//                  context,
+//                  MaterialPageRoute(
+//                      builder: (context) => RecentScannedCoupons(
+//                            user: locationStorage.user,
+//                          )));
+//            },
+//          )
         ],
       ),
     );
