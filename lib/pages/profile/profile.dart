@@ -61,36 +61,11 @@ class ProfileState extends State<Profile> {
             ),
           ),
           Center(
-            child: Text(
-              widget.user.displayName,
-              textScaleFactor: 1.5,
+            child: ListTile(
+              title: Center(child: Text(widget.user.displayName)),
+              subtitle: Center(child: Text(widget.user.email)),
+//              textScaleFactor: 1.5,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-                child: Column(
-              children: <Widget>[
-                const ListTile(
-                  leading: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Icon(Icons.camera_alt),
-                  ),
-                  title: const Text('Amount of coupons scanned'),
-                  subtitle: const Text('123'),
-                ),
-                ButtonTheme.bar(
-                  child: ButtonBar(
-                    children: <Widget>[
-                      FlatButton(
-                        child: const Text('VIEW'),
-                        onPressed: () => {},
-                      )
-                    ],
-                  ),
-                )
-              ],
-            )),
           )
         ],
       ),
