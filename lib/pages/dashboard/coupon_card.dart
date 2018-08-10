@@ -51,8 +51,7 @@ class CouponCard extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => CouponPage(
                         coupon,
-                        false,
-                    user: user,
+                        user,
                       )));
         },
       ),

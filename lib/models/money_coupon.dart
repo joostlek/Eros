@@ -14,10 +14,10 @@ class MoneyCoupon extends Coupon with _$MoneyCouponSerializerMixin {
       String name,
       bool activated,
       DateTime activatedAt,
-      String activatedBy,
+      Map<String, dynamic> activatedBy,
       DateTime expires,
       DateTime issuedAt,
-      String issuedBy,
+      Map<String, dynamic> issuedBy,
       Coupons type,
       this.value)
       : super(couponId, locationId, name, activated, activatedAt, activatedBy,

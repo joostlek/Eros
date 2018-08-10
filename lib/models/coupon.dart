@@ -9,13 +9,13 @@ class Coupon extends Object with _$CouponSerializerMixin {
   @JsonKey(name: 'coupon_id')
   final String couponId;
   @JsonKey(name: 'issued_by')
-  final String issuedBy;
+  final Map<String, dynamic> issuedBy;
   @JsonKey(name: 'issued_at')
   final DateTime issuedAt;
   @JsonKey(name: 'location_id')
   final String locationId;
   @JsonKey(name: 'activated_by')
-  String activatedBy;
+  Map<String, dynamic> activatedBy;
   @JsonKey(name: 'activated_at')
   DateTime activatedAt;
   final String name;

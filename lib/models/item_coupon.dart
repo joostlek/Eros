@@ -14,10 +14,10 @@ class ItemCoupon extends Coupon with _$ItemCouponSerializerMixin {
       String name,
       bool activated,
       DateTime activatedAt,
-      String activatedBy,
+      Map<String, dynamic> activatedBy,
       DateTime expires,
       DateTime issuedAt,
-      String issuedBy,
+      Map<String, dynamic> issuedBy,
       Coupons type,
       this.item)
       : super(couponId, locationId, name, activated, activatedAt, activatedBy,

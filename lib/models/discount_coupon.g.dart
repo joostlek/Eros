@@ -15,24 +15,28 @@ DiscountCoupon _$DiscountCouponFromJson(Map<String, dynamic> json) {
       json['activated_at'] == null
           ? null
           : DateTime.parse(json['activated_at'] as String),
-      json['activated_by'] as String,
+      json['activated_by'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['activated_by'] as Map),
       json['expires'] == null
           ? null
           : DateTime.parse(json['expires'] as String),
       json['issued_at'] == null
           ? null
           : DateTime.parse(json['issued_at'] as String),
-      json['issued_by'] as String,
+      json['issued_by'] == null
+          ? null
+          : new Map<String, dynamic>.from(json['issued_by'] as Map),
       $enumDecodeNullable('Coupons', Coupons.values, json['type'] as String),
       (json['discount'] as num)?.toDouble());
 }
 
 abstract class _$DiscountCouponSerializerMixin {
   String get couponId;
-  String get issuedBy;
+  Map<String, dynamic> get issuedBy;
   DateTime get issuedAt;
   String get locationId;
-  String get activatedBy;
+  Map<String, dynamic> get activatedBy;
   DateTime get activatedAt;
   String get name;
   bool get activated;

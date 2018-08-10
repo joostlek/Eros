@@ -84,7 +84,7 @@ class CouponStorage {
           null,
           expires,
           DateTime.now(),
-          user.uid,
+          {},
           Coupons.ItemCoupon,
           item);
       final Map<String, dynamic> data = _toMap(itemCoupon);
@@ -115,7 +115,7 @@ class CouponStorage {
           null,
           expires,
           DateTime.now(),
-          user.uid,
+          {},
           Coupons.MoneyCoupon,
           value);
       final Map<String, dynamic> data = _toMap(moneyCoupon);
@@ -146,7 +146,7 @@ class CouponStorage {
           null,
           expires,
           DateTime.now(),
-          user.uid,
+          {},
           Coupons.DiscountCoupon,
           discount);
       final Map<String, dynamic> data = _toMap(discountCoupon);
@@ -233,7 +233,7 @@ class CouponStorage {
   Future<bool> activate(Coupon coupon, User user) {
     coupon.activatedAt = DateTime.now();
     coupon.activated = true;
-    coupon.activatedBy = user.uid;
+//    coupon.activatedBy = user.uid;
     _activateCouponActivity(coupon);
     return update(coupon);
   }

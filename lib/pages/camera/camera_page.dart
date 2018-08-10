@@ -69,7 +69,7 @@ class CameraPageState extends State<CameraPage> {
                     if (data['error'] == false) {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return CouponPage(data['item'], true);
+                        return CouponPage(data['item'], widget.user);
                       }));
                     } else {
                       Scaffold.of(context).showSnackBar(

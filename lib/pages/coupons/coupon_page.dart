@@ -18,10 +18,9 @@ import 'package:flutter/services.dart';
 
 class CouponPage extends StatefulWidget {
   final Coupon coupon;
-  final bool newCoupon;
   final User user;
 
-  CouponPage(this.coupon, this.newCoupon, {this.user});
+  CouponPage(this.coupon, this.user);
 
   @override
   State<StatefulWidget> createState() {
@@ -43,11 +42,8 @@ class CouponPageState extends State<CouponPage> {
   }
 
   getStorage() async {
-    this.userStorage = UserStorage.forFirebaseUser(
-        firebaseUser: await FirebaseAuth.instance.currentUser());
-    User user = await this.userStorage.getUser();
-    if (user.manager[widget.coupon.locationId] == true ||
-        user.owner[widget.coupon.locationId] == true) {
+    if (widget.user.manager[widget.coupon.locationId] == true ||
+        widget.user.owner[widget.coupon.locationId] == true) {
       this.couponLayouts = await Firestore.instance
           .collection('coupon_layouts')
           .where('location_id', isEqualTo: widget.coupon.locationId)
@@ -195,49 +191,29 @@ class CouponPageState extends State<CouponPage> {
                     .month}-${widget.coupon.issuedAt.year} ${widget.coupon
                     .issuedAt.hour}:${widget.coupon.issuedAt.minute}'),
           ),
-          FutureBuilder<User>(
-            future: userStorage.getUserByUid(widget.coupon.issuedBy),
-            builder: (context, user) {
-              if (user.data != null && user.hasData) {
-                return ListTile(
-                  title: Text('Issued by'),
-                  trailing: Text(user.data.displayName),
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
+          ListTile(
+            title: Text('Issued by'),
+            trailing: Text(widget.coupon.issuedBy['displayName']),
           ),
-          !widget.coupon.activated
-              ? ListTile(
-                  title: Text(''),
+          widget.coupon.activated == true
+              ? Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text('Activated at'),
+                      trailing: Text(
+                          Util.getWeekday(widget.coupon.activatedAt.weekday) +
+                              ' ${widget.coupon.activatedAt.day}-${widget.coupon
+                      .activatedAt.month}-${widget.coupon.activatedAt
+                      .year} ${widget.coupon.activatedAt.hour}:${widget
+                      .coupon.activatedAt.minute}'),
+                    ),
+                    ListTile(
+                      title: Text('Activated by'),
+                      trailing: Text(widget.coupon.activatedBy['displayName']),
+                    ),
+                  ],
                 )
-              : FutureBuilder<User>(
-                  future: userStorage.getUserByUid(widget.coupon.activatedBy),
-                  builder: (context, user) {
-                    if (user.data != null && user.hasData) {
-                      return Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: Text('Activated at'),
-                            trailing: Text(Util.getWeekday(
-                                    widget.coupon.activatedAt.weekday) +
-                                ' ${widget.coupon.activatedAt.day}-${widget.coupon
-                              .activatedAt.month}-${widget.coupon.activatedAt
-                              .year} ${widget.coupon.activatedAt.hour}:${widget
-                              .coupon.activatedAt.minute}'),
-                          ),
-                          ListTile(
-                            title: Text('Activated by'),
-                            trailing: Text(user.data.displayName),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
+              : ListTile()
         ],
       ),
     );
