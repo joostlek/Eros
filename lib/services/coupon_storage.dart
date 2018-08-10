@@ -64,8 +64,6 @@ class CouponStorage {
 
   _activateCouponActivity(Coupon coupon) {
     ActivityStorage activityStorage = ActivityStorage(user);
-    print(coupon.toShort().toString());
-    print(coupon.locationId);
     activityStorage.createActivity(Activities.ActivateCoupon,
         coupon: coupon.toShort(), locationId: coupon.locationId);
   }
@@ -84,7 +82,7 @@ class CouponStorage {
           null,
           expires,
           DateTime.now(),
-          {},
+          user.toShort(),
           Coupons.ItemCoupon,
           item);
       final Map<String, dynamic> data = _toMap(itemCoupon);
@@ -115,7 +113,7 @@ class CouponStorage {
           null,
           expires,
           DateTime.now(),
-          {},
+          user.toShort(),
           Coupons.MoneyCoupon,
           value);
       final Map<String, dynamic> data = _toMap(moneyCoupon);
@@ -146,7 +144,7 @@ class CouponStorage {
           null,
           expires,
           DateTime.now(),
-          {},
+          user.toShort(),
           Coupons.DiscountCoupon,
           discount);
       final Map<String, dynamic> data = _toMap(discountCoupon);
@@ -233,7 +231,7 @@ class CouponStorage {
   Future<bool> activate(Coupon coupon, User user) {
     coupon.activatedAt = DateTime.now();
     coupon.activated = true;
-//    coupon.activatedBy = user.uid;
+    coupon.activatedBy = user.toShort();
     _activateCouponActivity(coupon);
     return update(coupon);
   }

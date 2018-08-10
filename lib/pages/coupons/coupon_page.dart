@@ -92,24 +92,6 @@ class CouponPageState extends State<CouponPage> {
                         });
                       },
                     );
-//                    return IconButton(
-//                      icon: Icon(Icons.print),
-//                      onPressed: () {
-//                        _print().then((bool) {
-//                          if (bool == true) {
-//                            final snackbar = SnackBar(
-//                              content: Text('Printing...'),
-//                            );
-//                            Scaffold.of(context).showSnackBar(snackbar);
-//                          } else {
-//                            final snackbar = SnackBar(
-//                              content: Text('An error occured!'),
-//                            );
-//                            Scaffold.of(context).showSnackBar(snackbar);
-//                          }
-//                        });
-//                      },
-//                    );
                   },
                 )
               ],
