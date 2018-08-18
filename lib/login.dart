@@ -61,82 +61,82 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                new Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: new RaisedButton(
-                    color: Color(0xFF3B5998),
-                    textColor: Colors.white,
-                    onPressed: () => {},
-                    child: new Row(
-                      children: <Widget>[
-                        new Padding(
-                            padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
-                            child: new Image.asset('assets/fb-logo.png')),
-                        new Center(
-                          child: new Text('Sign in with Facebook'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                new Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: new RaisedButton(
-                    color: Color(0xFF1DA1F2),
-                    textColor: Colors.white,
-                    onPressed: () => {},
-                    child: new Row(
-                      children: <Widget>[
-                        new Padding(
-                            padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
-                            child: new Icon(Icons.home)),
-                        new Center(
-                          child: new Text('Sign in with Twitter'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                new Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: new RaisedButton(
-                    color: Colors.redAccent[700],
-                    textColor: Colors.white,
-                    onPressed: () => {},
-                    child: new Row(
-                      children: <Widget>[
-                        new Padding(
-                            padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
-                            child: new Icon(Icons.email)),
-                        new Center(
-                          child: new Text('Sign in with email'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                new Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: new RaisedButton(
-                    color: Colors.tealAccent[700],
-                    textColor: Colors.white,
-                    onPressed: () => {},
-                    child: new Row(
-                      children: <Widget>[
-                        new Padding(
-                            padding:
-                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
-                            child: new Icon(Icons.phone)),
-                        new Center(
-                          child: new Text('Sign in with phone'),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
+//                new Padding(
+//                  padding: EdgeInsets.all(16.0),
+//                  child: new RaisedButton(
+//                    color: Color(0xFF3B5998),
+//                    textColor: Colors.white,
+//                    onPressed: () => {},
+//                    child: new Row(
+//                      children: <Widget>[
+//                        new Padding(
+//                            padding:
+//                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+//                            child: new Image.asset('assets/fb-logo.png')),
+//                        new Center(
+//                          child: new Text('Sign in with Facebook'),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//                new Padding(
+//                  padding: EdgeInsets.all(16.0),
+//                  child: new RaisedButton(
+//                    color: Color(0xFF1DA1F2),
+//                    textColor: Colors.white,
+//                    onPressed: () => {},
+//                    child: new Row(
+//                      children: <Widget>[
+//                        new Padding(
+//                            padding:
+//                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+//                            child: new Icon(Icons.home)),
+//                        new Center(
+//                          child: new Text('Sign in with Twitter'),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//                new Padding(
+//                  padding: EdgeInsets.all(16.0),
+//                  child: new RaisedButton(
+//                    color: Colors.redAccent[700],
+//                    textColor: Colors.white,
+//                    onPressed: () => {},
+//                    child: new Row(
+//                      children: <Widget>[
+//                        new Padding(
+//                            padding:
+//                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+//                            child: new Icon(Icons.email)),
+//                        new Center(
+//                          child: new Text('Sign in with email'),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//                new Padding(
+//                  padding: EdgeInsets.all(16.0),
+//                  child: new RaisedButton(
+//                    color: Colors.tealAccent[700],
+//                    textColor: Colors.white,
+//                    onPressed: () => {},
+//                    child: new Row(
+//                      children: <Widget>[
+//                        new Padding(
+//                            padding:
+//                                EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+//                            child: new Icon(Icons.phone)),
+//                        new Center(
+//                          child: new Text('Sign in with phone'),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                )
               ]),
         ));
   }

@@ -46,7 +46,7 @@ class ExampleState extends State<Example> {
   @override
   Widget build(BuildContext context) {
     if (_currentUser == null) {
-      return new Login('Eros');
+      return new Login('Couppo');
     } else {
       return FutureBuilder<User>(
           future: getUser(_currentUser),
@@ -57,8 +57,29 @@ class ExampleState extends State<Example> {
                 userStorage: UserStorage.forUser(user: user.data),
               );
             } else {
-              return Center(
-                child: CircularProgressIndicator(),
+              return Scaffold(
+                body: Container(
+                  color: Colors.blue,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset('assets/eros-logo.png'),
+                        ),
+                        Text(
+                          'Couppo',
+                          textScaleFactor: 3.5,
+                        ),
+                        Text(
+                          'Coupon verification tool',
+                          textScaleFactor: 1.5,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               );
             }
           });
