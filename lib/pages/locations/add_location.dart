@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class AddLocation extends StatefulWidget {
   final User user;
+  final LocationStorage locationStorage;
 
-  AddLocation(this.user);
+  AddLocation(this.user, this.locationStorage);
 
   @override
   State createState() => AddLocationState();
@@ -117,9 +118,7 @@ class AddLocationState extends State<AddLocation> {
 
   _save() {
     if (validate() == true) {
-      LocationStorage locationStorage =
-          LocationStorage.forUser(user: widget.user);
-      locationStorage
+      widget.locationStorage
           .create(
               _nameController.text,
               _streetController.text,

@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
 import 'package:eros/models/money_coupon.dart';
 import 'package:eros/models/user.dart';
-import 'package:eros/services/coupon_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
@@ -15,7 +14,6 @@ class MoneyCouponLineChart extends StatelessWidget {
   MoneyCouponLineChart({this.location, this.stream, this.user});
   @override
   Widget build(BuildContext context) {
-    CouponStorage couponStorage = CouponStorage(user);
     return StreamBuilder<QuerySnapshot>(
       stream: stream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> data) {

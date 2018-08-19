@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 
 class Locations extends StatefulWidget {
   final User user;
+  final LocationStorage locationStorage;
 
-  Locations({this.user});
+  Locations({this.user, this.locationStorage});
 
   @override
   State<StatefulWidget> createState() {
@@ -18,12 +19,9 @@ class Locations extends StatefulWidget {
 }
 
 class LocationsState extends State<Locations> {
-  LocationStorage locationStorage;
-
   @override
   void initState() {
     super.initState();
-    locationStorage = LocationStorage.forUser(user: widget.user);
   }
 
   @override
@@ -35,7 +33,8 @@ class LocationsState extends State<Locations> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => AddLocation(widget.user)));
+                    builder: (context) =>
+                        AddLocation(widget.user, widget.locationStorage)));
           },
           child: Icon(Icons.add),
         ),
@@ -43,7 +42,7 @@ class LocationsState extends State<Locations> {
           title: Text('Locations'),
         ),
         body: StreamBuilder<QuerySnapshot>(
-            stream: locationStorage.list(),
+            stream: widget.locationStorage.list(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot> querySnapshot) {
               if (querySnapshot.hasData && querySnapshot.data != null) {
@@ -54,7 +53,7 @@ class LocationsState extends State<Locations> {
                         DocumentSnapshot ds =
                             querySnapshot.data.documents[index];
                         return createCard(
-                            user: locationStorage.user,
+                            user: widget.user,
                             location: LocationStorage.fromDocument(ds));
                       });
                 } else {
@@ -99,7 +98,8 @@ class LocationsState extends State<Locations> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => LocationPage(user, location)));
+                    builder: (context) =>
+                        LocationPage(user, location, widget.locationStorage)));
           },
         ),
       ),

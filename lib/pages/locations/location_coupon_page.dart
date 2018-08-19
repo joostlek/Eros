@@ -98,13 +98,19 @@ class LocationCouponPageState extends State<LocationCouponPage> {
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot> asyncSnapshot) {
             if (asyncSnapshot.hasData && asyncSnapshot.data != null) {
-              return ListView.builder(
-                  itemCount: asyncSnapshot.data.documents.length,
-                  itemBuilder: (context, index) {
-                    Coupon coupon = CouponStorage
-                        .fromDocument(asyncSnapshot.data.documents[index]);
-                    return CouponCard(coupon: coupon, user: widget.user);
-                  });
+              if (asyncSnapshot.data.documents.length > 0) {
+                return ListView.builder(
+                    itemCount: asyncSnapshot.data.documents.length,
+                    itemBuilder: (context, index) {
+                      Coupon coupon = CouponStorage
+                          .fromDocument(asyncSnapshot.data.documents[index]);
+                      return CouponCard(coupon: coupon, user: widget.user);
+                    });
+              } else {
+                return Center(
+                  child: Text('No coupons found'),
+                );
+              }
             } else {
               return Center(child: CircularProgressIndicator());
             }

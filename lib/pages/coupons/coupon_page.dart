@@ -30,7 +30,6 @@ class CouponPage extends StatefulWidget {
 
 class CouponPageState extends State<CouponPage> {
   static const PRINT_CHANNEL = const MethodChannel('eros.jtosti.nl/print');
-  UserStorage userStorage = UserStorage();
   CouponStorage couponStorage;
 
   QuerySnapshot couponLayouts;

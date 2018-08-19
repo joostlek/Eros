@@ -1,12 +1,14 @@
 import 'package:eros/models/user.dart';
 import 'package:eros/pages/locations/add_location.dart';
 import 'package:eros/pages/profile/profile_qr_page.dart';
+import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
 
 class ScanQrCodeCard extends StatelessWidget {
   final User user;
+  final LocationStorage locationStorage;
 
-  ScanQrCodeCard(this.user);
+  ScanQrCodeCard(this.user, this.locationStorage);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,8 @@ class ScanQrCodeCard extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AddLocation(user)));
+                          builder: (context) =>
+                              AddLocation(user, locationStorage)));
                 },
                 child: Text('START COMPANY'),
               ),

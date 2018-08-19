@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/coupon.dart';
 import 'package:eros/models/coupons.dart';
-import 'package:eros/models/money_coupon.dart';
 import 'package:eros/models/status.dart';
 import 'package:eros/services/coupon_storage.dart';
 import 'package:flutter/material.dart';

@@ -49,10 +49,11 @@ class UserStorage {
           _toMap(user, {'created': DateTime.now().toUtc().toIso8601String()}));
       return user;
     };
-    return Firestore.instance
-        .runTransaction(createTransaction)
-        .then(_fromMap)
-        .catchError((e) {
+    return Firestore.instance.runTransaction(createTransaction).then((res) {
+      User user = _fromMap(res);
+      this.user = user;
+      return user;
+    }).catchError((e) {
       print('dart error $e');
       return null;
     });

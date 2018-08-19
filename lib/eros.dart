@@ -1,17 +1,21 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/bottom_item.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/pages/camera/camera_page.dart';
 import 'package:eros/pages/dashboard/dashboard.dart';
 import 'package:eros/pages/profile/profile.dart';
+import 'package:eros/services/location_storage.dart';
 import 'package:eros/services/user_storage.dart';
 
 import 'package:flutter/material.dart';
 
 class Eros extends StatefulWidget {
-  final User user;
   final UserStorage userStorage;
+  final LocationStorage locationStorage;
 
-  Eros({this.user, this.userStorage});
+  Eros({this.userStorage, this.locationStorage});
 
   final bottomItems = [
     new BottomItem('Camera', Icons.camera_alt, Colors.blue),
@@ -26,8 +30,16 @@ class Eros extends StatefulWidget {
 }
 
 class _ErosState extends State<Eros> {
+  Stream<QuerySnapshot> locationStream;
   int _selectedNavIndex = 1;
-  String title = 'Eros';
+  String title = 'Couppo';
+
+
+  @override
+  void initState() {
+    super.initState();
+    locationStream = widget.locationStorage.list();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +68,12 @@ class _ErosState extends State<Eros> {
         return new CameraPage();
       case 1:
         return new Dashboard(
-          user: widget.user,
+          locationStorage: widget.locationStorage,
+          userStorage: widget.userStorage,
         );
       case 2:
         return new Profile(
-          user: widget.user,
+          user: widget.userStorage.user,
         );
     }
   }

@@ -3,15 +3,15 @@ import 'package:eros/models/user.dart';
 import 'package:eros/pages/locations/location_coupon_page.dart';
 import 'package:eros/pages/locations/location_employee_page.dart';
 import 'package:eros/pages/locations/location_page.dart';
-import 'package:eros/services/coupon_storage.dart';
 import 'package:eros/services/location_storage.dart';
 import 'package:flutter/material.dart';
 
 class LocationCard extends StatelessWidget {
   final User user;
   final Location location;
+  final LocationStorage locationStorage;
 
-  LocationCard({this.user, this.location});
+  LocationCard({this.user, this.location, this.locationStorage});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,8 @@ class LocationCard extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => LocationPage(user, location)));
+                      builder: (context) =>
+                          LocationPage(user, location, locationStorage)));
             },
           ),
           location.owner == user.uid
@@ -62,32 +63,16 @@ class LocationCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         Divider(),
-        FutureBuilder<int>(
-          future: CouponStorage(user).countCoupons(location),
-          builder: (BuildContext context, AsyncSnapshot<int> result) {
-            if (result.hasData && result.data != null) {
-              return ListTile(
-                title: Text('Coupons'),
-                subtitle: Text(result.data.toString()),
-                leading: Icon(Icons.local_activity),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              LocationCouponPage(location, user)));
-                },
-                trailing: Icon(Icons.chevron_right),
-              );
-            } else {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
+        ListTile(
+          title: Text('Coupons'),
+          leading: Icon(Icons.local_activity),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LocationCouponPage(location, user)));
           },
+          trailing: Icon(Icons.chevron_right),
         ),
       ],
     );

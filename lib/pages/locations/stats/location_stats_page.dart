@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eros/models/location.dart';
-import 'package:eros/models/money_coupon.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/pages/locations/stats/coupon_activated_chart.dart';
 import 'package:eros/pages/locations/stats/coupon_amount_chart.dart';

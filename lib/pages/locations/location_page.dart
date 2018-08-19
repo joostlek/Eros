@@ -11,12 +11,9 @@ import 'package:flutter/material.dart';
 class LocationPage extends StatefulWidget {
   final Location location;
   final User user;
+  final LocationStorage locationStorage;
 
-  LocationPage(this.user, this.location);
-
-  LocationStorage getLocationStorage() {
-    return LocationStorage.forUser(user: user);
-  }
+  LocationPage(this.user, this.location, this.locationStorage);
 
   @override
   State<StatefulWidget> createState() {
@@ -110,7 +107,7 @@ class LocationPageState extends State<LocationPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => LocationEmployeePage(
-                          locationStorage: widget.getLocationStorage(),
+                          locationStorage: widget.locationStorage,
                           location: widget.location,
                         )));
           },

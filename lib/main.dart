@@ -5,6 +5,7 @@ import 'package:eros/login.dart';
 import 'package:eros/models/activity/activities.dart';
 import 'package:eros/models/user.dart';
 import 'package:eros/services/activity_storage.dart';
+import 'package:eros/services/location_storage.dart';
 import 'package:eros/services/user_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
@@ -30,6 +31,8 @@ class ExampleState extends State<Example> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   StreamSubscription<FirebaseUser> _listener;
   FirebaseUser _currentUser;
+  LocationStorage locationStorage;
+  UserStorage userStorage;
 
   @override
   void initState() {
@@ -43,46 +46,57 @@ class ExampleState extends State<Example> {
     super.dispose();
   }
 
+  Future<bool> getStorage(FirebaseUser user) async {
+    userStorage = await getUserStorage(user);
+    locationStorage =
+        LocationStorage.forUser(user: await userStorage.getUser());
+    if (userStorage != null && locationStorage != null) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_currentUser == null) {
       return new Login('Couppo');
     } else {
-      return FutureBuilder<User>(
-          future: getUser(_currentUser),
-          builder: (BuildContext context, AsyncSnapshot<User> user) {
-            if (user.hasData && user.data != null) {
-              return Eros(
-                user: user.data,
-                userStorage: UserStorage.forUser(user: user.data),
-              );
-            } else {
-              return Scaffold(
-                body: Container(
-                  color: Colors.blue,
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset('assets/eros-logo.png'),
-                        ),
-                        Text(
-                          'Couppo',
-                          textScaleFactor: 3.5,
-                        ),
-                        Text(
-                          'Coupon verification tool',
-                          textScaleFactor: 1.5,
-                        ),
-                      ],
-                    ),
+      return FutureBuilder<bool>(
+        future: getStorage(_currentUser),
+        builder: (BuildContext context, AsyncSnapshot<bool> success) {
+          if (success.hasData && success.data != null && success.data == true) {
+            return Eros(
+              userStorage: userStorage,
+              locationStorage: locationStorage,
+            );
+          } else {
+            return Scaffold(
+              body: Container(
+                color: Colors.blue,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset('assets/eros-logo.png'),
+                      ),
+                      Text(
+                        'Couppo',
+                        textScaleFactor: 3.5,
+                      ),
+                      Text(
+                        'Coupon verification tool',
+                        textScaleFactor: 1.5,
+                      ),
+                    ],
                   ),
                 ),
-              );
-            }
-          });
+              ),
+            );
+          }
+        },
+      );
     }
   }
 
@@ -97,15 +111,15 @@ class ExampleState extends State<Example> {
     });
   }
 
-  Future<User> getUser(FirebaseUser firebaseUser) async {
+  Future<UserStorage> getUserStorage(FirebaseUser firebaseUser) async {
     UserStorage userStorage =
         UserStorage.forFirebaseUser(firebaseUser: firebaseUser);
     if (!(await userStorage.isUserStored())) {
       User user = await userStorage.create(User.fromFirebaseUser(firebaseUser));
       _createUserActivity(user);
-      return user;
+      return userStorage;
     }
-    return userStorage.getUser();
+    return userStorage;
   }
 
   _createUserActivity(User user) {

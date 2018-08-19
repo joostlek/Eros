@@ -126,7 +126,6 @@ class CouponAmountChartState extends State<CouponAmountChart>
   @override
   void initState() {
     super.initState();
-    CouponStorage couponStorage = CouponStorage(widget.user);
     _getCoupons();
     _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(() {

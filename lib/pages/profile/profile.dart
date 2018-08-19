@@ -16,12 +16,7 @@ class Profile extends StatefulWidget {
   }
 }
 
-class ProfileState extends State<Profile> {
-  Future<UserStorage> getStorage() async {
-    return UserStorage.forUser(user: await widget.user);
-  }
-
-  @override
+class ProfileState extends State<Profile> {@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
